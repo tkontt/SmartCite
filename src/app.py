@@ -20,12 +20,14 @@ def new():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
-    content = request.form.get("content")
-    author = request.form.get("author/s")
+    title = request.form.get("title")
+    author = request.form.get("author")
+    year = request.form.get("year")
+    publisher = request.form.get("publisher")
 
     try:
         # tämä ei vielä tehty
-        # create_citation(citation_type, author, content)
+        # create_citation(citation_type, title, author, year, publisher)
         
         validate_todo(content)
         create_todo(content)

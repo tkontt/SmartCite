@@ -1,9 +1,8 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.todo_repository import get_todos, create_todo, set_done
-from repositories.citation_repository import get_citations
+from repositories.citation_repository import get_citations, add_citation
+from entities.citation import Citation
 from config import app, test_env
-from util import validate_todo
 
 @app.route("/")
 def index():
@@ -20,27 +19,24 @@ def new():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation_type")
+    key = request.form.get("key")
     title = request.form.get("title")
     author = request.form.get("author")
     year = request.form.get("year")
     publisher = request.form.get("publisher")
 
+    if not title or not author or not year or not publisher:
+        flash("Missing required fields")
+        return redirect(f"/new_citation")
+
     try:
-        # tämä ei vielä tehty
-        # create_citation(citation_type, title, author, year, publisher)
-        
-        validate_todo(content)
-        create_todo(content)
+        citation = Citation(citation_type, key, {"title": title, "author": author, "year": year, "publisher": publisher})
+        add_citation(citation)
 
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect(f"/new_citation/{type}")
-
-@app.route("/toggle_todo/<todo_id>", methods=["POST"])
-def toggle_todo(todo_id):
-    set_done(todo_id)
-    return redirect("/")
+        return redirect(f"/new_citation")
 
 # testausta varten oleva reitti
 if test_env:

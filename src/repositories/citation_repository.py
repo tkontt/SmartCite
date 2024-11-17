@@ -20,9 +20,19 @@ def get_citations() -> list[Citation]:
         citation["fields"][field_name] = field_value
 
     citations = [
-        Citation(citation_data["id"], citation_data["citation_key"], citation_data["citation_type"], citation_data["fields"])
+        Citation(citation_data["citation_type"], citation_data["citation_key"], citation_data["fields"], citation_data["id"])
         for citation_data in citations_dict.values()
     ]
 
     return citations
 
+def add_citation(citation: Citation):
+    sql = text("INSERT INTO citations (citation_type, citation_key) VALUES (:citation_type, :citation_key) RETURNING id")
+    result = db.session.execute(sql, { "citation_type": citation.citation_type, "citation_key": citation.citation_key })
+    citation_id = result.fetchone()[0]
+
+    for field_name, field_value in citation.fields.items():
+        sql = text("INSERT INTO citation_fields (citation_id, field_name, field_value) VALUES (:citation_id, :field_name, :field_value)")
+        db.session.execute(sql, { "citation_id": citation_id, "field_name": field_name, "field_value": field_value })
+
+    db.session.commit()

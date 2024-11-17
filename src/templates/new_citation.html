@@ -18,13 +18,19 @@ Create a new citation
       </ul>
     {% endif %}
   {% endwith %}
-  <label for="citation_type">Citation type:</label>
-  <input type="text" name="citation_type">
-  <p></p>
+
+  <select class="form-select" aria-label="Select citation type">
+    <option value="article" name="citation_type" selected>article</option>
+    {% for option in types %}
+      <option value="{{ option }}" name="citation_type">{{ option }}</option>
+    {% endfor %}
+  </select>
+
+  <br>
   <label for="author/s">Author / authors:</label>
   <input type="text" name="author/s">
   <p></p>
-  <label for="citation_type">Content:</label>
+  <label for="content">Content:</label>
   <input type="text" name="content">
   <br>
   <p></p>

@@ -25,3 +25,4 @@ def get_citations() -> list[Citation]:
     ]
 
     return citations
+

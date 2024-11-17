@@ -12,7 +12,10 @@ def index():
 
 @app.route("/new_citation")
 def new():
-    return render_template("new_citation.html")
+    types = ['book', 'booklet', 'conference', 'inbook', 'incollection', 'inproceedings',
+            'manual', 'masterthesis', 'misc', 'phdthesis', 'proceedings', 'techreport', 'unpublished']
+
+    return render_template("new_citation.html", types=types)
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
@@ -30,7 +33,7 @@ def citation_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_citation")
+        return  redirect(f"/new_citation/{type}")
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):

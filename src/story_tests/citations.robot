@@ -5,7 +5,7 @@ Suite Teardown   Close Browser
 Test Setup       Reset Todos
 
 *** Test Cases ***
-At start there are no todos
+At start there are no citations
     Go To Home Page
     Home Page Should Be Open
     Page Should Contain  You haven't added any citations

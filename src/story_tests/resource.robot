@@ -6,6 +6,7 @@ ${SERVER}     localhost:5001
 ${DELAY}      0.5 seconds
 ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
+${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
 
@@ -27,3 +28,14 @@ Open And Configure Browser
 Reset Todos
     Go To  ${RESET_URL}
 
+Home Page Should Be Open
+    Title Should Be  Citation app
+
+New Citation Page Should Be Open
+    Title Should Be  Create a new citation
+
+Go To Home Page
+    Go To  ${HOME_URL}
+
+Go To New Citation Page
+    Go To  ${NEW_CITATION_URL}

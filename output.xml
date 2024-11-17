@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.10.12 on linux)" generated="2024-11-18T01:09:37.992709" rpa="false" schemaversion="5">
+<suite id="s1" name="Story Tests" source="/home/aliinu/SmartCite/src/story_tests">
+<suite id="s1-s1" name="Citations" source="/home/aliinu/SmartCite/src/story_tests/citations.robot">
+<kw name="Open And Configure Browser" owner="resource" type="SETUP">
+<if>
+<branch type="IF" condition="$BROWSER == 'chrome'">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-18T01:09:38.077524" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7a3680ab5ba0&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-18T01:09:38.077310" elapsed="0.000241"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.075584" elapsed="0.002018"/>
+</branch>
+<branch type="ELSE IF" condition="$BROWSER == 'firefox'">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-11-18T01:09:38.077704" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2024-11-18T01:09:38.077629" elapsed="0.000120"/>
+</branch>
+<status status="PASS" start="2024-11-18T01:09:38.075565" elapsed="0.002202"/>
+</if>
+<if>
+<branch type="IF" condition="$HEADLESS == 'true'">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="NOT RUN" start="2024-11-18T01:09:38.077909" elapsed="0.000016"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2024-11-18T01:09:38.077982" elapsed="0.000015"/>
+</kw>
+<status status="NOT RUN" start="2024-11-18T01:09:38.077800" elapsed="0.000227"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2024-11-18T01:09:38.078098" elapsed="0.000171"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.078046" elapsed="0.000255"/>
+</branch>
+<status status="PASS" start="2024-11-18T01:09:38.077791" elapsed="0.000529"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:38.078549" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<msg time="2024-11-18T01:09:38.122114" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
+<arg>browser=${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-18T01:09:38.078381" elapsed="0.369182"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.075398" elapsed="0.372335"/>
+</kw>
+<test id="s1-s1-t1" name="At start there are no todos" line="8">
+<kw name="Reset Todos" owner="resource" type="SETUP">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:38.448727" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
+<arg>${RESET_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2024-11-18T01:09:38.448591" elapsed="0.817063"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.448353" elapsed="0.818215"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:39.269226" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2024-11-18T01:09:39.268741" elapsed="0.639622"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:39.267795" elapsed="0.640984"/>
+</kw>
+<kw name="Home Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:40.421102" level="INFO">Page title is 'Citation app'.</msg>
+<arg>Citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2024-11-18T01:09:39.910325" elapsed="0.511220"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:39.909543" elapsed="0.512415"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:41.437748" level="INFO">Current page contains text 'You haven't added any citations'.</msg>
+<arg>You haven't added any citations</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2024-11-18T01:09:40.422714" elapsed="1.015622"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.447853" elapsed="2.991395"/>
+</test>
+<test id="s1-s1-t2" name="After adding a citation, there is one" line="13">
+<kw name="Reset Todos" owner="resource" type="SETUP">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:41.443679" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
+<arg>${RESET_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2024-11-18T01:09:41.442298" elapsed="0.609291"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:41.441481" elapsed="0.610517"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:42.054212" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2024-11-18T01:09:42.053653" elapsed="0.589729"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:42.052779" elapsed="0.591102"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:42.645633" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:42.644635" elapsed="1.627263"/>
+</kw>
+<kw name="New Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:44.787212" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2024-11-18T01:09:44.274550" elapsed="0.513081"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:44.273542" elapsed="0.514503"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:44.789279" level="INFO">Typing text 'Key123' into text field 'key'.</msg>
+<arg>key</arg>
+<arg>Key123</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:44.788662" elapsed="1.647507"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:46.438612" level="INFO">Typing text 'Title' into text field 'title'.</msg>
+<arg>title</arg>
+<arg>Title</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:46.437394" elapsed="1.615495"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:48.055394" level="INFO">Typing text 'Author' into text field 'author'.</msg>
+<arg>author</arg>
+<arg>Author</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:48.054353" elapsed="1.639648"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:49.695454" level="INFO">Typing text '2024' into text field 'year'.</msg>
+<arg>year</arg>
+<arg>2024</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:49.694822" elapsed="1.609616"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:51.306263" level="INFO">Typing text 'Publisher' into text field 'publisher'.</msg>
+<arg>publisher</arg>
+<arg>Publisher</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:51.305489" elapsed="1.624243"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:52.931200" level="INFO">Clicking button 'Create'.</msg>
+<arg>Create</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-18T01:09:52.930551" elapsed="2.218184"/>
+</kw>
+<kw name="Page Should Not Contain" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:56.696159" level="INFO">Current page does not contain text 'You haven't added any citations'.</msg>
+<arg>You haven't added any citations</arg>
+<doc>Verifies the current page does not contain ``text``.</doc>
+<status status="PASS" start="2024-11-18T01:09:55.149739" elapsed="1.546773"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2024-11-18T01:09:57.725160" level="INFO">Current page contains text '"citation_type": "article"'.</msg>
+<arg>"citation_type": "article"</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2024-11-18T01:09:56.697378" elapsed="1.028279"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:41.440268" elapsed="16.286314"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-11-18T01:09:57.728511" elapsed="0.561747"/>
+</kw>
+<status status="PASS" start="2024-11-18T01:09:38.003722" elapsed="20.286837"/>
+</suite>
+<status status="PASS" start="2024-11-18T01:09:37.993361" elapsed="20.299700"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Story Tests">Story Tests</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s1" name="Citations">Story Tests.Citations</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-11-18T01:09:38.122114" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
+</errors>
+</robot>

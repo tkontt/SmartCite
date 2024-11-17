@@ -27,7 +27,7 @@ def citation_creation():
 
     if not title or not author or not year or not publisher:
         flash("Missing required fields")
-        return redirect(f"/new_citation")
+        return redirect("/new_citation")
 
     try:
         citation = Citation(citation_type, key, {"title": title, "author": author, "year": year, "publisher": publisher})

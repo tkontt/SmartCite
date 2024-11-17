@@ -8,16 +8,19 @@ Citation app
 
 <h2>Citation app</h2>
 
-<ul>
-  {% for citation in citations %}
-    <li style="display: flex">
-      <div>
-        {{ citation }} 
-      </div>
-      
-    </li>
-  {% endfor %}
-</ul>
+{% if citations|length > 0 %}
+  <ul>
+    {% for citation in citations %}
+      <li style="display: flex">
+        <div>
+          {{ citation }} 
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+<p>You haven't added any citations</p>
+{% endif %}
 
 <div>
   <a href="/new_citation">Create new citation</a>

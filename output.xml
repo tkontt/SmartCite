@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.1.1 (Python 3.10.12 on linux)" generated="2024-11-18T01:09:37.992709" rpa="false" schemaversion="5">
+<robot generator="Robot 7.1.1 (Python 3.10.12 on linux)" generated="2024-11-18T10:14:13.564935" rpa="false" schemaversion="5">
 <suite id="s1" name="Story Tests" source="/home/aliinu/SmartCite/src/story_tests">
 <suite id="s1-s1" name="Citations" source="/home/aliinu/SmartCite/src/story_tests/citations.robot">
 <kw name="Open And Configure Browser" owner="resource" type="SETUP">
 <if>
 <branch type="IF" condition="$BROWSER == 'chrome'">
 <kw name="Evaluate" owner="BuiltIn">
-<msg time="2024-11-18T01:09:38.077524" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7a3680ab5ba0&gt;</msg>
+<msg time="2024-11-18T10:14:13.716210" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7de9c9f0dba0&gt;</msg>
 <var>${options}</var>
 <arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
 <arg>sys</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2024-11-18T01:09:38.077310" elapsed="0.000241"/>
+<status status="PASS" start="2024-11-18T10:14:13.715830" elapsed="0.000428"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.075584" elapsed="0.002018"/>
+<status status="PASS" start="2024-11-18T10:14:13.712477" elapsed="0.003874"/>
 </branch>
 <branch type="ELSE IF" condition="$BROWSER == 'firefox'">
 <kw name="Evaluate" owner="BuiltIn">
@@ -21,180 +21,180 @@
 <arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
 <arg>sys</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="NOT RUN" start="2024-11-18T01:09:38.077704" elapsed="0.000017"/>
+<status status="NOT RUN" start="2024-11-18T10:14:13.716562" elapsed="0.000038"/>
 </kw>
-<status status="NOT RUN" start="2024-11-18T01:09:38.077629" elapsed="0.000120"/>
+<status status="NOT RUN" start="2024-11-18T10:14:13.716404" elapsed="0.000253"/>
 </branch>
-<status status="PASS" start="2024-11-18T01:09:38.075565" elapsed="0.002202"/>
+<status status="PASS" start="2024-11-18T10:14:13.712443" elapsed="0.004252"/>
 </if>
 <if>
 <branch type="IF" condition="$HEADLESS == 'true'">
 <kw name="Set Selenium Speed" owner="SeleniumLibrary">
 <arg>0</arg>
 <doc>Sets the delay that is waited after each Selenium command.</doc>
-<status status="NOT RUN" start="2024-11-18T01:09:38.077909" elapsed="0.000016"/>
+<status status="NOT RUN" start="2024-11-18T10:14:13.716995" elapsed="0.000035"/>
 </kw>
 <kw name="Call Method" owner="BuiltIn">
 <arg>${options}</arg>
 <arg>add_argument</arg>
 <arg>--headless</arg>
 <doc>Calls the named method of the given object with the provided arguments.</doc>
-<status status="NOT RUN" start="2024-11-18T01:09:38.077982" elapsed="0.000015"/>
+<status status="NOT RUN" start="2024-11-18T10:14:13.717160" elapsed="0.000030"/>
 </kw>
-<status status="NOT RUN" start="2024-11-18T01:09:38.077800" elapsed="0.000227"/>
+<status status="NOT RUN" start="2024-11-18T10:14:13.716767" elapsed="0.000476"/>
 </branch>
 <branch type="ELSE">
 <kw name="Set Selenium Speed" owner="SeleniumLibrary">
 <arg>${DELAY}</arg>
 <doc>Sets the delay that is waited after each Selenium command.</doc>
-<status status="PASS" start="2024-11-18T01:09:38.078098" elapsed="0.000171"/>
+<status status="PASS" start="2024-11-18T10:14:13.717389" elapsed="0.000312"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.078046" elapsed="0.000255"/>
+<status status="PASS" start="2024-11-18T10:14:13.717281" elapsed="0.000504"/>
 </branch>
-<status status="PASS" start="2024-11-18T01:09:38.077791" elapsed="0.000529"/>
+<status status="PASS" start="2024-11-18T10:14:13.716749" elapsed="0.001080"/>
 </if>
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:38.078549" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
-<msg time="2024-11-18T01:09:38.122114" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
+<msg time="2024-11-18T10:14:13.718315" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<msg time="2024-11-18T10:14:13.959402" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
 <arg>browser=${BROWSER}</arg>
 <arg>options=${options}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2024-11-18T01:09:38.078381" elapsed="0.369182"/>
+<status status="PASS" start="2024-11-18T10:14:13.717960" elapsed="0.936105"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.075398" elapsed="0.372335"/>
+<status status="PASS" start="2024-11-18T10:14:13.712187" elapsed="0.942177"/>
 </kw>
-<test id="s1-s1-t1" name="At start there are no todos" line="8">
+<test id="s1-s1-t1" name="At start there are no citations" line="8">
 <kw name="Reset Todos" owner="resource" type="SETUP">
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:38.448727" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
+<msg time="2024-11-18T10:14:14.656442" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
 <arg>${RESET_URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2024-11-18T01:09:38.448591" elapsed="0.817063"/>
+<status status="PASS" start="2024-11-18T10:14:14.656078" elapsed="1.009443"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.448353" elapsed="0.818215"/>
+<status status="PASS" start="2024-11-18T10:14:14.655500" elapsed="1.010454"/>
 </kw>
 <kw name="Go To Home Page" owner="resource">
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:39.269226" level="INFO">Opening url 'http://localhost:5001'</msg>
+<msg time="2024-11-18T10:14:15.668978" level="INFO">Opening url 'http://localhost:5001'</msg>
 <arg>${HOME_URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2024-11-18T01:09:39.268741" elapsed="0.639622"/>
+<status status="PASS" start="2024-11-18T10:14:15.668074" elapsed="0.718248"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:39.267795" elapsed="0.640984"/>
+<status status="PASS" start="2024-11-18T10:14:15.666804" elapsed="0.720312"/>
 </kw>
 <kw name="Home Page Should Be Open" owner="resource">
 <kw name="Title Should Be" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:40.421102" level="INFO">Page title is 'Citation app'.</msg>
-<arg>Citation app</arg>
+<msg time="2024-11-18T10:14:16.905455" level="INFO">Page title is 'Citation App'.</msg>
+<arg>Citation App</arg>
 <doc>Verifies that the current page title equals ``title``.</doc>
-<status status="PASS" start="2024-11-18T01:09:39.910325" elapsed="0.511220"/>
+<status status="PASS" start="2024-11-18T10:14:16.389644" elapsed="0.516222"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:39.909543" elapsed="0.512415"/>
+<status status="PASS" start="2024-11-18T10:14:16.388497" elapsed="0.517800"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:41.437748" level="INFO">Current page contains text 'You haven't added any citations'.</msg>
+<msg time="2024-11-18T10:14:17.939987" level="INFO">Current page contains text 'You haven't added any citations'.</msg>
 <arg>You haven't added any citations</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="PASS" start="2024-11-18T01:09:40.422714" elapsed="1.015622"/>
+<status status="PASS" start="2024-11-18T10:14:16.907054" elapsed="1.033822"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.447853" elapsed="2.991395"/>
+<status status="PASS" start="2024-11-18T10:14:14.654577" elapsed="3.287789"/>
 </test>
 <test id="s1-s1-t2" name="After adding a citation, there is one" line="13">
 <kw name="Reset Todos" owner="resource" type="SETUP">
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:41.443679" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
+<msg time="2024-11-18T10:14:17.948052" level="INFO">Opening url 'http://localhost:5001/reset_db'</msg>
 <arg>${RESET_URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2024-11-18T01:09:41.442298" elapsed="0.609291"/>
+<status status="PASS" start="2024-11-18T10:14:17.946006" elapsed="0.623527"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:41.441481" elapsed="0.610517"/>
+<status status="PASS" start="2024-11-18T10:14:17.945233" elapsed="0.624689"/>
 </kw>
 <kw name="Go To Home Page" owner="resource">
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:42.054212" level="INFO">Opening url 'http://localhost:5001'</msg>
+<msg time="2024-11-18T10:14:18.571748" level="INFO">Opening url 'http://localhost:5001'</msg>
 <arg>${HOME_URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2024-11-18T01:09:42.053653" elapsed="0.589729"/>
+<status status="PASS" start="2024-11-18T10:14:18.571345" elapsed="0.613615"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:42.052779" elapsed="0.591102"/>
+<status status="PASS" start="2024-11-18T10:14:18.570590" elapsed="0.615023"/>
 </kw>
 <kw name="Click Link" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:42.645633" level="INFO">Clicking link 'Create new citation'.</msg>
+<msg time="2024-11-18T10:14:19.188904" level="INFO">Clicking link 'Create new citation'.</msg>
 <arg>Create new citation</arg>
 <doc>Clicks a link identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:42.644635" elapsed="1.627263"/>
+<status status="PASS" start="2024-11-18T10:14:19.186833" elapsed="1.677992"/>
 </kw>
 <kw name="New Citation Page Should Be Open" owner="resource">
 <kw name="Title Should Be" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:44.787212" level="INFO">Page title is 'Create a new citation'.</msg>
+<msg time="2024-11-18T10:14:21.378895" level="INFO">Page title is 'Create a new citation'.</msg>
 <arg>Create a new citation</arg>
 <doc>Verifies that the current page title equals ``title``.</doc>
-<status status="PASS" start="2024-11-18T01:09:44.274550" elapsed="0.513081"/>
+<status status="PASS" start="2024-11-18T10:14:20.866682" elapsed="0.512656"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:44.273542" elapsed="0.514503"/>
+<status status="PASS" start="2024-11-18T10:14:20.865808" elapsed="0.513865"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:44.789279" level="INFO">Typing text 'Key123' into text field 'key'.</msg>
+<msg time="2024-11-18T10:14:21.380803" level="INFO">Typing text 'Key123' into text field 'key'.</msg>
 <arg>key</arg>
 <arg>Key123</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:44.788662" elapsed="1.647507"/>
+<status status="PASS" start="2024-11-18T10:14:21.380248" elapsed="1.678526"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:46.438612" level="INFO">Typing text 'Title' into text field 'title'.</msg>
+<msg time="2024-11-18T10:14:23.061473" level="INFO">Typing text 'Title' into text field 'title'.</msg>
 <arg>title</arg>
 <arg>Title</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:46.437394" elapsed="1.615495"/>
+<status status="PASS" start="2024-11-18T10:14:23.060380" elapsed="1.644062"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:48.055394" level="INFO">Typing text 'Author' into text field 'author'.</msg>
+<msg time="2024-11-18T10:14:24.705654" level="INFO">Typing text 'Author' into text field 'author'.</msg>
 <arg>author</arg>
 <arg>Author</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:48.054353" elapsed="1.639648"/>
+<status status="PASS" start="2024-11-18T10:14:24.705076" elapsed="1.637571"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:49.695454" level="INFO">Typing text '2024' into text field 'year'.</msg>
+<msg time="2024-11-18T10:14:26.345015" level="INFO">Typing text '2024' into text field 'year'.</msg>
 <arg>year</arg>
 <arg>2024</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:49.694822" elapsed="1.609616"/>
+<status status="PASS" start="2024-11-18T10:14:26.344221" elapsed="1.650129"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:51.306263" level="INFO">Typing text 'Publisher' into text field 'publisher'.</msg>
+<msg time="2024-11-18T10:14:27.996737" level="INFO">Typing text 'Publisher' into text field 'publisher'.</msg>
 <arg>publisher</arg>
 <arg>Publisher</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:51.305489" elapsed="1.624243"/>
+<status status="PASS" start="2024-11-18T10:14:27.995741" elapsed="1.661186"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:52.931200" level="INFO">Clicking button 'Create'.</msg>
+<msg time="2024-11-18T10:14:29.659746" level="INFO">Clicking button 'Create'.</msg>
 <arg>Create</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-18T01:09:52.930551" elapsed="2.218184"/>
+<status status="PASS" start="2024-11-18T10:14:29.658720" elapsed="2.334351"/>
 </kw>
 <kw name="Page Should Not Contain" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:56.696159" level="INFO">Current page does not contain text 'You haven't added any citations'.</msg>
+<msg time="2024-11-18T10:14:33.544981" level="INFO">Current page does not contain text 'You haven't added any citations'.</msg>
 <arg>You haven't added any citations</arg>
 <doc>Verifies the current page does not contain ``text``.</doc>
-<status status="PASS" start="2024-11-18T01:09:55.149739" elapsed="1.546773"/>
+<status status="PASS" start="2024-11-18T10:14:31.994513" elapsed="1.550782"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2024-11-18T01:09:57.725160" level="INFO">Current page contains text '"citation_type": "article"'.</msg>
+<msg time="2024-11-18T10:14:34.577089" level="INFO">Current page contains text '"citation_type": "article"'.</msg>
 <arg>"citation_type": "article"</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="PASS" start="2024-11-18T01:09:56.697378" elapsed="1.028279"/>
+<status status="PASS" start="2024-11-18T10:14:33.545990" elapsed="1.031992"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:41.440268" elapsed="16.286314"/>
+<status status="PASS" start="2024-11-18T10:14:17.943943" elapsed="16.635498"/>
 </test>
 <kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
 <doc>Closes the current browser.</doc>
-<status status="PASS" start="2024-11-18T01:09:57.728511" elapsed="0.561747"/>
+<status status="PASS" start="2024-11-18T10:14:34.581738" elapsed="0.566760"/>
 </kw>
-<status status="PASS" start="2024-11-18T01:09:38.003722" elapsed="20.286837"/>
+<status status="PASS" start="2024-11-18T10:14:13.585998" elapsed="21.562759"/>
 </suite>
-<status status="PASS" start="2024-11-18T01:09:37.993361" elapsed="20.299700"/>
+<status status="PASS" start="2024-11-18T10:14:13.566046" elapsed="21.584309"/>
 </suite>
 <statistics>
 <total>
@@ -208,6 +208,6 @@
 </suite>
 </statistics>
 <errors>
-<msg time="2024-11-18T01:09:38.122114" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
+<msg time="2024-11-18T10:14:13.959402" level="WARN">The chromedriver version (130.0.6723.91) detected in PATH at /usr/bin/chromedriver might not be compatible with the detected chrome version (131.0.6778.69); currently, chromedriver 131.0.6778.69 is recommended for chrome 131.*, so it is advised to delete the driver in PATH and retry</msg>
 </errors>
 </robot>

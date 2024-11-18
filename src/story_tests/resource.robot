@@ -29,7 +29,7 @@ Reset Todos
     Go To  ${RESET_URL}
 
 Home Page Should Be Open
-    Title Should Be  Citation app
+    Title Should Be  Citation App
 
 New Citation Page Should Be Open
     Title Should Be  Create a new citation

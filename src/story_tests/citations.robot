@@ -19,6 +19,6 @@ After adding a citation, there is one
     Input Text  author  Author
     Input Text  year  2024
     Input Text  publisher  Publisher
-    Click Button  Create
+    Click Button  create
     Page Should Not Contain  You haven't added any citations
     Page Should Contain  "citation_type": "article"

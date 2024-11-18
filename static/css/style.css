@@ -1,0 +1,53 @@
+ /* Container for the logo */
+ .logo {
+    background-image: url("{{ url_for('static', filename='logo.svg') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 200px; 
+    height: 80px;  
+    margin: 20px auto; /* Center the logo */
+}
+
+/* Global styles */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+h2 {
+    color: #007bff;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h2 {
+    color: #007bff;
+}
+
+
+.card {
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.alert {
+    margin-top: 10px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-danger {
+    margin-left: 10px;
+}

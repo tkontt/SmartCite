@@ -1,6 +1,7 @@
 *** Settings ***
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
+Set Window Size  2560  2560
 Suite Teardown   Close Browser
 Test Setup       Reset Todos
 

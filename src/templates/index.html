@@ -1,29 +1,24 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Citation app
+Citation App
 {% endblock %}
 
 {% block body %}
-
-<h2>Citation app</h2>
+<h2 class="mb-4">SmartCite</h2>
 
 {% if citations|length > 0 %}
-  <ul>
-    {% for citation in citations %}
-      <li style="display: flex">
-        <div>
-          {{ citation }} 
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
+    <ul class="list-group mb-4">
+        {% for citation in citations %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>{{ citation }}</div>
+            <a href="#" class="btn btn-success btn-sm">Show</a>
+        </li>
+        {% endfor %}
+    </ul>
 {% else %}
-<p>You haven't added any citations</p>
+    <p class="alert alert-warning">You haven't added any citations yet.</p>
 {% endif %}
 
-<div>
-  <a href="/new_citation">Create new citation</a>
-</div>
-
+<a href="/new_citation" class="btn btn-primary">Create new citation</a>
 {% endblock %}

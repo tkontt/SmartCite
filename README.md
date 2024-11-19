@@ -15,7 +15,7 @@ git clone
 ```
 
 
-Siiry projektin juurihakemistoon.
+Siirry projektin juurihakemistoon.
 
 Luo .env tiedosto ja luo sen sisällöksi:
 ```

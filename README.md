@@ -10,7 +10,6 @@ https://docs.google.com/spreadsheets/d/1wmKJn92xzplfzJKrfDkUWur9-Hx96e_3TWNF-Aju
 ## Käynnistysohjeet
 
 Kloonaa repositorio komennolla:
-
 git clone
 
 Siiry projektin juurihakemistoon.
@@ -26,7 +25,7 @@ SECRET_KEY=XXXXX
 Asenna projektin riippuvuudet komennolla:
 poetry install
 
-Siirry virtuaaliympäristöön komellonna:
+Siirry virtuaaliympäristöön komennolla:
 poetry shell
 
 Alusta projektin tietokanta:

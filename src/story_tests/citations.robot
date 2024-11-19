@@ -23,4 +23,4 @@ After adding a citation, there is one
     Sleep  1
     Click Button  create
     Page Should Not Contain  You haven't added any citations
-    Page Should Contain  "citation_type": "article"
+    Page Should Contain  Key123

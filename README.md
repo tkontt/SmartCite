@@ -20,7 +20,6 @@ Siiry projektin juurihakemistoon.
 Luo .env tiedosto ja luo sen sisällöksi:
 ```
 DATABASE_URL=postgresql://XXXX
-TEST_ENV=true
 SECRET_KEY=XXXXX
 ```
 

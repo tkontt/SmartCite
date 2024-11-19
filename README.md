@@ -10,6 +10,7 @@ https://docs.google.com/spreadsheets/d/1wmKJn92xzplfzJKrfDkUWur9-Hx96e_3TWNF-Aju
 ## Käynnistysohjeet
 
 Kloonaa repositorio komennolla:
+
 git clone
 
 Siiry projektin juurihakemistoon.
@@ -17,7 +18,9 @@ Siiry projektin juurihakemistoon.
 Luo .env tiedosto ja luo sen sisällöksi:
 
 DATABASE_URL=postgresql://XXXX
+
 TEST_ENV=true
+
 SECRET_KEY=XXXXX
 
 Asenna projektin riippuvuudet komennolla:

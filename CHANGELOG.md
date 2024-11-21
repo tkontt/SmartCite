@@ -5,3 +5,4 @@
 ### Added
 - citation details page
 - Delete citation 
+- Double click table/row to open edit

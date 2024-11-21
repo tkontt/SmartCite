@@ -16,3 +16,14 @@ class Citation:
             }
     
         return json.dumps(data)
+    
+    def to_dict(self):
+        """
+        Converts the Citation object to a dictionary.
+        """
+        return {
+            "id": self.id,
+            "citation_type": self.citation_type,
+            "citation_key": self.citation_key,
+            "fields": self.fields,
+        } 

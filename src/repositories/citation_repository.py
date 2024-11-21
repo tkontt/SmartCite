@@ -36,3 +36,48 @@ def add_citation(citation: Citation):
         db.session.execute(sql, { "citation_id": citation_id, "field_name": field_name, "field_value": field_value })
 
     db.session.commit()
+
+#Hae viite id:lla
+def get_citation_by_id(citation_id: int) -> dict:
+    """
+    Retrieves a single citation by its ID and returns it as a dictionary.
+    """
+    sql = text("""
+        SELECT c.id, c.citation_key, c.citation_type, cf.field_name, cf.field_value 
+        FROM citations c 
+        LEFT JOIN citation_fields cf ON c.id = cf.citation_id 
+        WHERE c.id = :citation_id
+    """)
+    result = db.session.execute(sql, {"citation_id": citation_id})
+    rows = result.fetchall()
+
+    if not rows:
+        return None
+
+    citation_data = {"fields": {}}
+    for row in rows:
+        id, citation_key, citation_type, field_name, field_value = row
+        citation_data["id"] = id
+        citation_data["citation_key"] = citation_key
+        citation_data["citation_type"] = citation_type
+        if field_name:
+            citation_data["fields"][field_name] = field_value
+
+    return Citation(
+        citation_data["citation_type"],
+        citation_data["citation_key"],
+        citation_data["fields"],
+        citation_data["id"]
+    ).to_dict()
+
+#Poista citation
+def delete_citation_from_db(citation_id: int):
+    """
+    Deletes a citation and its associated fields from the database.
+    """
+    sql_delete_fields = text("DELETE FROM citation_fields WHERE citation_id = :citation_id")
+    sql_delete_citation = text("DELETE FROM citations WHERE id = :citation_id")
+    
+    db.session.execute(sql_delete_fields, {"citation_id": citation_id})
+    db.session.execute(sql_delete_citation, {"citation_id": citation_id})
+    db.session.commit()

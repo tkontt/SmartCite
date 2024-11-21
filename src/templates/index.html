@@ -56,21 +56,6 @@ Citation App
 {% endif %}
 
 <a href="/new_citation" class="btn btn-primary">Create new citation</a>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const rows = document.querySelectorAll(".citation-row");
-
-        rows.forEach(function(row) {
-            row.addEventListener("dblclick", function() {
-                // Get the citation ID from the data-id attribute of the row
-                const citationId = row.getAttribute("data-id");
-                
-                // Redirect to the edit page of the citation
-                window.location.href = `/citation/${citationId}`;
-            });
-        });
-    });
-</script>
 
 {% endblock %}
 

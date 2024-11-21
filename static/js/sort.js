@@ -1,5 +1,6 @@
 document.querySelectorAll("table").forEach((table) => {
     table.querySelectorAll("th").forEach((header, columnIndex) => {
+        if (header.getAttribute("id") == "actions") return;
         header.addEventListener("click", () => {
             // Toggle sort direction
             let currentDirection = header.getAttribute("data-sort") || "none";

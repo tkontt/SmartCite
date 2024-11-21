@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit citation
+{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">Edit Citation Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
+    </div>
+
+
+    <div class="card-body">
+        <form action="/update_citation" method="post">
+            <div class="mb-3">
+                <input type="hidden" name="citation_id" value="{{ citation_id }}">
+
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" name="title" value="{{ citation.fields.get('title', 'N/A') }}">
+                </div>
+                <div class="mb-3">
+                <label for="author" class="form-label">Author:</label>
+                <input type="text" class="form-control" name="author" value="{{ citation.fields.get('author', 'N/A') }}">
+                </div>
+                <div class="mb-3">
+                <label for="year" class="form-label">Year:</label>
+                <input type="text" class="form-control" name="year" value="{{ citation.fields.get('year', 'N/A') }}">
+                </div>
+                <div class="mb-3">
+                <label for="publisher" class="form-label">Publisher:</label>
+                <input type="text" class="form-control" name="publisher" value="{{ citation.fields.get('publisher', 'N/A') }}">
+            </div>
+            <button type="submit" class="btn btn-primary" name="create">Update</button>
+        </form>
+    </div>
+
+    
+</div>
+{% endblock %}

@@ -6,43 +6,89 @@ Citation App
 
 {% block body %}
 <h2 class="mb-4">Recent citations</h2>
-<!-- Versio 1 -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+<!-- Modal for Citation Details -->
+<div class="modal fade" id="citationModal" tabindex="-1" aria-labelledby="citationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="citationModalLabel">Citation Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Citation Key:</strong> <span id="modalCiteKey"></span></p>
+                <p><strong>Type:</strong> <span id="modalCiteType"></span></p>
+                <p><strong>Author:</strong> <span id="modalAuthor"></span></p>
+                <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+                <p><strong>Year:</strong> <span id="modalYear"></span></p>
+                <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table -->
 {% if citations|length > 0 %}
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Cite Key</th>
-                <th>Type</th>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Year</th>
-                <th class="text-end">Actions</th> <!-- Align right vika kolumni -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for citation in citations %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ citation.citation_key }}</td>
-                <td>{{ citation.citation_type }}</td>
-                <td>{{ citation.fields.get('author', 'N/A') }}</td>
-                <td>{{ citation.fields.get('title', 'N/A') }}</td>
-                <td>{{ citation.fields.get('year', 'N/A') }}</td>
-                <td class="text-end">
-                    <a href="#" class="btn btn-success btn-sm">Show</a>
-                    <a href="#" class="btn btn-primary btn-sm">Cite</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Cite Key</th>
+            <th>Type</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th class="text-end">Actions</th> <!-- Align right -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for citation in citations %}
+        <tr class="citation-row" data-id="{{ citation.id }}">
+            <td>{{ loop.index }}</td>
+            <td>{{ citation.citation_key }}</td>
+            <td>{{ citation.citation_type }}</td>
+            <td>{{ citation.fields.get('author', 'N/A') }}</td>
+            <td>{{ citation.fields.get('title', 'N/A') }}</td>
+            <td>{{ citation.fields.get('year', 'N/A') }}</td>
+            <td class="text-end">
+                <!-- Show Button -->
+                <button class="btn btn-success btn-sm show-citation">Show</button>
+                <!-- Edit Button -->
+                <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-
-    
 {% else %}
     <p class="alert alert-warning">You haven't added any citations yet.</p>
 {% endif %}
 
 <a href="/new_citation" class="btn btn-primary">Create new citation</a>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rows = document.querySelectorAll(".citation-row");
+
+        rows.forEach(function(row) {
+            row.addEventListener("dblclick", function() {
+                // Get the citation ID from the data-id attribute of the row
+                const citationId = row.getAttribute("data-id");
+                
+                // Redirect to the edit page of the citation
+                window.location.href = `/citation/${citationId}`;
+            });
+        });
+    });
+</script>
+
 {% endblock %}
+

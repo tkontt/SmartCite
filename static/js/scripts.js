@@ -12,21 +12,8 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = `/citation/${citationId}`;
         });
     });
-});    
-// Kopioi latex key clipboardille
-function copyToClipboard(text) {
-        const tempInput = document.createElement("textarea");
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        try {
-            document.execCommand("copy");
-            alert("Copied to clipboard: " + text);
-        } catch (err) {
-            alert("Failed to copy text. Please try again.");
-        }
-        document.body.removeChild(tempInput);
-}
+});
+
 // Hakutoiminno Javascript
 function filterTable() {
     const input = document.getElementById("search-input");
@@ -42,4 +29,19 @@ function filterTable() {
         }
         rows[i].style.display = rowText.includes(filter) ? "" : "none";
     }
+}
+
+// Kopioi latex key clipboardille
+function copyToClipboard(text) {
+        const tempInput = document.createElement("textarea");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+            document.execCommand("copy");
+            alert("Copied to clipboard: " + text);
+        } catch (err) {
+            alert("Failed to copy text. Please try again.");
+        }
+        document.body.removeChild(tempInput);
 }

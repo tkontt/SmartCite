@@ -41,12 +41,13 @@ Citation App
             <td>{{ citation.fields.get('year', 'N/A') }}</td>
             <td>{{ citation.citation_type }}</td>
             <td class="text-end">
+                <!-- Edit Button -->
+                <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
                 <!-- Quick LaTeX copy-->
                 <button class="btn btn-dark btn-sm"
                 title="Copy citation to clipboard"
                 onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
-                <!-- Edit Button -->
-                <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
+                
                 
             </td>
         </tr>

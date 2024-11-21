@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db
+from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_from_db
 from entities.citation import Citation
 from config import app, test_env
 
@@ -56,6 +56,30 @@ def delete_citation_route(citation_id):
     except Exception as e:
         flash(f"An error occurred while deleting: {e}", "danger")
     return redirect('/')
+
+
+@app.route("/edit_citation/<int:citation_id>", methods=["GET"])
+def edit(citation_id):
+    citation = get_citation_by_id(citation_id)
+    citation_id = citation_id
+    return render_template('edit_citation.html', citation=citation, citation_id=citation_id)
+
+#Muokkaa
+@app.route('/update_citation', methods=['POST'])
+def edit_citation_form_route():
+    citation_id = request.form.get("citation_id")
+    title = request.form.get("title")
+    author = request.form.get("author")
+    year = request.form.get("year")
+    publisher = request.form.get("publisher")
+    try:
+        citation_fields = {"title": title, "author": author, "year": year, "publisher": publisher}
+        update_citation_from_db(citation_id, citation_fields)
+        return redirect("/")
+
+    except Exception as e:
+        flash(f"An error occurred while editing: {e}", "danger")
+        return redirect("/")
 
 # testausta varten oleva reitti
 if test_env:

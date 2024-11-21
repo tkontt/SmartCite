@@ -19,34 +19,16 @@ Create a new citation
     {% endif %}
   {% endwith %}
 
-  <select class="form-select" aria-label="Select citation type" name="citation_type">
+  <select class="form-select" aria-label="Select citation type" name="citation_type" id="citation_type" onchange="updateForm(this)">
     <option value="article" selected>article</option>
     {% for option in types %}
       <option value="{{ option }}">{{ option }}</option>
     {% endfor %}
   </select>
 
-  <br>
-  <div class="mb-3">
-    <label for="key" class="form-label">Key:</label>
-    <input type="text" class="form-control" name="key">
+  <div id="mandatory_fields">
   </div>
-  <div class="mb-3">
-    <label for="title" class="form-label">Title:</label>
-    <input type="text" class="form-control" name="title">
-  </div>
-  <div class="mb-3">
-    <label for="author" class="form-label">Author:</label>
-    <input type="text" class="form-control" name="author">
-  </div>
-  <div class="mb-3">
-    <label for="year" class="form-label">Year:</label>
-    <input type="text" class="form-control" name="year">
-  </div>
-  <div class="mb-3">
-    <label for="publisher" class="form-label">Publisher:</label>
-    <input type="text" class="form-control" name="publisher">
-  </div>
+
   <button type="submit" class="btn btn-primary" name="create">Create</button>
 </form>
 

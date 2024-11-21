@@ -12,8 +12,11 @@ def index():
 
 @app.route("/new_citation")
 def new():
-    types = ['book', 'booklet', 'conference', 'inbook', 'incollection', 'inproceedings',
-            'manual', 'masterthesis', 'misc', 'phdthesis', 'proceedings', 'techreport', 'unpublished']
+    # Vielä toteuttamatta olevat tyypit
+    types_left = ['booklet', 'conference', 'inbook', 'incollection', 'manual', 'masterthesis', 'misc', 'phdthesis', 
+                  'proceedings', 'techreport', 'unpublished']
+    # Article on defaulttina
+    types = ['book', 'inproceedings']
 
     return render_template("new_citation.html", types=types)
 
@@ -21,6 +24,8 @@ def new():
 def citation_creation():
     citation_type = request.form.get("citation_type")
     key = request.form.get("key")
+
+    # Tarkistukset riippuen lähdetyypistä toteuttamatta
     title = request.form.get("title")
     author = request.form.get("author")
     year = request.form.get("year")

@@ -15,28 +15,10 @@ Citation App
       </ul>
     {% endif %}
   {% endwith %}
-<!-- Modal for Citation Details -->
-<div class="modal fade" id="citationModal" tabindex="-1" aria-labelledby="citationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="citationModalLabel">Citation Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Citation Key:</strong> <span id="modalCiteKey"></span></p>
-                <p><strong>Type:</strong> <span id="modalCiteType"></span></p>
-                <p><strong>Author:</strong> <span id="modalAuthor"></span></p>
-                <p><strong>Title:</strong> <span id="modalTitle"></span></p>
-                <p><strong>Year:</strong> <span id="modalYear"></span></p>
-                <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Table -->
 {% if citations|length > 0 %}
+
 <table class="table table-striped table-hover">
     <thead>
         <tr>

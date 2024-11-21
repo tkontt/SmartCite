@@ -25,7 +25,7 @@ Open And Configure Browser
     END
     Open Browser  browser=${BROWSER}  options=${options}
 
-Reset Todos
+Reset Application
     Go To  ${RESET_URL}
 
 Home Page Should Be Open

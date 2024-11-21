@@ -51,3 +51,7 @@ h2 {
 .btn-danger {
     margin-left: 10px;
 }
+
+th {
+  white-space: nowrap;
+}

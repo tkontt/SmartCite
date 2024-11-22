@@ -12,14 +12,16 @@ At start there are no citations
 
 After adding a citation, there is one
     Go To Home Page
-    Click Link  Create new citation
-    New Citation Page Should Be Open
+    Click Element  xpath=//button[contains(text(), 'Create new citation')]
+    Wait Until Element Is Visible    year
+    Wait Until Element Is Enabled    year
     Page Should Contain  article
     Input Text  key  Key123
     Input Text  author  TestAuthor1
     Input Text  title  Title
     Input Text  journal  Journal
     Input Text  year  2024
+    Sleep  1
     Click Create
     Page Should Not Contain  You haven't added any citations
     Page Should Contain  TestAuthor1
@@ -50,12 +52,14 @@ When Header Is Clicked Twice The Sorting Is Reversed
 *** Keywords ***
 Create Test Citation
     [Arguments]  ${append}
-    Click Link  Create new citation
+    Click Element  xpath=//button[contains(text(), 'Create new citation')]
+    Wait Until Element Is Visible    year
+    Wait Until Element Is Enabled    year
     Input Text  key  Key${append}
     Input Text  title  Title${append}
     Input Text  author  Author${append}
-    Input Text  year  Year${append}
     Input Text  journal  Journal${append}
+    Input Text  year  Year${append}
     Click Create
 
 Click Table Header
@@ -66,15 +70,6 @@ Verify Table Row
     [Arguments]  ${column_index}  ${row_index}  ${expected_value}
     ${first_element}=  Get Text  //table[@id="citations-table"]/tbody/tr[${row_index}]/td[${column_index}]
     Should Be Equal  ${first_element.strip()}  ${expected_value}
-
-Scroll Down Page
-    Execute Javascript  window.scrollTo(0, document.body.scrollHeight)
-    Wait Until Keyword Succeeds  10s  0.2s  Scroll Finished
-
-Scroll Finished
-    ${scroll_height}  Execute Javascript  return document.body.scrollHeight
-    ${scroll_top}  Execute Javascript  return window.scrollY + window.innerHeight
-    Should Be Equal  ${scroll_height}  ${scroll_top}
 
 Click Create
     Scroll Element Into View  ${CREATE}

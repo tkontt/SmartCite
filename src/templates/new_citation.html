@@ -1,35 +1,33 @@
-{% extends "layout.html" %}
+<div class="modal fade" id="citation_modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2>Create a new citation</h2>
 
-{% block title %}
-Create a new citation
-{% endblock %}
-
-{% block body %}
-
-<h2>Create a new citation</h2>
-
-<form action="/create_citation" method="post">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
-  <select class="form-select" aria-label="Select citation type" name="citation_type" id="citation_type" onchange="updateForm(this)">
-    <option value="article" selected>article</option>
-    {% for option in types %}
-      <option value="{{ option }}">{{ option }}</option>
-    {% endfor %}
-  </select>
-
-  <div id="mandatory_fields">
+        <form action="/create_citation" method="post">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        
+          <select class="form-select" aria-label="Select citation type" name="citation_type" id="citation_type" onchange="updateForm(this)">
+            <option value="article" selected>article</option>
+            {% for option in types %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+          </select>
+        
+          <div id="mandatory_fields">
+          </div>
+        
+          <button type="submit" class="btn btn-primary" name="create">Create</button>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <button type="submit" class="btn btn-primary" name="create">Create</button>
-</form>
-
-{% endblock %}
+</div>

@@ -32,9 +32,6 @@ Reset Application
 Home Page Should Be Open
     Title Should Be  Citation App
 
-New Citation Page Should Be Open
-    Title Should Be  Create a new citation
-
 Go To Home Page
     Go To  ${HOME_URL}
 

@@ -24,19 +24,30 @@ def new():
 def citation_creation():
     citation_type = request.form.get("citation_type")
     key = request.form.get("key")
+    fields = {}
 
-    # Tarkistukset riippuen lähdetyypistä toteuttamatta
-    title = request.form.get("title")
-    author = request.form.get("author")
-    year = request.form.get("year")
-    publisher = request.form.get("publisher")
-
-    if not title or not author or not year or not publisher:
+    match citation_type:
+        case "article":
+            fields["author"] = request.form.get("author")
+            fields["title"] = request.form.get("title")
+            fields["journal"] = request.form.get("journal")
+            fields["year"] = request.form.get("year")
+        case "book":
+            fields["author"] = request.form.get("author")
+            fields["editor"] = request.form.get("editor")
+            fields["title"] = request.form.get("title")
+            fields["publisher"] = request.form.get("publisher")
+            fields["year"] = request.form.get("year")
+        case "inproceedings":
+            fields["author"] = request.form.get("author")
+            fields["title"] = request.form.get("title")
+    
+    if "" in fields.values():
         flash("Missing required fields")
         return redirect("/new_citation")
 
     try:
-        citation = Citation(citation_type, key, {"title": title, "author": author, "year": year, "publisher": publisher})
+        citation = Citation(citation_type, key, fields)
         add_citation(citation)
 
         return redirect("/")

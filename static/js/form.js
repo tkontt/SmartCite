@@ -29,9 +29,9 @@ function updateForm(element) {
         lbl.innerHTML = `${field}:`;
       
         var txt = document.createElement("input");
-        lbl.setAttribute("type", "text");
-        lbl.setAttribute("class", "form-control");
-        lbl.setAttribute("name", field);
+        txt.setAttribute("type", "text");
+        txt.setAttribute("class", "form-control");
+        txt.setAttribute("name", field);
       
         f.appendChild(lbl);
         f.appendChild(txt);

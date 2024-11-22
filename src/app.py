@@ -6,19 +6,14 @@ from config import app, test_env
 
 @app.route("/")
 def index():
-    citations = get_citations()
-    return render_template("index.html", citations=citations) 
-
-
-@app.route("/new_citation")
-def new():
     # Vielä toteuttamatta olevat tyypit
     types_left = ['booklet', 'conference', 'inbook', 'incollection', 'manual', 'masterthesis', 'misc', 'phdthesis', 
                   'proceedings', 'techreport', 'unpublished']
     # Article on defaulttina
     types = ['book', 'inproceedings']
 
-    return render_template("new_citation.html", types=types)
+    citations = get_citations()
+    return render_template("index.html", citations=citations, types=types) 
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():

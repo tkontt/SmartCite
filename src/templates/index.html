@@ -59,7 +59,11 @@ Citation App
     <p class="alert alert-warning">You haven't added any citations yet.</p>
 {% endif %}
 
-<a href="/new_citation" class="btn btn-primary">Create new citation</a>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citation_modal">
+    Create new citation
+</button>
+
+{% include "new_citation.html" %}
 
 {% endblock %}
 

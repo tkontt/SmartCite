@@ -32,7 +32,7 @@ def citation_creation():
 
     if "" in fields.values():
         flash("Missing required fields")
-        return redirect("/new_citation")
+        return redirect("/")
 
     try:
         citation = Citation(citation_type, key, fields)
@@ -41,7 +41,7 @@ def citation_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect(f"/new_citation")
+        return redirect(f"/")
     
 #Avaa Citation page   
 @app.route('/citation/<int:citation_id>')

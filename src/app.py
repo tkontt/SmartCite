@@ -22,26 +22,19 @@ def new():
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
+    types = {
+        "article": ["author", "title", "journal", "year"],
+        "book": ["author", "editor", "title", "publisher", "year"],
+        "inproceedings": ["author", "title"]
+    }
+
     citation_type = request.form.get("citation_type")
     key = request.form.get("key")
     fields = {}
 
-    match citation_type:
-        case "article":
-            fields["author"] = request.form.get("author")
-            fields["title"] = request.form.get("title")
-            fields["journal"] = request.form.get("journal")
-            fields["year"] = request.form.get("year")
-        case "book":
-            fields["author"] = request.form.get("author")
-            fields["editor"] = request.form.get("editor")
-            fields["title"] = request.form.get("title")
-            fields["publisher"] = request.form.get("publisher")
-            fields["year"] = request.form.get("year")
-        case "inproceedings":
-            fields["author"] = request.form.get("author")
-            fields["title"] = request.form.get("title")
-    
+    for field in types[citation_type]:
+        fields[field] = request.form.get(field).strip()
+
     if "" in fields.values():
         flash("Missing required fields")
         return redirect("/new_citation")

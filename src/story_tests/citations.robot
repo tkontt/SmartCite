@@ -14,13 +14,13 @@ After adding a citation, there is one
     Go To Home Page
     Click Link  Create new citation
     New Citation Page Should Be Open
+    Page Should Contain  article
     Input Text  key  Key123
-    Input Text  title  Title
     Input Text  author  TestAuthor1
+    Input Text  title  Title
+    Input Text  journal  Journal
     Input Text  year  2024
-    Input Text  publisher  Publisher
-    Scroll Down Page
-    Click Button  create
+    Click Create
     Page Should Not Contain  You haven't added any citations
     Page Should Contain  TestAuthor1
 
@@ -55,9 +55,8 @@ Create Test Citation
     Input Text  title  Title${append}
     Input Text  author  Author${append}
     Input Text  year  Year${append}
-    Input Text  publisher  Publisher${append}
-    Scroll Down Page
-    Click Button  create
+    Input Text  journal  Journal${append}
+    Click Create
 
 Click Table Header
     [Arguments]  ${header}
@@ -76,3 +75,9 @@ Scroll Finished
     ${scroll_height}  Execute Javascript  return document.body.scrollHeight
     ${scroll_top}  Execute Javascript  return window.scrollY + window.innerHeight
     Should Be Equal  ${scroll_height}  ${scroll_top}
+
+Click Create
+    Scroll Element Into View  ${CREATE}
+    Wait Until Element is visible  ${CREATE}  timeout=5s
+    Set Focus To Element  ${CREATE}    
+    Click Element  ${CREATE}

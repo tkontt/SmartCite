@@ -9,6 +9,7 @@ ${RESET_URL}  http://${SERVER}/reset_db
 ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
+${CREATE}     //button[@name='create']
 
 *** Keywords ***
 Open And Configure Browser

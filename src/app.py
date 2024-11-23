@@ -3,6 +3,7 @@ from db_helper import reset_db
 from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_in_db
 from entities.citation import Citation
 from config import app, test_env
+from util import generate_cite_key
 
 @app.route("/")
 def index():
@@ -24,7 +25,7 @@ def citation_creation():
     }
 
     citation_type = request.form.get("citation_type")
-    key = request.form.get("key")
+    key = generate_cite_key()
     fields = {}
 
     for field in types[citation_type]:

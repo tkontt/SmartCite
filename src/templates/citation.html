@@ -13,17 +13,19 @@ Citation Details
     </div>
     <div class="card-body">
         <dl class="row">
-            <dt class="col-sm-3">Author</dt>
-            <dd class="col-sm-9">{{ citation.fields.get('author', 'N/A') }}</dd>
+            <input type="hidden" 
+            name="citation_type" 
+            value="{{ citation.citation_type }}" 
+            id="citation_type"
+            {% for field, value in citation.fields.items() %}
+            data-{{ field }}="{{ value }}"
+            {% endfor %}>
 
-            <dt class="col-sm-3">Title</dt>
-            <dd class="col-sm-9">{{ citation.fields.get('title', 'N/A') }}</dd>
+            {% for field, value in citation.fields.items() %}
+                <dt class="col-sm-3">{{ field }}</dt>
+                <dd class="col-sm-9">{{ value }}</dd>
+            {% endfor %}
 
-            <dt class="col-sm-3">Year</dt>
-            <dd class="col-sm-9">{{ citation.fields.get('year', 'N/A') }}</dd>
-
-            <dt class="col-sm-3">Notes</dt>
-            <dd class="col-sm-9">{{ citation.fields.get('notes', 'N/A') }}</dd>
         </dl>
     </div>
     <div class="card-footer text-end">

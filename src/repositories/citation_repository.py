@@ -83,9 +83,9 @@ def delete_citation_from_db(citation_id: int):
     db.session.commit()
 
 
-def update_citation_from_db(citation_id: int, citation_fields: dict):
+def update_citation_in_db(citation_id: int, citation_fields: dict):
     for field_name, field_value in citation_fields.items():
         sql_update_field = text("""UPDATE citation_fields SET field_value = :field_value 
                         WHERE citation_id = :citation_id AND field_name = :field_name""")
         db.session.execute(sql_update_field, {"citation_id": citation_id, "field_name": field_name, "field_value": field_value})
-        db.session.commit()
+    db.session.commit()

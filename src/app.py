@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_from_db
+from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_in_db
 from entities.citation import Citation
 from config import app, test_env
 
@@ -71,14 +71,26 @@ def edit(citation_id):
 #Muokkaa
 @app.route('/update_citation', methods=['POST'])
 def edit_citation_form_route():
+    types = {
+        "article": ["author", "title", "journal", "year"],
+        "book": ["author", "editor", "title", "publisher", "year"],
+        "inproceedings": ["author", "title"]
+    }
+
     citation_id = request.form.get("citation_id")
-    title = request.form.get("title")
-    author = request.form.get("author")
-    year = request.form.get("year")
-    publisher = request.form.get("publisher")
+    citation_type = request.form.get("citation_type")
+
+    fields = {}
+
+    for field in types[citation_type]:
+        fields[field] = request.form.get(field)
+
+    if "" in fields.values():
+        flash("Missing required fields")
+        return redirect("/")
+
     try:
-        citation_fields = {"title": title, "author": author, "year": year, "publisher": publisher}
-        update_citation_from_db(citation_id, citation_fields)
+        update_citation_in_db(citation_id, fields)
         return redirect("/")
 
     except Exception as e:

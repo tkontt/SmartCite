@@ -89,3 +89,12 @@ def update_citation_in_db(citation_id: int, citation_fields: dict):
                         WHERE citation_id = :citation_id AND field_name = :field_name""")
         db.session.execute(sql_update_field, {"citation_id": citation_id, "field_name": field_name, "field_value": field_value})
     db.session.commit()
+
+def unique_key(key):
+    sql = text("SELECT c.citation_key FROM citations c")
+    result = db.session.execute(sql)
+    rows = result.fetchall()
+    print(rows)
+    if key in rows:
+        return False
+    return True

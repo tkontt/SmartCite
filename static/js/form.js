@@ -38,8 +38,6 @@ function updateForm(element) {
         placement.appendChild(f);
     }
 
-    createField("key");
-
     for (field of types[type]) {
       createField(field);
     }

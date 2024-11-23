@@ -16,7 +16,6 @@ After adding a citation, there is one
     Wait Until Element Is Visible    year
     Wait Until Element Is Enabled    year
     Page Should Contain  article
-    Input Text  key  Key123
     Input Text  author  TestAuthor1
     Input Text  title  Title
     Input Text  journal  Journal
@@ -55,7 +54,6 @@ Create Test Citation
     Click Element  xpath=//button[contains(text(), 'Create new citation')]
     Wait Until Element Is Visible    year
     Wait Until Element Is Enabled    year
-    Input Text  key  Key${append}
     Input Text  title  Title${append}
     Input Text  author  Author${append}
     Input Text  journal  Journal${append}

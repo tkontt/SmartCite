@@ -1,9 +1,8 @@
-class UserInputError(Exception):
-    pass
+import secrets
+from repositories.citation_repository import unique_key
 
-def validate_todo(content):
-    if len(content) < 5:
-        raise UserInputError("Todo content length must be greater than 4")
-
-    if len(content) > 100:
-          raise UserInputError("Todo content length must be smaller than 100")
+def generate_cite_key():
+    key = secrets.token_hex(6)
+    if unique_key(key):
+        return key
+    generate_cite_key()

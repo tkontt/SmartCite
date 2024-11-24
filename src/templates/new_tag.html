@@ -1,0 +1,16 @@
+<div class="modal fade" id="tag_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2>Create new tag</h2>
+          <form action="/create_tag" method="post"> 
+            <div class="form-group">
+                <input type="text" class="form-control" id="tag_id" name="tag" placeholder="Enter tag">
+                <small id="tag_text" class="form-text text-muted">You will be able to add this tag to any citation.</small>
+              </div>
+            <button type="submit" class="btn btn-primary" name="create">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

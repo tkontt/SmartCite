@@ -48,6 +48,16 @@ When Header Is Clicked Twice The Sorting Is Reversed
     Verify Table Row  4  2  Year2
     Verify Table Row  4  3  Year1
 
+When Text Is Searched The Correct Citations Are Shown
+    Go To Home Page
+    Create Test Citation  aaa
+    Create Test Citation  bbb
+    Create Test Citation  ccc
+    Input Text  search-input  bbb
+    Page Should Not Contain Visible Text  aaa
+    Page Should Not Contain Visible Text  ccc
+    Page Should Contain Visible Text  bbb
+
 *** Keywords ***
 Create Test Citation
     [Arguments]  ${append}
@@ -74,3 +84,11 @@ Click Create
     Wait Until Element is visible  ${CREATE}  timeout=5s
     Set Focus To Element  ${CREATE}    
     Click Element  ${CREATE}
+
+Page Should Contain Visible Text
+    [Arguments]  ${text}
+    Element Should Be Visible  xpath=//*[contains(text(), '${text}')]
+
+Page Should Not Contain Visible Text
+    [Arguments]  ${text}
+    Element Should Not Be Visible  xpath=//*[contains(text(), '${text}')]

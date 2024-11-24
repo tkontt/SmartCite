@@ -1,33 +1,30 @@
-{% extends "layout.html" %}
+<div class="modal fade" id="edit_citation_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            <h2 class="mb-4">Edit Citation Details</h2>
 
-{% block title %}
-Edit citation
-{% endblock %}
-
-{% block body %}
-<h2 class="mb-4">Edit Citation Details</h2>
-
-<div class="card">
-    <div class="card-header">
-        <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
+            <div class="card-header">
+                <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
+            </div>
+        
+            <div class="card-body">
+                <form action="/update_citation" method="post">
+                    <input type="hidden" name="citation_id" value="{{ citation_id }}">
+                    <input type="hidden" 
+                    name="citation_type" 
+                    value="{{ citation.citation_type }}" 
+                    id="citation_type"
+                    {% for field, value in citation.fields.items() %}
+                    data-{{ field }}="{{ value }}"
+                    {% endfor %}>
+        
+                <div id="mandatory_fields"></div>
+        
+                <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+      </div>
     </div>
-
-    <div class="card-body">
-        <form action="/update_citation" method="post">
-            <input type="hidden" name="citation_id" value="{{ citation_id }}">
-            <input type="hidden" 
-            name="citation_type" 
-            value="{{ citation.citation_type }}" 
-            id="citation_type"
-            {% for field, value in citation.fields.items() %}
-            data-{{ field }}="{{ value }}"
-            {% endfor %}>
-
-        <div id="mandatory_fields"></div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-    </div>
-</div>
-
-{% endblock %}
+  </div>

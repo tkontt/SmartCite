@@ -88,15 +88,15 @@ def edit_citation_form_route():
 
     if "" in fields.values():
         flash("Missing required fields")
-        return redirect("/")
+        return redirect(f"/citation/{citation_id}")
 
     try:
         update_citation_in_db(citation_id, fields)
-        return redirect("/")
+        return redirect(f"/citation/{citation_id}")
 
     except Exception as e:
         flash(f"An error occurred while editing: {e}", "danger")
-        return redirect("/")
+        return redirect(f"/citation/{citation_id}")
  
     
 @app.route("/create_tag", methods=["POST"])

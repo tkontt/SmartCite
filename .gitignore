@@ -5,3 +5,4 @@ __pycache__
 /report.html
 /selenium-screenshot*
 SmartCite.code-workspace
+poetry.lock

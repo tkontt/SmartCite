@@ -33,6 +33,7 @@ function editForm(element) {
         txt.setAttribute("type", "text");
         txt.setAttribute("class", "form-control");
         txt.setAttribute("name", field);
+        txt.required = true;
         const fieldValue = citationTypeElement.dataset[field];
 
         if (fieldValue) {

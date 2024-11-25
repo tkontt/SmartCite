@@ -5,12 +5,19 @@
           <h2>Create new tag</h2>
           <form action="/create_tag" method="post"> 
             <div class="form-group">
-                <input type="text" class="form-control" id="tag_id" name="tag" placeholder="Enter tag">
+                <input class="form-control" id="tag_id" name="tag" placeholder="Enter tag">
                 <small id="tag_text" class="form-text text-muted">You will be able to add this tag to any citation.</small>
               </div>
             <button type="submit" class="btn btn-primary" name="create">Create</button>
           </form>
         </div>
+        <div class="container">
+            <div class="row row-cols-3">
+            {% for tag in tags %}
+                <div class="col">{{ tag.tag }} <button type="button" class="btn btn-outline-danger">X</button> </div>
+            {% endfor %}  
+            </div>
+          </div>
       </div>
     </div>
   </div>

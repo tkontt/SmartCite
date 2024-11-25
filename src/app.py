@@ -1,7 +1,9 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_in_db
+from repositories.tag_repository import get_tags, create_tag, delete_tag_from_db, check_if_valid_tag
 from entities.citation import Citation
+from entities.tag import Tag
 from config import app, test_env
 from util import generate_cite_key
 
@@ -14,7 +16,8 @@ def index():
     types = ['book', 'inproceedings']
 
     citations = get_citations()
-    return render_template("index.html", citations=citations, types=types) 
+    tags = get_tags()
+    return render_template("index.html", citations=citations, types=types, tags=tags) 
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
@@ -94,12 +97,20 @@ def edit_citation_form_route():
 
 @app.route("/create_tag", methods=["POST"])
 def tag_creation():
-    tag = request.form.get("tag")
-    try:
-        return redirect("/")
-    except Exception as error:
+    tag = request.form.get("tag").lower()
+    if check_if_valid_tag(tag):
+        try:
+            tag_create = Tag(tag)
+            create_tag(tag_create)
+            return redirect("/")
+        except Exception as error:
+            flash(str(error))
+            return redirect(f"/")
+    else:
+        error = Exception("Tag needs to between 1 and 7 characters long.")
         flash(str(error))
         return redirect(f"/")
+    
 
 
 # testausta varten oleva reitti

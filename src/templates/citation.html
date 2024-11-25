@@ -30,7 +30,7 @@ Citation Details
     </div>
     <div class="card-footer text-end">
         <a href="/" class="btn btn-secondary">Back</a>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_citation_modal">Edit</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_citation_modal" name="edit">Edit</button>
         <form action="/delete_citation/{{ citation.id }}" method="POST" style="display:inline-block;">
             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this citation?');">Delete</button>
         </form>

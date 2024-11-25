@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, jsonify, flash
+from flask import redirect, render_template, request, jsonify, flash, abort
 from db_helper import reset_db
 from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_in_db
 from repositories.tag_repository import get_tags, create_tag, delete_tag_from_db, check_if_valid_tag
@@ -10,14 +10,15 @@ from util import generate_cite_key
 @app.route("/")
 def index():
     # Vielä toteuttamatta olevat tyypit
-    types_left = ['booklet', 'conference', 'inbook', 'incollection', 'manual', 'masterthesis', 'misc', 'phdthesis', 
+    types_left = ['booklet', 'conference', 'inbook', 'incollection',
+                  'manual', 'masterthesis', 'misc', 'phdthesis',
                   'proceedings', 'techreport', 'unpublished']
     # Article on defaulttina
     types = ['book', 'inproceedings']
 
     citations = get_citations()
     tags = get_tags()
-    return render_template("index.html", citations=citations, types=types, tags=tags) 
+    return render_template("index.html", citations=citations, types=types, tags=tags)
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
@@ -45,13 +46,12 @@ def citation_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect(f"/")
-    
-#Avaa Citation page   
+        return redirect("/")
+
+#Avaa Citation page
 @app.route('/citation/<int:citation_id>')
 def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)
-    citation_id = citation_id
     if not citation:
         abort(404)  # Return a 404 page if the citation is not found
     return render_template('citation.html', citation=citation, citation_id=citation_id)
@@ -60,7 +60,7 @@ def citation_details(citation_id):
 @app.route('/delete_citation/<int:citation_id>', methods=['POST'])
 def delete_citation_route(citation_id):
     try:
-        delete_citation_from_db(citation_id) 
+        delete_citation_from_db(citation_id)
         flash("Citation deleted successfully!", "success")
     except Exception as e:
         flash(f"An error occurred while deleting: {e}", "danger")
@@ -105,13 +105,11 @@ def tag_creation():
             return redirect("/")
         except Exception as error:
             flash(str(error))
-            return redirect(f"/")
+            return redirect("/")
     else:
         error = Exception("Tag needs to between 1 and 7 characters long.")
         flash(str(error))
-        return redirect(f"/")
-    
-
+        return redirect("/")
 
 # testausta varten oleva reitti
 if test_env:

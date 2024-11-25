@@ -5,4 +5,4 @@ def generate_cite_key():
     key = secrets.token_hex(6)
     if unique_key(key):
         return key
-    generate_cite_key()
+    return generate_cite_key()

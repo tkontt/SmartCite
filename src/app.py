@@ -92,6 +92,16 @@ def edit_citation_form_route():
         flash(f"An error occurred while editing: {e}", "danger")
         return redirect(f"/citation/{citation_id}")
 
+@app.route("/create_tag", methods=["POST"])
+def tag_creation():
+    tag = request.form.get("tag")
+    try:
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return redirect(f"/")
+
+
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")

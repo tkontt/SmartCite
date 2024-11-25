@@ -10,6 +10,8 @@ ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
 ${CREATE}     //button[@name='create']
+${EDIT}       //button[@name='edit']
+${UPDATE}     //button[@name='update']
 
 *** Keywords ***
 Open And Configure Browser
@@ -37,3 +39,6 @@ Go To Home Page
 
 Go To New Citation Page
     Go To  ${NEW_CITATION_URL}
+
+Citation Page Should Be Open
+    Title Should Be  Citation Details

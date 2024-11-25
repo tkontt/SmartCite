@@ -48,9 +48,10 @@ def citation_creation():
 @app.route('/citation/<int:citation_id>')
 def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)
+    citation_id = citation_id
     if not citation:
         abort(404)  # Return a 404 page if the citation is not found
-    return render_template('citation.html', citation=citation)
+    return render_template('citation.html', citation=citation, citation_id=citation_id)
 
 #Poista Citation
 @app.route('/delete_citation/<int:citation_id>', methods=['POST'])
@@ -61,13 +62,6 @@ def delete_citation_route(citation_id):
     except Exception as e:
         flash(f"An error occurred while deleting: {e}", "danger")
     return redirect('/')
-
-
-@app.route("/edit_citation/<int:citation_id>", methods=["GET"])
-def edit(citation_id):
-    citation = get_citation_by_id(citation_id)
-    citation_id = citation_id
-    return render_template('edit_citation.html', citation=citation, citation_id=citation_id)
 
 #Muokkaa
 @app.route('/update_citation', methods=['POST'])
@@ -97,8 +91,7 @@ def edit_citation_form_route():
     except Exception as e:
         flash(f"An error occurred while editing: {e}", "danger")
         return redirect(f"/citation/{citation_id}")
- 
-    
+
 @app.route("/create_tag", methods=["POST"])
 def tag_creation():
     tag = request.form.get("tag")
@@ -107,6 +100,7 @@ def tag_creation():
     except Exception as error:
         flash(str(error))
         return redirect(f"/")
+
 
 # testausta varten oleva reitti
 if test_env:

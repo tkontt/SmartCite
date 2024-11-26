@@ -8,16 +8,28 @@ from entities.tag import Tag
 from config import app, test_env
 from util import generate_cite_key, validate_fields
 
+TYPES = {
+        "article": ["author", "title", "journal", "year"],
+        "book": ["author", "editor", "title", "publisher", "year"],
+        "inproceedings": ["author", "title"],
+        "booklet": ["title"],
+        "conference": ["author", "title"],
+        "inbook": ["author", "title", "chapter", "publisher", "year"],
+        "incollection": ["author", "title", "booktitle"],
+        "manual": ["title"],
+        "masterthesis": ["author", "title", "school", "year"],
+        "misc": [],
+        "phdthesis": ["author", "title", "school", "year"],
+        "proceedings": ["title", "year"],
+        "techreport": ["author", "title", "institution", "year"],
+        "unpublished": ["author", "title"]
+        }
+
 @app.route("/")
 def index():
-    # Vielä toteuttamatta olevat tyypit
-    """
-    types_left = ['booklet', 'conference', 'inbook', 'incollection',
-                  'manual', 'masterthesis', 'misc', 'phdthesis',
-                  'proceedings', 'techreport', 'unpublished']
-    """
     # Article on defaulttina
-    types = ['book', 'inproceedings']
+    types = ['book', 'inproceedings', 'booklet', 'conference', 'inbook', 'incollection', 'manual',
+              'masterthesis', 'misc', 'phdthesis', 'proceedings', 'techreport', 'unpublished']
 
     citations = get_citations()
     tags = get_tags()
@@ -25,17 +37,11 @@ def index():
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
-    types = {
-        "article": ["author", "title", "journal", "year"],
-        "book": ["author", "editor", "title", "publisher", "year"],
-        "inproceedings": ["author", "title"]
-    }
-
     citation_type = request.form.get("citation_type")
     key = generate_cite_key()
     fields = {}
 
-    for field in types[citation_type]:
+    for field in TYPES[citation_type]:
         fields[field] = request.form.get(field).strip()
 
     try:
@@ -68,18 +74,12 @@ def delete_citation_route(citation_id):
 #Muokkaa
 @app.route('/update_citation', methods=['POST'])
 def edit_citation_form_route():
-    types = {
-        "article": ["author", "title", "journal", "year"],
-        "book": ["author", "editor", "title", "publisher", "year"],
-        "inproceedings": ["author", "title"]
-    }
-
     citation_id = request.form.get("citation_id")
     citation_type = request.form.get("citation_type")
 
     fields = {}
 
-    for field in types[citation_type]:
+    for field in TYPES[citation_type]:
         fields[field] = request.form.get(field)
 
     if "" in fields.values():

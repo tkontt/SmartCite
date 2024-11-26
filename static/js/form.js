@@ -11,9 +11,20 @@ function updateForm(element) {
 
     // Pakolliset kentät
     let types = {
-      book: ["author", "editor", "title", "publisher", "year"],
       article: ["author", "title", "journal", "year"],
-      inproceedings: ["author", "title"]
+      book: ["author", "editor", "title", "publisher", "year"],
+      inproceedings: ["author", "title"],
+      booklet: ["title"],
+      conference: ["author", "title"],
+      inbook: ["author", "title", "chapter", "publisher", "year"],
+      incollection: ["author", "title", "booktitle"],
+      manual: ["title"],
+      masterthesis: ["author", "title", "school", "year"],
+      misc: [],
+      phdthesis: ["author", "title", "school", "year"],
+      proceedings: ["title", "year"],
+      techreport: ["author", "title", "institution", "year"],
+      unpublished: ["author", "title"]
     }
 
     const type = element.value;

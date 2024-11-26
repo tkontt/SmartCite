@@ -23,17 +23,6 @@ Click Create
     Set Focus To Element  ${CREATE}    
     Click Element  ${CREATE}
 
-Create Test Citation
-    [Arguments]  ${append}
-    Click Element  xpath=//button[contains(text(), 'Create new citation')]
-    Wait Until Element Is Visible    year
-    Wait Until Element Is Enabled    year
-    Input Text  title  Title${append}
-    Input Text  author  Author${append}
-    Input Text  journal  Journal${append}
-    Input Text  year  Year${append}
-    Click Create
-
 Click Citation Row
     [Arguments]  ${row}
     Double Click Element  //td[contains(text(), "${row}")]

@@ -116,3 +116,16 @@ if test_env:
     def reset_database():
         reset_db()
         return jsonify({ 'message': "db reset" })
+
+    @app.route("/create_test_citations")
+    def create_test_citations():
+        for i in range(1, 10):
+            add_citation(Citation("article", generate_cite_key(),
+            {
+                "author": f"Author{i}",
+                "title": f"Title{i}",
+                "year": f"201{i}",
+                "journal": f"Journal{i}"
+            }))
+
+        return jsonify({ 'message': "created test citations" })

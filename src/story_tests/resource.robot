@@ -6,6 +6,7 @@ ${SERVER}     localhost:5001
 ${DELAY}      0.5 seconds
 ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
+${CREATE_TEST_CITATIONS_URL}  http://${SERVER}/create_test_citations
 ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
@@ -30,6 +31,9 @@ Open And Configure Browser
 
 Reset Application
     Go To  ${RESET_URL}
+
+Create Test Citations
+    Go To  ${CREATE_TEST_CITATIONS_URL}
 
 Home Page Should Be Open
     Title Should Be  Citation App

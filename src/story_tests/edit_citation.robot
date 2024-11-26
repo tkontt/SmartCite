@@ -6,16 +6,17 @@ Test Setup       Reset Application
 
 *** Test Cases ***
 After editing a citation, changes are visible
+    Create Test Citations
     Go To Home Page
-    Create Test Citation  1
     Click Citation Row  1
     Citation Page Should Be Open
     Click Edit
     Wait Until Element Is Visible    year
-    Wait Until Element Is Enabled    year
+    Sleep  0.25
     Input Text  year  2023
+    Sleep  0.25
     Click Update
-    Sleep  1
+    Sleep  0.25
     Citation Page Should Be Open
     Page Should Contain  2023
     Go To Home Page
@@ -29,17 +30,6 @@ Click Create
     Wait Until Element is visible  ${CREATE}  timeout=5s
     Set Focus To Element  ${CREATE}    
     Click Element  ${CREATE}
-
-Create Test Citation
-    [Arguments]  ${append}
-    Click Element  xpath=//button[contains(text(), 'Create new citation')]
-    Wait Until Element Is Visible    year
-    Wait Until Element Is Enabled    year
-    Input Text  title  Title${append}
-    Input Text  author  Author${append}
-    Input Text  journal  Journal${append}
-    Input Text  year  Year${append}
-    Click Create
 
 Click Citation Row
     [Arguments]  ${row}

@@ -6,8 +6,8 @@ Test Setup       Reset Application
 
 *** Test Cases ***
 After deleting a citation, it is no longer visible
+    Create Test Citations
     Go To Home Page
-    Create Test Citation  1
     Page Should Contain  Title1
     Click Citation Row  1
     Citation Page Should Be Open

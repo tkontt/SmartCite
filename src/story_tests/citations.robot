@@ -12,25 +12,23 @@ At start there are no citations
 
 After adding a citation, there is one
     Go To Home Page
-    Click Element  xpath=//button[contains(text(), 'Create new citation')]
+    Click Button  create_citation_button
     Wait Until Element Is Visible    year
-    Wait Until Element Is Enabled    year
+    Sleep  0.25
     Page Should Contain  article
     Input Text  author  TestAuthor1
     Input Text  title  Title
     Input Text  journal  Journal
     Input Text  year  2024
-    Sleep  1
+    Sleep  0.25
     Click Create
     Page Should Not Contain  You haven't added any citations
     Page Should Contain  TestAuthor1
 
 *** Test Cases ***
 When Header Is Clicked The Citations Are Sorted
+    Create Test Citations
     Go To Home Page
-    Create Test Citation  2
-    Create Test Citation  1
-    Create Test Citation  3
     Click Table Header    Author
     # 2 on yläotsikon "Author" indeksi alkaen luvusta 1. Jos otsikoiden järjestys muuttuu niin pitää muuttaa. Sama alemmassa testissä.
     Verify Table Row  2  1  Author1
@@ -38,38 +36,23 @@ When Header Is Clicked The Citations Are Sorted
     Verify Table Row  2  3  Author3
 
 When Header Is Clicked Twice The Sorting Is Reversed
+    Create Test Citations
     Go To Home Page
-    Create Test Citation  2
-    Create Test Citation  1
-    Create Test Citation  3
     Click Table Header  Year
     Click Table Header  Year
-    Verify Table Row  4  1  Year3
-    Verify Table Row  4  2  Year2
-    Verify Table Row  4  3  Year1
+    Verify Table Row  4  1  2019
+    Verify Table Row  4  2  2018
+    Verify Table Row  4  3  2017
 
 When Text Is Searched The Correct Citations Are Shown
+    Create Test Citations
     Go To Home Page
-    Create Test Citation  aaa
-    Create Test Citation  bbb
-    Create Test Citation  ccc
-    Input Text  search-input  bbb
-    Page Should Not Contain Visible Text  aaa
-    Page Should Not Contain Visible Text  ccc
-    Page Should Contain Visible Text  bbb
+    Input Text  search-input  Author6
+    Page Should Not Contain Visible Text  Author5
+    Page Should Not Contain Visible Text  Author7
+    Page Should Contain Visible Text  Author6
 
 *** Keywords ***
-Create Test Citation
-    [Arguments]  ${append}
-    Click Element  xpath=//button[contains(text(), 'Create new citation')]
-    Wait Until Element Is Visible    year
-    Wait Until Element Is Enabled    year
-    Input Text  title  Title${append}
-    Input Text  author  Author${append}
-    Input Text  journal  Journal${append}
-    Input Text  year  Year${append}
-    Click Create
-
 Click Table Header
     [Arguments]  ${header}
     Click Element  //th[contains(text(), "${header}")]

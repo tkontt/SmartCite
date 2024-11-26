@@ -12,16 +12,16 @@ def get_tags() -> list[Tag]:
     rows = result.fetchall()
 
     for row in rows:
-        id, tag_name = row
+        tag_id, tag_name = row
         tag = tags_dict[tag_name]
-        tag["id"] = id
+        tag["id"] = tag_id
         tag["name"] = tag_name
-          
+
     tags = [
         Tag(tag_data["name"], tag_data["id"])
         for tag_data in tags_dict.values()
     ]
-    
+
     return tags
 
 

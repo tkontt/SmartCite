@@ -1,7 +1,8 @@
 import json
 
 class Citation:
-    def __init__(self, citation_type: str, citation_key: str, fields: dict, citation_id: int = None):
+    def __init__(self, citation_type: str, citation_key: str,
+                 fields: dict, citation_id: int = None):
         self.id = citation_id
         self.citation_type = citation_type
         self.citation_key = citation_key

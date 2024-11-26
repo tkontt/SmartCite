@@ -45,7 +45,7 @@ def add_citation(citation: Citation):
                    INSERT INTO citation_fields (citation_id, field_name, field_value)
                    VALUES (:citation_id, :field_name, :field_value)
                    """)
-        db.session.execute(sql, { "citation_id": citation_id, 
+        db.session.execute(sql, { "citation_id": citation_id,
                                  "field_name": field_name,
                                  "field_value": field_value })
 

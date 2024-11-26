@@ -1,7 +1,8 @@
 from flask import redirect, render_template, request, jsonify, flash, abort
 from db_helper import reset_db
-from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, delete_citation_from_db, update_citation_in_db
-from repositories.tag_repository import get_tags, create_tag, delete_tag_from_db, check_if_valid_tag
+from repositories.citation_repository import get_citations, add_citation, get_citation_by_id
+from repositories.citation_repository import delete_citation_from_db, update_citation_in_db
+from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
 from entities.tag import Tag
 from config import app, test_env
@@ -10,9 +11,11 @@ from util import generate_cite_key, validate_fields
 @app.route("/")
 def index():
     # Vielä toteuttamatta olevat tyypit
+    """
     types_left = ['booklet', 'conference', 'inbook', 'incollection',
                   'manual', 'masterthesis', 'misc', 'phdthesis',
                   'proceedings', 'techreport', 'unpublished']
+    """
     # Article on defaulttina
     types = ['book', 'inproceedings']
 
@@ -43,8 +46,8 @@ def citation_creation():
     except Exception as error:
         flash(str(error))
         return redirect("/")
-    
-#Avaa Citation page   
+
+#Avaa Citation page
 @app.route('/citation/<int:citation_id>')
 def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)

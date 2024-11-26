@@ -15,6 +15,7 @@ After editing a citation, changes are visible
     Wait Until Element Is Enabled    year
     Input Text  year  2023
     Click Update
+    Sleep  1
     Citation Page Should Be Open
     Page Should Contain  2023
     Go To Home Page

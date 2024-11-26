@@ -18,15 +18,18 @@
                     {% for field, value in citation.fields.items() %}
                     data-{{ field }}="{{ value }}"
                     {% endfor %}>
+
+                    {% for field, value in citation.fields.items() %}
+                      {% if field != citation_key and field != citation_type %}
+                      <label for="{{ field }}" class="form-label">{{ field }}:</label>
+                      <input type="text" class="form-control" name="{{ field }}" value="{{ value }}" required></input>
+                      {% endif %}
+                    {% endfor %}
         
-                <div id="mandatory_fields"></div>
-        
-                <button type="submit" class="btn btn-primary" name="update">Update</button>
+                  <button type="submit" class="btn btn-primary" name="update">Update</button>
                 </form>
             </div>
         </div>
       </div>
     </div>
   </div>
-
-  <script src="{{ url_for('static', filename='js/edit.js') }}"></script> 

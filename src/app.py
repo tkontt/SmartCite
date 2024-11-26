@@ -76,7 +76,6 @@ def delete_citation_route(citation_id):
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
     citation_type = request.form.get("citation_type")
-
     fields = {}
 
     for field in TYPES[citation_type]:

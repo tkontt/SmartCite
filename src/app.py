@@ -5,7 +5,7 @@ from repositories.tag_repository import get_tags, create_tag, delete_tag_from_db
 from entities.citation import Citation
 from entities.tag import Tag
 from config import app, test_env
-from util import generate_cite_key
+from util import generate_cite_key, validate_fields
 
 @app.route("/")
 def index():
@@ -35,20 +35,16 @@ def citation_creation():
     for field in types[citation_type]:
         fields[field] = request.form.get(field).strip()
 
-    if "" in fields.values():
-        flash("Missing required fields")
-        return redirect("/")
-
     try:
+        validate_fields(fields)
         citation = Citation(citation_type, key, fields)
         add_citation(citation)
-
         return redirect("/")
     except Exception as error:
         flash(str(error))
         return redirect("/")
-
-#Avaa Citation page
+    
+#Avaa Citation page   
 @app.route('/citation/<int:citation_id>')
 def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)

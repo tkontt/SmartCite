@@ -20,6 +20,7 @@ const MANDATORY = {
     unpublished: ["author", "title"]
 };
 
+// Ylläpitää listaa kentistä
 let current_fields = [];
 
 function createField(fieldName, placement, removable) {
@@ -41,6 +42,7 @@ function createField(fieldName, placement, removable) {
     container.appendChild(lbl);
     container.appendChild(txt);
 
+    // Painike, jolla voi poistaa luodun/valinnaisen kentän
     if (removable) {
       let removeBtn = document.createElement("input");
       removeBtn.setAttribute("type", "button");
@@ -62,13 +64,15 @@ function createField(fieldName, placement, removable) {
 
 function updateForm(element) {
     let placement = document.getElementById("mandatory_fields");
+    let optionals = document.getElementById("optional_fields");
 
     // Tyhjennä edellisen valitun tyypin kentät
     var last;
     while (last = placement.lastChild) placement.removeChild(last);
+    while (last = optionals.lastChild) optionals.removeChild(last);
 
     const type = element.value;
-    current_fields = MANDATORY[type];
+    current_fields = MANDATORY[type].slice();
     setAllFields();
 
     for (fieldName of MANDATORY[type]) createField(fieldName, placement, false);
@@ -84,8 +88,10 @@ function addNewField() {
     current_fields.push(nameOfNewField);
     setAllFields();
     createField(nameOfNewField, placement, true);
+    document.getElementById("add_field").value = "";
 }
 
+// Kentät asetetaan all_fields elementin valueksi
 function setAllFields() {
     let element = document.getElementById("all_fields");
     element.value = `${current_fields}`;

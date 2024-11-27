@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash, abort
 from db_helper import reset_db
-from repositories.citation_repository import get_citations, add_citation, get_citation_by_id
+from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, get_citation_field_names
 from repositories.citation_repository import delete_citation_from_db, update_citation_in_db
 from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
@@ -23,7 +23,7 @@ TYPES = {
         "proceedings": ["title", "year"],
         "techreport": ["author", "title", "institution", "year"],
         "unpublished": ["author", "title"]
-        }
+    }
 
 @app.route("/")
 def index():
@@ -76,10 +76,10 @@ def delete_citation_route(citation_id):
 @app.route('/update_citation', methods=['POST'])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    citation_type = request.form.get("citation_type")
+    field_names = get_citation_field_names(citation_id)
     fields = {}
 
-    for field in TYPES[citation_type]:
+    for field in field_names:
         fields[field] = request.form.get(field)
 
     if "" in fields.values():

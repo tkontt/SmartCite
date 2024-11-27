@@ -109,6 +109,14 @@ def update_citation_in_db(citation_id: int, citation_fields: dict):
         )
     db.session.commit()
 
+def get_citation_field_names(citation_id):
+    sql = text("""SELECT cf.field_name
+                  FROM citations c LEFT JOIN citation_fields cf ON c.id = cf.citation_id
+                  WHERE c.id = :citation_id""")
+    result = db.session.execute(sql, {"citation_id": citation_id})
+    rows = result.fetchall()
+    return [row[0] for row in rows]
+
 def unique_key(key):
     sql = text("SELECT c.citation_key FROM citations c")
     result = db.session.execute(sql)

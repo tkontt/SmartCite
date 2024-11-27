@@ -55,3 +55,9 @@ h2 {
 th {
   white-space: nowrap;
 }
+
+#bibtex-list {
+    max-height: 50vh;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+}

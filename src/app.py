@@ -112,10 +112,7 @@ def tag_creation():
 @app.route("/create_bibtex", methods=["GET"])
 def create_bibtex():
     citations = get_citations()
-    bibtex = ""
-    for citation in citations:
-        bibtex += f"{generate_bibtex(citation)}\n\n"
-    return bibtex
+    return generate_bibtex(citations)
 
 # testausta varten oleva reitti
 if test_env:

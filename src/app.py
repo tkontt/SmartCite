@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, jsonify, flash, abort
 from db_helper import reset_db
-from repositories.citation_repository import get_citations, add_citation, get_citation_by_id, get_citation_field_names
+from repositories.citation_repository import get_citations, add_citation, get_citation_by_id
+from repositories.citation_repository import get_citation_field_names
 from repositories.citation_repository import delete_citation_from_db, update_citation_in_db
 from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation

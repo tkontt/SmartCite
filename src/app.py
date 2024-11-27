@@ -6,7 +6,7 @@ from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
 from entities.tag import Tag
 from config import app, test_env
-from util import generate_cite_key, validate_fields
+from util import generate_cite_key, validate_fields, generate_bibtex
 
 TYPES = {
         "article": ["author", "title", "journal", "year"],
@@ -109,6 +109,11 @@ def tag_creation():
         flash(str(error))
         return redirect("/")
 
+@app.route("/create_bibtex", methods=["GET"])
+def create_bibtex():
+    citations = get_citations()
+    return generate_bibtex(citations)
+
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")
@@ -128,7 +133,7 @@ if test_env:
             }))
 
         return jsonify({ 'message': "created test citations" })
-    
+
     @app.route("/create_test_citation/<author>/<title>/<year>/<journal>")
     def create_test_tags(author, title, year, journal):
         add_citation(Citation("article", generate_cite_key(),
@@ -140,4 +145,3 @@ if test_env:
             }))
 
         return jsonify({ 'message': "created test citation" })
-        

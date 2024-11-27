@@ -1,0 +1,21 @@
+<div class="modal fade" id="bibtex_modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">BibTeX Citations</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div id="bibtex-list" class="border rounded p-3">
+            <!-- JS täyttää BibTeX listan tähän -->
+        </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" onclick="copyBibTex()">Copy</button>
+        <button type="button" class="btn btn-primary" onclick="downloadBibTex()">Download</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/bibtex.js') }}"></script> 

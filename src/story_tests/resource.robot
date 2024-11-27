@@ -7,6 +7,7 @@ ${DELAY}      0.5 seconds
 ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
 ${CREATE_TEST_CITATIONS_URL}  http://${SERVER}/create_test_citations
+${CREATE_TEST_CITATION_URL}  http://${SERVER}/create_test_citation
 ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
@@ -34,6 +35,10 @@ Reset Application
 
 Create Test Citations
     Go To  ${CREATE_TEST_CITATIONS_URL}
+
+Create Test Citation
+    [Arguments]  ${author}  ${title}  ${year}  ${journal}
+    Go To  ${CREATE_TEST_CITATION_URL}/${author}/${title}/${year}/${journal}
 
 Home Page Should Be Open
     Title Should Be  Citation App

@@ -44,6 +44,21 @@ When Header Is Clicked Twice The Sorting Is Reversed
     Verify Table Row  4  2  2018
     Verify Table Row  4  3  2017
 
+When Citations Are Sorted The Previous Relative Order Is Kept
+    Create Test Citation  Author1  Title1  2015  Journal1
+    Create Test Citation  Author2  Title1  2014  Journal1
+    Create Test Citation  Author1  Title1  2016  Journal1
+    Create Test Citation  Author2  Title1  2018  Journal1
+    Create Test Citation  Author1  Title1  2014  Journal1
+    Create Test Citation  Author1  Title1  2017  Journal1
+    Go To Home Page
+    Click Table Header  Year
+    Click Table Header  Author
+    Verify Table Row  4  1  2014
+    Verify Table Row  4  2  2015
+    Verify Table Row  4  3  2016
+    Verify Table Row  4  4  2017
+
 When Text Is Searched The Correct Citations Are Shown
     Create Test Citations
     Go To Home Page

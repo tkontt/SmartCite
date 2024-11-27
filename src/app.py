@@ -128,3 +128,16 @@ if test_env:
             }))
 
         return jsonify({ 'message': "created test citations" })
+    
+    @app.route("/create_test_citation/<author>/<title>/<year>/<journal>")
+    def create_test_tags(author, title, year, journal):
+        add_citation(Citation("article", generate_cite_key(),
+            {
+                "author": author,
+                "title": title,
+                "year": year,
+                "journal": journal
+            }))
+
+        return jsonify({ 'message': "created test citation" })
+        

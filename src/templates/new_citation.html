@@ -22,9 +22,18 @@
             {% endfor %}
           </select>
         
-          <div id="mandatory_fields">
+          <div id="mandatory_fields"></div>
+          <div id="optional_fields"></div>
+
+          <div>
+            Add a field <br>
+            <label for="add_field">The name of the field:</label>
+            <input type="text" name="add_field" id="add_field">
+            <input type="button" value="Add" onclick="addNewField()">
           </div>
-        
+
+          <input type="hidden" id="all_fields" name="all_fields" value="">
+
           <button type="submit" class="btn btn-primary" name="create">Create</button>
         </form>
       </div>

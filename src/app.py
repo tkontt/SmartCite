@@ -40,8 +40,9 @@ def citation_creation():
     citation_type = request.form.get("citation_type")
     key = generate_cite_key()
     fields = {}
+    all_fields = request.form.get("all_fields").split(',')
 
-    for field in TYPES[citation_type]:
+    for field in all_fields:
         fields[field] = request.form.get(field).strip()
 
     try:

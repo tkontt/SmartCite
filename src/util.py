@@ -26,4 +26,4 @@ def generate_bibtex(citations: list[Citation]):
     return bibtex
 
 def import_bibtex_citations(bibtex):
-    return None
+    return bibtex

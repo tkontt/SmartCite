@@ -1,17 +1,17 @@
 <div class="modal fade" id="edit_citation_modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-            <h2 class="mb-4">Edit Citation Details</h2>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2 class="mb-4">Edit Citation Details</h2>
 
-            <div class="card-header">
-                <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
-            </div>
+        <div class="card-header">
+          <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
+        </div>
         
-            <div class="card-body">
-                <form action="/update_citation" method="post">
-                    <input type="hidden" name="citation_id" value="{{ citation_id }}">
-                    <input type="hidden" 
+        <div class="card-body">
+          <form action="/update_citation" method="post">
+            <input type="hidden" name="citation_id" value="{{ citation_id }}">
+            <input type="hidden" 
                     name="citation_type" 
                     value="{{ citation.citation_type }}" 
                     id="citation_type"
@@ -19,17 +19,29 @@
                     data-{{ field }}="{{ value }}"
                     {% endfor %}>
 
-                    {% for field, value in citation.fields.items() %}
-                      {% if field != citation_key and field != citation_type %}
-                      <label for="{{ field }}" class="form-label">{{ field }}:</label>
-                      <input type="text" class="form-control" name="{{ field }}" value="{{ value }}" required></input>
-                      {% endif %}
-                    {% endfor %}
-        
-                  <button type="submit" class="btn btn-primary" name="update">Update</button>
-                </form>
+            <div id="field-cotainer">
+              <div id="mandatory-fields"></div>
+              <div id="optional-fields"></div>
             </div>
+          
+            <div>
+              Add a field <br>
+              <label for="add-field">The name of the field:</label>
+              <input type="text" name="add-field" id="add-field">
+              <input type="button" value="Add" onclick="addNewField()">
+            </div>
+          
+            <input type="hidden" id="all-fields" name="all-fields" value="">
+        
+            <button type="submit" class="btn btn-primary" name="update">Update</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/edit_citation.js') }}"></script> 
+<script type="text/javascript">
+    formFieldData('{{ citation.fields | tojson }}', '{{ citation.citation_type }}', '{{ citation_id }}');
+</script>

@@ -15,24 +15,26 @@
             {% endif %}
           {% endwith %}
         
-          <select class="form-select" aria-label="Select citation type" name="citation_type" id="citation_type" onchange="updateForm(this)">
+          <select class="form-select" aria-label="Select citation type" name="citation-type" id="citation-type" onchange="updateFormAfterTypeChange(this)">
             <option value="article" selected>article</option>
             {% for option in types %}
               <option value="{{ option }}">{{ option }}</option>
             {% endfor %}
           </select>
-        
-          <div id="mandatory_fields"></div>
-          <div id="optional_fields"></div>
+
+          <div id="field-cotainer">
+            <div id="mandatory-fields"></div>
+            <div id="optional-fields"></div>
+          </div>
 
           <div>
             Add a field <br>
-            <label for="add_field">The name of the field:</label>
-            <input type="text" name="add_field" id="add_field">
+            <label for="add-field">The name of the field:</label>
+            <input type="text" name="add-field" id="add-field">
             <input type="button" value="Add" onclick="addNewField()">
           </div>
 
-          <input type="hidden" id="all_fields" name="all_fields" value="">
+          <input type="hidden" id="all-fields" name="all-fields" value="">
 
           <button type="submit" class="btn btn-primary" name="create">Create</button>
         </form>

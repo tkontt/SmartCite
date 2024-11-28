@@ -1,8 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    updateFormAfterTypeChange(document.getElementById("citation-type"))
-});
-
-// Pakolliset kentät
 const MANDATORY = {
     article: ["author", "title", "journal", "year"],
     book: ["author", "editor", "title", "publisher", "year"],
@@ -20,39 +15,66 @@ const MANDATORY = {
     unpublished: ["author", "title"]
 };
 
-// Ylläpitää listaa kentistä
 let CURRENTFIELDS = [];
-
-function clearAllFields() {
-    const mandatoryFields = document.getElementById("mandatory-fields");
-    const optionalFields = document.getElementById("optional-fields");
-    var last;
-
-    while (last = mandatoryFields.lastChild) mandatoryFields.removeChild(last);
-    while (last = optionalFields.lastChild) optionalFields.removeChild(last);
-}
 
 function updateAllFieldsElementValue() {
     const element = document.getElementById("all-fields");
     element.value = `${CURRENTFIELDS}`;
 }
 
-function updateFormAfterTypeChange(element) {
-    clearAllFields()
-
-    const citationType = element.value;
-    const placement = document.getElementById("mandatory-fields");
-    CURRENTFIELDS = MANDATORY[citationType].slice();
-
+function formFieldData(fields, citationType, citationId) {
+    const fieldData = JSON.parse(fields);
+    CURRENTFIELDS = Object.keys(fieldData);
     updateAllFieldsElementValue();
+    const mandatoryFields = document.getElementById("mandatory-fields");
+    const optionalFields = document.getElementById("optional-fields");
+    
+    for (const fieldName in fieldData) {
+        const mandatory = MANDATORY[citationType].includes(fieldName);
+        let placement = mandatory ? mandatoryFields : optionalFields;
+        
+        createField(fieldName, fieldData[fieldName], placement, placement == optionalFields);
 
-    for (fieldName of MANDATORY[citationType]) createField(fieldName, placement, false);
+        if (!mandatory) {
+            const removeButton = document.getElementById(`remove-${fieldName}`);
+            removeButton.addEventListener("click", function() {
+                fetch(`/remove_citation_field/${citationId}/${fieldName}`, {method: 'POST'})
+                .then(response => response.json()) 
+                .then(data => console.log(data)) 
+                .catch(error => console.error(error));
+            })
+        }
+    }
+}
+
+function createField(fieldName, fieldValue, placement, removable) {
+    let container = document.createElement("div");
+    container.setAttribute("class", "mb-3");
+    container.setAttribute("id", `${fieldName}-container`);
+      
+    let lbl = document.createElement("label");
+    lbl.setAttribute("for", fieldName);
+    lbl.setAttribute("class", "form-label");
+    lbl.innerHTML = `${fieldName}:`;
+
+    let txt = document.createElement("input");
+    txt.setAttribute("type", "text");
+    txt.setAttribute("class", "form-control");
+    txt.setAttribute("name", fieldName);
+    txt.setAttribute("value", fieldValue);
+    txt.required = true;
+
+    container.appendChild(lbl);
+    container.appendChild(txt);
+    if (removable) container.appendChild(createRemoveButton(fieldName));
+    placement.appendChild(container);
 }
 
 function createRemoveButton(fieldName) {
     let removeButton = document.createElement("input");
     removeButton.setAttribute("type", "button");
     removeButton.setAttribute("value", "Remove");
+    removeButton.setAttribute("id", `remove-${fieldName}`);
 
     removeButton.addEventListener("click", function() {
         let fieldContainer = document.getElementById(`${fieldName}-container`);
@@ -67,28 +89,6 @@ function createRemoveButton(fieldName) {
     return removeButton;
 }
 
-function createField(fieldName, placement, removable) {
-    let container = document.createElement("div");
-    container.setAttribute("class", "mb-3");
-    container.setAttribute("id", `${fieldName}-container`);
-      
-    let lbl = document.createElement("label");
-    lbl.setAttribute("for", fieldName);
-    lbl.setAttribute("class", "form-label");
-    lbl.innerHTML = `${fieldName}:`;
-
-    let txt = document.createElement("input");
-    txt.setAttribute("type", "text");
-    txt.setAttribute("class", "form-control");
-    txt.setAttribute("name", fieldName);
-    txt.required = true;
-
-    container.appendChild(lbl);
-    container.appendChild(txt);
-    if (removable) container.appendChild(createRemoveButton(fieldName));
-    placement.appendChild(container);
-}
-
 function addNewField() {
     let placement = document.getElementById("optional-fields");
     let nameOfNewField = document.getElementById("add-field").value.trim().toLowerCase();
@@ -98,6 +98,6 @@ function addNewField() {
 
     CURRENTFIELDS.push(nameOfNewField);
     updateAllFieldsElementValue();
-    createField(nameOfNewField, placement, true);
+    createField(nameOfNewField, "", placement, true);
     document.getElementById("add-field").value = "";
 }

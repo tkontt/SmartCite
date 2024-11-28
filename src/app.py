@@ -5,7 +5,7 @@ from repositories.citation_repository import (
     add_citation,
     get_citation_by_id,
 )
-from repositories.citation_repository import get_citation_field_names
+from repositories.citation_repository import remove_citation_field_from_db
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
@@ -65,18 +65,22 @@ def index():
 
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
-    citation_type = request.form.get("citation_type")
+    citation_type = request.form.get("citation-type")
     key = generate_cite_key()
     fields = {}
-    all_fields = request.form.get("all_fields").split(",")
+    all_fields = request.form.get("all-fields").split(",")
+    
+    if all_fields == ['']:
+        flash("Citation must at least have one field.")
+        return redirect("/")
 
     for field in all_fields:
         fields[field] = request.form.get(field).strip()
 
     try:
         validate_fields(fields)
-        citation = Citation(citation_type, key, fields)
-        add_citation(citation)
+        add_citation(Citation(citation_type, key, fields))
+        flash("Citation added successfully!")
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -89,6 +93,7 @@ def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)
     if not citation:
         abort(404)  # Return a 404 page if the citation is not found
+    
     return render_template("citation.html", citation=citation, citation_id=citation_id)
 
 
@@ -107,11 +112,16 @@ def delete_citation_route(citation_id):
 @app.route("/update_citation", methods=["POST"])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    field_names = get_citation_field_names(citation_id)
+    all_fields = request.form.get("all-fields").split(',')
     fields = {}
 
-    for field in field_names:
-        fields[field] = request.form.get(field)
+    if all_fields == ['']:
+        delete_citation_from_db(citation_id)
+        flash("Citation removed due to all fields being removed.")
+        return redirect("/")
+
+    for field in all_fields:
+        fields[field] = request.form.get(field).strip()
 
     if "" in fields.values():
         flash("Missing required fields")
@@ -199,4 +209,10 @@ if test_env:
             )
         )
 
-        return jsonify({"message": "created test citation"})
+        return jsonify({ 'message': "created test citation" })
+
+@app.route('/remove_citation_field/<citation_id>/<field_name>', methods=['POST'])
+def remove_citation_field(citation_id, field_name):
+    remove_citation_field_from_db(citation_id, field_name)
+
+    return {'result': 'success'}

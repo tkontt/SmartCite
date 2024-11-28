@@ -121,6 +121,7 @@ def delete_citation_from_db(citation_id: int):
     db.session.execute(sql_delete_citation, {"citation_id": citation_id})
     db.session.commit()
 
+
 def get_citation_field_names(citation_id):
     sql = text(
         """SELECT cf.field_name
@@ -129,7 +130,7 @@ def get_citation_field_names(citation_id):
     )
     result = db.session.execute(sql, {"citation_id": citation_id})
     rows = result.fetchall()
-    return set([row[0] for row in rows])
+    return {row[0] for row in rows}
 
 def update_citation_in_db(citation_id: int, citation_fields: dict):
     existing_fields = get_citation_field_names(citation_id)
@@ -137,14 +138,15 @@ def update_citation_in_db(citation_id: int, citation_fields: dict):
     for field_name, field_value in citation_fields.items():
         sql = ""
         if field_name in existing_fields:
-            sql = """UPDATE citation_fields 
+            sql = """UPDATE citation_fields
                      SET field_value = :field_value 
                      WHERE citation_id = :citation_id AND field_name = :field_name"""
         else:
-            sql = """INSERT INTO citation_fields (citation_id, field_name, field_value) 
+            sql = """INSERT INTO citation_fields (citation_id, field_name, field_value)
                      VALUES (:citation_id, :field_name, :field_value)"""
-            
-        db.session.execute(text(sql), {"citation_id": citation_id, "field_name": field_name, "field_value": field_value})
+
+        db.session.execute(text(sql), {"citation_id": citation_id, "field_name": field_name,
+                                       "field_value": field_value})
     db.session.commit()
 
 def remove_citation_field_from_db(citation_id, field_name):

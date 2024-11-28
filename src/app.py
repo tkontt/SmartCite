@@ -69,7 +69,7 @@ def citation_creation():
     key = generate_cite_key()
     fields = {}
     all_fields = request.form.get("all-fields").split(",")
-    
+
     if all_fields == ['']:
         flash("Citation must at least have one field.")
         return redirect("/")
@@ -93,7 +93,6 @@ def citation_details(citation_id):
     citation = get_citation_by_id(citation_id)
     if not citation:
         abort(404)  # Return a 404 page if the citation is not found
-    
     return render_template("citation.html", citation=citation, citation_id=citation_id)
 
 
@@ -210,6 +209,7 @@ if test_env:
         )
 
         return jsonify({ 'message': "created test citation" })
+
 
 @app.route('/remove_citation_field/<citation_id>/<field_name>', methods=['POST'])
 def remove_citation_field(citation_id, field_name):

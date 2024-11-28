@@ -24,3 +24,6 @@ def generate_bibtex(citations: list[Citation]):
         bibtex += "}\n\n"
 
     return bibtex
+
+def import_bibtex_citations(bibtex):
+    return bibtex

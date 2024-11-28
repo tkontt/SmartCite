@@ -7,7 +7,7 @@ from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
 from entities.tag import Tag
 from config import app, test_env
-from util import generate_cite_key, validate_fields, generate_bibtex
+from util import generate_cite_key, validate_fields, generate_bibtex, import_bibtex_citations
 
 TYPES = {
         "article": ["author", "title", "journal", "year"],
@@ -116,6 +116,13 @@ def create_bibtex():
     citations = get_citations()
     return generate_bibtex(citations)
 
+# Bibtex viitteiden importtaus ei vielä valmis tässä vasta pohjaa.
+@app.route("/import_citations_bibtex", methods=["POST"])
+def import_from_bibtex():
+    bibtex = request.form.get("input_bibtex")
+    import_bibtex_citations(bibtex)
+    return redirect("/")
+
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")
@@ -147,3 +154,4 @@ if test_env:
             }))
 
         return jsonify({ 'message': "created test citation" })
+

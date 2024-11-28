@@ -154,4 +154,3 @@ if test_env:
             }))
 
         return jsonify({ 'message': "created test citation" })
-

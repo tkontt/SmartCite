@@ -9,3 +9,12 @@
 - Double click table/row to open edit
 - Search bar
 - LaTeX quick copy button for citation
+
+## 2024-11-29
+## HT
+- importing citations from bibtex type input
+    - Library bibtexparser is used, added as a dependency
+- generating citekey changed
+    - Key is generated from the citation's fields
+    - Random characters added if not unique
+  

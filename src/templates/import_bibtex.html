@@ -8,9 +8,24 @@
       <div class="modal-body">
           <div id="import-bibtex-list" class="border rounded p-3">
             <form action="/import_citations_bibtex" method="post">
-                <textarea rows="10" class="form-control" id="input_bibtex" name="input_bibtex"></textarea>
+                <textarea rows="10" class="form-control" id="input_bibtex" name="input_bibtex" 
+                placeholder="@inproceedings{Example1,
+    author = {Author1, Author2},
+    title = {Title1},
+    year = {Year1},
+    booktitle = {Booktitle},
+}
+
+@article{Example2,
+    author = {Author3},
+    title = {Title2},
+    journal = {Journal},
+    year = {Year2},
+    volume = {1},
+    pages = {11--22}
+}"></textarea>
                 <div id="input_bibtex" class="form-text">
-                    Input citations in BibTeX form
+                    Input citations in BibTeX form as shown in example. Input should start with "@" and end with "}"
                 </div>
           </div>
         <div class="d-flex justify-content-end">

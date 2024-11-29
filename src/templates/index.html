@@ -59,7 +59,8 @@ Citation App
     <p class="alert alert-warning">You haven't added any citations yet.</p>
 {% endif %}
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citation_modal" id="create_citation_button">Create new citation</button>
+<input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citation_modal" id="create_citation_button" 
+       onclick='formForNewCitation(document.getElementById("citation-type"))' value="Create new citation">
 
 {% include "new_citation.html" %}
 

@@ -22,19 +22,19 @@
             {% endfor %}
           </select>
 
-          <div id="field-cotainer">
-            <div id="mandatory-fields"></div>
-            <div id="optional-fields"></div>
+          <div id="field-cotainer-new">
+            <div id="mandatory-fields-new"></div>
+            <div id="optional-fields-new"></div>
           </div>
 
           <div>
             Add a field <br>
-            <label for="add-field">The name of the field:</label>
-            <input type="text" name="add-field" id="add-field">
+            <label for="add-field-new">The name of the field:</label>
+            <input type="text" name="add-field-new" id="add-field-new">
             <input type="button" value="Add" onclick="addNewField()">
           </div>
 
-          <input type="hidden" id="all-fields" name="all-fields" value="">
+          <input type="hidden" id="all-fields-new" name="all-fields-new" value="">
 
           <button type="submit" class="btn btn-primary" name="create">Create</button>
         </form>
@@ -42,5 +42,3 @@
     </div>
   </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/form.js') }}"></script> 

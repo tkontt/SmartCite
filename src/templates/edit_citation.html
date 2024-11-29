@@ -19,19 +19,19 @@
                     data-{{ field }}="{{ value }}"
                     {% endfor %}>
 
-            <div id="field-cotainer">
-              <div id="mandatory-fields"></div>
-              <div id="optional-fields"></div>
+            <div id="field-cotainer-edit">
+              <div id="mandatory-fields-edit"></div>
+              <div id="optional-fields-edit"></div>
             </div>
           
             <div>
               Add a field <br>
-              <label for="add-field">The name of the field:</label>
-              <input type="text" name="add-field" id="add-field">
+              <label for="add-field-edit">The name of the field:</label>
+              <input type="text" name="add-field-edit" id="add-field-edit">
               <input type="button" value="Add" onclick="addNewField()">
             </div>
           
-            <input type="hidden" id="all-fields" name="all-fields" value="">
+            <input type="hidden" id="all-fields-edit" name="all-fields-edit" value="">
         
             <button type="submit" class="btn btn-primary" name="update">Update</button>
           </form>
@@ -40,8 +40,3 @@
     </div>
   </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/edit_citation.js') }}"></script> 
-<script type="text/javascript">
-    formFieldData('{{ citation.fields | tojson }}', '{{ citation.citation_type }}', '{{ citation_id }}');
-</script>

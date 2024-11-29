@@ -68,7 +68,7 @@ def citation_creation():
     citation_type = request.form.get("citation-type")
     key = generate_cite_key()
     fields = {}
-    all_fields = request.form.get("all-fields").split(",")
+    all_fields = request.form.get("all-fields-new").split(",")
 
     if all_fields == ['']:
         flash("Citation must at least have one field.")
@@ -111,7 +111,7 @@ def delete_citation_route(citation_id):
 @app.route("/update_citation", methods=["POST"])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    all_fields = request.form.get("all-fields").split(',')
+    all_fields = request.form.get("all-fields-edit").split(',')
     fields = {}
 
     if all_fields == ['']:

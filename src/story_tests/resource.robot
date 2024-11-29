@@ -12,7 +12,7 @@ ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
 ${CREATE}     //button[@name='create']
-${EDIT}       //button[@name='edit']
+${EDIT}       //input[@name='edit']
 ${UPDATE}     //button[@name='update']
 
 *** Keywords ***

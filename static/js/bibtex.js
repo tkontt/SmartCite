@@ -15,9 +15,7 @@ function fetchBibTeX() {
 
 function copyBibTex() {
     const bibtexContent = bibtexList.textContent;
-    navigator.clipboard.writeText(bibtexContent).then(() => {
-      alert("BibTeX copied to clipboard");
-    });
+    copyToClipboard(bibtexContent, "BibTeX copied to clipboard");
 }
 
 function downloadBibTex() {

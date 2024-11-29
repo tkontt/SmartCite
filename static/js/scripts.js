@@ -31,17 +31,28 @@ function filterTable() {
     }
 }
 
-// Kopioi latex key clipboardille
-function copyToClipboard(text) {
-        const tempInput = document.createElement("textarea");
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        try {
-            document.execCommand("copy");
-            alert("Copied to clipboard: " + text);
-        } catch (err) {
-            alert("Failed to copy text. Please try again.");
-        }
-        document.body.removeChild(tempInput);
+function copyToClipboard(text, message) {
+    navigator.clipboard.writeText(text).then(() => {
+        showAlert(message || `Copied to clipboard: ${text}`);
+    });
+}
+
+function showAlert(message, duration = 2000) {
+    const alertContainer = document.getElementById('alert-container');
+    
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-success alert-dismissible fade show';
+    alert.role = 'alert';
+    alert.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    alertContainer.appendChild(alert);
+
+    setTimeout(() => {
+        alert.classList.remove('show');
+        alert.classList.add('fade');
+        setTimeout(() => alert.remove(), 150);
+    }, duration);
 }

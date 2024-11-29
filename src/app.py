@@ -19,6 +19,8 @@ from util import (
     validate_fields,
     generate_bibtex,
     import_bibtex_citations,
+    validate_bibtex,
+    valid_inputs,
 )
 
 TYPES = {
@@ -66,11 +68,10 @@ def index():
 @app.route("/create_citation", methods=["POST"])
 def citation_creation():
     citation_type = request.form.get("citation-type")
-    key = generate_cite_key()
     fields = {}
     all_fields = request.form.get("all-fields-new").split(",")
 
-    if all_fields == ['']:
+    if all_fields == [""]:
         flash("Citation must at least have one field.")
         return redirect("/")
 
@@ -79,6 +80,7 @@ def citation_creation():
 
     try:
         validate_fields(fields)
+        key = generate_cite_key(fields)
         add_citation(Citation(citation_type, key, fields))
         flash("Citation added successfully!")
         return redirect("/")
@@ -111,10 +113,10 @@ def delete_citation_route(citation_id):
 @app.route("/update_citation", methods=["POST"])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    all_fields = request.form.get("all-fields-edit").split(',')
+    all_fields = request.form.get("all-fields-edit").split(",")
     fields = {}
 
-    if all_fields == ['']:
+    if all_fields == [""]:
         delete_citation_from_db(citation_id)
         flash("Citation removed due to all fields being removed.")
         return redirect("/")
@@ -162,10 +164,19 @@ def create_bibtex():
 @app.route("/import_citations_bibtex", methods=["POST"])
 def import_from_bibtex():
     bibtex = request.form.get("input_bibtex")
+    try:
+        validate_bibtex(bibtex)
+    except Exception as error:
+        flash(str(error))
     citations = import_bibtex_citations(bibtex)
+    try:
+        valid_inputs(bibtex, citations)
+    except Exception as error:
+        flash(str(error))
     try:
         for c in citations:
             add_citation(c)
+        flash("All citations added successfully!")
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -186,7 +197,14 @@ if test_env:
             add_citation(
                 Citation(
                     "article",
-                    generate_cite_key(),
+                    generate_cite_key(
+                        {
+                            "author": f"Author{i}",
+                            "title": f"Title{i}",
+                            "year": f"201{i}",
+                            "journal": f"Journal{i}",
+                        }
+                    ),
                     {
                         "author": f"Author{i}",
                         "title": f"Title{i}",
@@ -203,16 +221,18 @@ if test_env:
         add_citation(
             Citation(
                 "article",
-                generate_cite_key(),
+                generate_cite_key(
+                    {"author": author, "title": title, "year": year, "journal": journal}
+                ),
                 {"author": author, "title": title, "year": year, "journal": journal},
             )
         )
 
-        return jsonify({ 'message': "created test citation" })
+        return jsonify({"message": "created test citation"})
 
 
-@app.route('/remove_citation_field/<citation_id>/<field_name>', methods=['POST'])
+@app.route("/remove_citation_field/<citation_id>/<field_name>", methods=["POST"])
 def remove_citation_field(citation_id, field_name):
     remove_citation_field_from_db(citation_id, field_name)
 
-    return {'result': 'success'}
+    return {"result": "success"}

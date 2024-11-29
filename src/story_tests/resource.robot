@@ -12,6 +12,7 @@ ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
 ${CREATE}     //button[@name='create']
+${GET_BIBTEX}     //button[@name='get_bibtex']
 ${EDIT}       //input[@name='edit']
 ${UPDATE}     //button[@name='update']
 

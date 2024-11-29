@@ -5,7 +5,7 @@ Citation App
 {% endblock %}
 
 {% block body %}
-<h2 class="mb-4">Recent citations</h2>
+<h2 class="mb-4">My citations</h2>
 {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
@@ -14,10 +14,35 @@ Citation App
       {% endfor %}
       </ul>
     {% endif %}
-  {% endwith %}
+{% endwith %}
 
-<!-- Hakukenttä tablelle-->
-<input type="text" id="search-input" class="form-control mb-3" placeholder="Search citations..." onkeyup="filterTable()">
+<!-- Dropdown ja Search gridi -->
+<div class="row align-items-center mb-3">
+    <!-- Dropdown for selecting fields -->
+    <div class="col-md-6 col-12 mb-2 mb-md-0">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Fields
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- "Select All" Checkbox -->
+                <li><label class="dropdown-item"><input type="checkbox" id="select-all" checked> All</label></li>
+                <!-- Single Checkboxes -->
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="0" checked> #</label></li>
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="1" checked> Author</label></li>
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="2" checked> Title</label></li>
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="3" checked> Year</label></li>
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="4" checked> Type</label></li>
+                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="5" checked> Actions</label></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="col-md-6 col-12">
+        <input type="text" id="search-input" class="form-control" placeholder="Search citations..." onkeyup="filterTable()">
+    </div>
+</div>
 
 <!-- Table -->
 {% if citations|length > 0 %}
@@ -29,7 +54,7 @@ Citation App
             <th>Title</th>
             <th>Year</th>
             <th>Type</th>
-            <th class="text-end" id="actions">Actions</th> <!-- Align right -->
+            <th class="text-end" id="actions">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -41,14 +66,8 @@ Citation App
             <td>{{ citation.fields.get('year', 'N/A') }}</td>
             <td>{{ citation.citation_type }}</td>
             <td class="text-end">
-                <!-- Edit Button -->
                 <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
-                <!-- Quick LaTeX copy-->
-                <button class="btn btn-dark btn-sm"
-                title="Copy citation to clipboard"
-                onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
-                
-                
+                <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
             </td>
         </tr>
         {% endfor %}

@@ -10,6 +10,9 @@
 ## TK
 - Dropdown menu for table header filtering
 
+## 2024-11-28
+## NS
+ - Added citation export in BibTeX format
       
 ## 2024-11-21
 ### Added 

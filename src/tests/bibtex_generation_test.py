@@ -42,3 +42,8 @@ class TestBibtexGeneration(unittest.TestCase):
 """
 
         self.assertEqual(bibtex, expected)
+
+    def test_empty_bibtex_generates_correctly(self):
+        citations = []
+        bibtex = generate_bibtex(citations)
+        self.assertEqual(bibtex, "")

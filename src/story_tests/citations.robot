@@ -8,7 +8,7 @@ Test Setup       Reset Application
 At start there are no citations
     Go To Home Page
     Home Page Should Be Open
-    Page Should Contain  You haven't added any citations
+    Page Should Contain  No citations found.
 
 After adding a citation, there is one
     Go To Home Page
@@ -22,7 +22,7 @@ After adding a citation, there is one
     Input Text  year  2024
     Sleep  0.25
     Click Create
-    Page Should Not Contain  You haven't added any citations
+    Page Should Not Contain  No citations found.
     Page Should Contain  TestAuthor1
 
 When Text Is Searched The Correct Citations Are Shown

@@ -104,3 +104,23 @@ headerCheckboxes.forEach(checkbox => {
         });
     });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateResultsPerPage();
+});
+
+function updateResultsPerPage() {
+    const rowsPerPage = document.getElementById('results-per-page').value;
+    const table = document.getElementById('citations-table');
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+    // Reset visibility of all rows
+    rows.forEach(row => (row.style.display = 'none'));
+
+    if (rowsPerPage === 'all') {
+        rows.forEach(row => (row.style.display = ''));
+    } else {
+        rows.slice(0, parseInt(rowsPerPage)).forEach(row => (row.style.display = ''));
+    }
+}

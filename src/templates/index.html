@@ -16,66 +16,24 @@ Citation App
     {% endif %}
 {% endwith %}
 
-<!-- Dropdown ja Search gridi -->
 <div class="row align-items-center mb-3">
     <!-- Dropdown for selecting fields -->
     <div class="col-md-6 col-12 mb-2 mb-md-0">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                Select Fields
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <!-- "Select All" Checkbox -->
-                <li><label class="dropdown-item"><input type="checkbox" id="select-all" checked> All</label></li>
-                <!-- Single Checkboxes -->
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="0" checked> #</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="1" checked> Author</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="2" checked> Title</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="3" checked> Year</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="4" checked> Type</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="5" checked> Actions</label></li>
-            </ul>
-        </div>
+        {% include "_table_header_filter.html" %}
     </div>
     
     <!-- Search Bar -->
     <div class="col-md-6 col-12">
-        <input type="text" id="search-input" class="form-control" placeholder="Search citations..." onkeyup="filterTable()">
+        {% include "_search_bar.html" %}
     </div>
 </div>
 
 <!-- Table -->
 {% if citations|length > 0 %}
-<table id="citations-table" class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Type</th>
-            <th class="text-end" id="actions">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for citation in citations %}
-        <tr class="citation-row" data-id="{{ citation.id }}">
-            <td>{{ loop.index }}</td>
-            <td>{{ citation.fields.get('author', 'N/A') }}</td>
-            <td>{{ citation.fields.get('title', 'N/A') }}</td>
-            <td>{{ citation.fields.get('year', 'N/A') }}</td>
-            <td>{{ citation.citation_type }}</td>
-            <td class="text-end">
-                <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
-                <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% include "_citations_table.html" %}
 
 {% else %}
-    <p class="alert alert-warning">You haven't added any citations yet.</p>
+    <p class="alert alert-warning">No citations found. Use the "Create New Citation" button to add your first citation.</p>
 {% endif %}
 
 <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citation_modal" id="create_citation_button" 

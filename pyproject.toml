@@ -17,6 +17,7 @@ psycopg2-binary = "^2.9.10"
 requests = "^2.32.3"
 pylint = "^3.3.1"
 bibtexparser = "^1.4.2"
+beautifulsoup4 = "^4.12.3"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -12,7 +12,8 @@ const MANDATORY = {
     phdthesis: ["author", "title", "school", "year"],
     proceedings: ["title", "year"],
     techreport: ["author", "title", "institution", "year"],
-    unpublished: ["author", "title"]
+    unpublished: ["author", "title"],
+    url: ["url"] // URL citation type only requires the URL field initially
 };
 
 // Ylläpitää listaa kentistä
@@ -61,28 +62,75 @@ function updateAllFieldsElementValue() {
 }
 
 function updateFormAfterTypeChange(element) {
-    clearAllFields()
+    clearAllFields();
 
     const citationType = element.value;
-    const placement = mandatoryFields;
     CURRENTFIELDS = MANDATORY[citationType].slice();
-
     updateAllFieldsElementValue();
 
-    for (fieldName of MANDATORY[citationType]) createField(fieldName, "", placement, false, false, "");
+    if (citationType === "url") {
+        // URL-specific handling
+        createField("url", "", mandatoryFields, false, false, "");
+        
+        // Add a button to fetch metadata
+        const fetchButton = document.createElement("button");
+        fetchButton.setAttribute("type", "button");
+        fetchButton.setAttribute("class", "btn btn-secondary my-2");
+        fetchButton.innerText = "Fetch Metadata";
+        fetchButton.addEventListener("click", () => fetchUrlMetadata());
+        mandatoryFields.appendChild(fetchButton);
+    } else {
+        // Normal handling for other citation types
+        for (const fieldName of MANDATORY[citationType]) {
+            createField(fieldName, "", mandatoryFields, false, false, "");
+        }
+    }
 }
+
+function fetchUrlMetadata() {
+    const urlField = document.querySelector("input[name='url']");
+    const url = urlField.value.trim();
+
+    if (!url) {
+        alert("Please enter a URL.");
+        return;
+    }
+
+    fetch(`/fetch_metadata`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        // Dynamically populate fields with fetched metadata
+        if (data.title) createField("title", data.title, optionalFields, true, false, "");
+        if (data.author) createField("author", data.author, optionalFields, true, false, "");
+        if (data.description) createField("description", data.description, optionalFields, true, false, "");
+    })
+    .catch(error => {
+        console.error("Error fetching metadata:", error);
+        alert("Failed to fetch metadata. Please try again.");
+    });
+}
+
 
 function createRemoveButton(fieldName) {
     let removeButton = document.createElement("input");
     removeButton.setAttribute("type", "button");
     removeButton.setAttribute("value", "Remove");
 
-    removeButton.addEventListener("click", function() {
+    removeButton.addEventListener("click", function () {
         removeButton.parentNode.remove();
 
-        CURRENTFIELDS = CURRENTFIELDS.filter(function(value) {
-          return value != fieldName;
-        });
+        CURRENTFIELDS = CURRENTFIELDS.filter(value => value !== fieldName);
         updateAllFieldsElementValue();
     });
 
@@ -92,18 +140,19 @@ function createRemoveButton(fieldName) {
 function createField(fieldName, fieldValue, placement, removable, inDB, citationId) {
     let container = document.createElement("div");
     container.setAttribute("class", "mb-3");
-      
+
     let lbl = document.createElement("label");
     lbl.setAttribute("for", fieldName);
     lbl.setAttribute("class", "form-label");
-    lbl.innerHTML = `${fieldName}:`;
+    lbl.innerText = `${fieldName}:`;
 
     let txt = document.createElement("input");
     txt.setAttribute("type", "text");
     txt.setAttribute("class", "form-control");
     txt.setAttribute("name", fieldName);
     txt.setAttribute("value", fieldValue);
-    txt.required = true;
+
+    if (fieldName === "url") txt.required = true; // URL is mandatory for 'url' type
 
     container.appendChild(lbl);
     container.appendChild(txt);
@@ -111,12 +160,12 @@ function createField(fieldName, fieldValue, placement, removable, inDB, citation
     if (removable) {
         const removeButton = createRemoveButton(fieldName);
         if (inDB) {
-            removeButton.addEventListener("click", function() {
-                fetch(`/remove_citation_field/${citationId}/${fieldName}`, {method: 'POST'})
-                .then(response => response.json()) 
-                .then(data => console.log(data)) 
-                .catch(error => console.error(error));
-            })
+            removeButton.addEventListener("click", function () {
+                fetch(`/remove_citation_field/${citationId}/${fieldName}`, { method: "POST" })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error(error));
+            });
         }
         container.appendChild(removeButton);
     }
@@ -127,8 +176,8 @@ function addNewField() {
     let placement = optionalFields;
     let nameOfNewField = addField.value.trim().toLowerCase();
 
-    if (nameOfNewField == "") return;
-    if (CURRENTFIELDS.includes(nameOfNewField)) return; // Virheviesti syötteestä kesken
+    if (nameOfNewField === "") return;
+    if (CURRENTFIELDS.includes(nameOfNewField)) return;
 
     CURRENTFIELDS.push(nameOfNewField);
     updateAllFieldsElementValue();

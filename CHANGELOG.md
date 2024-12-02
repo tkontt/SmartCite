@@ -1,5 +1,9 @@
 # Changelog
-
+## 2024-11-29
+## TK
+- Added filtering for how many Citations show on table
+- Cleaned index.html to use separate modules for search & table
+  
 ## 2024-11-29
 ## HT
 - importing citations from bibtex type input

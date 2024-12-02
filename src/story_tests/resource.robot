@@ -13,6 +13,8 @@ ${BROWSER}    chrome
 ${HEADLESS}   false
 ${CREATE}     //button[@name='create']
 ${GET_BIBTEX}     //button[@name='get_bibtex']
+${IMPORT_BIBTEX}     //button[@name='import_bibtex']
+${IMPORT}     //button[@name='import']
 ${EDIT}       //input[@name='edit']
 ${UPDATE}     //button[@name='update']
 

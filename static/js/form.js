@@ -33,6 +33,7 @@ function formFieldData(fields, citationType, citationId) {
     addField = document.getElementById("add-field-edit");
 
     updateAllFieldsElementValue();
+    clearAllFields();
     
     for (const fieldName in fieldData) {
         const mandatory = MANDATORY[citationType].includes(fieldName);

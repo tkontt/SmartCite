@@ -160,7 +160,6 @@ def create_bibtex():
     return generate_bibtex(citations)
 
 
-# Bibtex viitteiden importtaus ei vielä valmis tässä vasta pohjaa.
 @app.route("/import_citations_bibtex", methods=["POST"])
 def import_from_bibtex():
     bibtex = request.form.get("input_bibtex")
@@ -168,19 +167,18 @@ def import_from_bibtex():
         validate_bibtex(bibtex)
     except Exception as error:
         flash(str(error))
+        return redirect("/")
+
     citations = import_bibtex_citations(bibtex)
+
+    for c in citations:
+        add_citation(c)
     try:
         valid_inputs(bibtex, citations)
+        flash(f"{len(citations)} citation/s added successfully!")
     except Exception as error:
         flash(str(error))
-    try:
-        for c in citations:
-            add_citation(c)
-        flash("All citations added successfully!")
-        return redirect("/")
-    except Exception as error:
-        flash(str(error))
-        return redirect("/")
+    return redirect("/")
 
 
 # testausta varten oleva reitti

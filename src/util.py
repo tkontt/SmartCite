@@ -12,25 +12,21 @@ class UserInputError(Exception):
 def generate_cite_key(fields: dict):
     cite_key = ""
     for key, value in fields.items():
-        if len(cite_key) > 5:
+        if len(cite_key) > 6:
             break
         if key == "title":
-            part_title = value[:3]
-            cite_key += part_title
-        if key == "year":
+            cite_key += value[:2]
+        elif key == "year":
             cite_key += value[2:]
-        if key == "author":
+        elif key == "author":
             cite_key += value[:3]
         else:
-            cite_key += value[:1]
+            cite_key += value[:2]
     if len(cite_key) < 5:
         cite_key += secrets.token_hex(2)
-    if unique_key(cite_key):
-        return cite_key
-    cite_key += secrets.token_hex(2)
-    if unique_key(cite_key):
-        return cite_key
-    return generate_cite_key(fields)
+    while not unique_key(cite_key):
+        cite_key += secrets.token_hex(2)
+    return cite_key
 
 
 def validate_fields(fields):
@@ -54,35 +50,35 @@ def import_bibtex_citations(bibtex):
     parser = BibTexParser()
     citations = bibtexparser.loads(bibtex, parser)
     for citation in citations.entries:
+        invalid = False
         fields_in_correct_order = {}
         citation_key = citation["ID"]
         citation_type = citation["ENTRYTYPE"]
         citation.pop("ENTRYTYPE")
         citation.pop("ID")
         for key, value in reversed(citation.items()):
+            if value == "":
+                invalid = True
             fields_in_correct_order[key] = value
-        validate_fields(fields_in_correct_order)
-        if unique_key(citation_key) is False:
-            citation_key = generate_cite_key(fields_in_correct_order)
-        citation = Citation(citation_type, citation_key, fields_in_correct_order)
-        list_of_citations.append(citation)
+        if not invalid:
+            if unique_key(citation_key) is False:
+                citation_key = generate_cite_key(fields_in_correct_order)
+            citation = Citation(citation_type, citation_key, fields_in_correct_order)
+            list_of_citations.append(citation)
     return list_of_citations
 
 
 def validate_bibtex(bibtex):
     if bibtex == "":
-        raise UserInputError("Not a valid input")
+        raise UserInputError("Invalid input: empty")
     if bibtex[0] != "@":
-        raise UserInputError("The input should start with @")
-    if bibtex[-1] != "}":
-        raise UserInputError("The input should end with }")
+        raise UserInputError("Invalid input: input should start with @")
 
 
 def valid_inputs(bibtex, list_of_valid):
     amount_of_inputted_citations = bibtex.count("@")
     if amount_of_inputted_citations != len(list_of_valid):
         difference = amount_of_inputted_citations - len(list_of_valid)
-        print(difference)
         raise UserInputError(
             f"""{difference} of the citation/s were not in valid form.
             {len(list_of_valid)} was/were added"""

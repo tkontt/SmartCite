@@ -152,8 +152,7 @@ function createField(fieldName, fieldValue, placement, removable, inDB, citation
     txt.setAttribute("class", "form-control");
     txt.setAttribute("name", fieldName);
     txt.setAttribute("value", fieldValue);
-
-    if (fieldName === "url") txt.required = true; // URL is mandatory for 'url' type
+    txt.required = true;
 
     container.appendChild(lbl);
     container.appendChild(txt);

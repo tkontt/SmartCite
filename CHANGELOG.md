@@ -1,5 +1,6 @@
 # Changelog
-## 2024-11-29
+
+## 2024-12-2
 ## TK
 - Added filtering for how many Citations show on table
 - Cleaned index.html to use separate modules for search & table

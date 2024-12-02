@@ -41,4 +41,13 @@
     <script src="{{ url_for('static', filename='js/sort.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/form.js') }}"></script> 
   </body>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <script>showAlert('{{ message.replace("\n", "\\n") }}')</script>
+      {% endfor %}
+    {% endif %}
+{% endwith %}
+
 </html>

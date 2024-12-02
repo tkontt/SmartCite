@@ -5,16 +5,6 @@
         <h2>Create a new citation</h2>
 
         <form action="/create_citation" method="post">
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <ul>
-              {% for message in messages %}
-                <li>{{ message }}</li>
-              {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-        
           <select class="form-select" aria-label="Select citation type" name="citation-type" id="citation-type" onchange="updateFormAfterTypeChange(this)">
             <option value="article" selected>article</option>
             {% for option in types %}

@@ -6,15 +6,6 @@ Citation App
 
 {% block body %}
 <h2 class="mb-4">My citations</h2>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-{% endwith %}
 
 <div class="row align-items-center mb-3">
     <!-- Dropdown for selecting fields -->

@@ -38,14 +38,8 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install        
-      - name: Run unit tests with coverage
-        run: |
-          poetry run pytest --cov=src --cov-report=term-missing --cov-report=html
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-html
-          path: htmlcov/
+      - name: Run unit tests
+        run: poetry run pytest src/tests
       - name: Run pylint
         run: poetry run pylint src
       - name: Setup chromedriver

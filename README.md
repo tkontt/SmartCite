@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/tkontt/SmartCite/graph/badge.svg?token=TP8CQ2D2LO)](https://codecov.io/gh/tkontt/SmartCite)
 # SmartCite
 SmartCite
 

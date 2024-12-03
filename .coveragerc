@@ -1,2 +1,8 @@
 [run]
 source = src
+
+omit =
+    src/app.py
+    src/index.py
+    src/repositories/*
+    src/db_helper.py

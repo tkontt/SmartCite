@@ -6,9 +6,9 @@
 
         <form action="/create_citation" method="post">
           <select class="form-select" aria-label="Select citation type" name="citation-type" id="citation-type" onchange="updateFormAfterTypeChange(this)">
-            <option value="article" selected>article</option>
+            <option value="article" name="article" selected>article</option>
             {% for option in types %}
-              <option value="{{ option }}">{{ option }}</option>
+              <option value="{{ option }}" name="{{ option }}">{{ option }}</option>
             {% endfor %}
           </select>
 
@@ -21,7 +21,7 @@
             Add a field <br>
             <label for="add-field-new">The name of the field:</label>
             <input type="text" name="add-field-new" id="add-field-new">
-            <input type="button" value="Add" onclick="addNewField()">
+            <input type="button" value="Add" name="add-field-new-btn" onclick="addNewField()">
           </div>
 
           <input type="hidden" id="all-fields-new" name="all-fields-new" value="">

@@ -17,6 +17,7 @@ ${IMPORT_BIBTEX}     //button[@name='import_bibtex']
 ${IMPORT}     //button[@name='import']
 ${EDIT}       //input[@name='edit']
 ${UPDATE}     //button[@name='update']
+${SELECT-CITATION-TYPE}  //select[@name='citation-type']
 
 *** Keywords ***
 Open And Configure Browser
@@ -54,3 +55,9 @@ Go To New Citation Page
 
 Citation Page Should Be Open
     Title Should Be  Citation Details
+
+Select Citation Type
+    [Arguments]  ${type}
+    Click Element  ${SELECT-CITATION-TYPE}
+    Wait Until Element Is Visible  ${type}
+    Click Element  ${type}

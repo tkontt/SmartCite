@@ -21,8 +21,7 @@ After editing a citation, changes are visible
     Page Should Contain  2023
     Go To Home Page
     Page Should Contain  2023
-
-
+    
 
 *** Keywords ***
 Click Create

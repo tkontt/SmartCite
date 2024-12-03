@@ -1,9 +1,9 @@
 # Changelog
 ## 2024-12-3
+## TK
 - Updated Poetry lock
 - Updated pyproject.toml -> pytest-cov plugin as dependency
   
-## TK
 ## 2024-12-2
 ## TK
 - Added filtering for how many Citations show on table

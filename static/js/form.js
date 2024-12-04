@@ -126,7 +126,7 @@ function fetchUrlMetadata() {
 function createRemoveButton(fieldName) {
     let removeButton = document.createElement("input");
     removeButton.setAttribute("type", "button");
-    removeButton.setAttribute("value", "Remove");
+    removeButton.setAttribute("value", "remove");
 
     removeButton.addEventListener("click", function () {
         removeButton.parentNode.remove();

@@ -11,7 +11,7 @@ After editing a citation, changes are visible
     Click Citation Row  1
     Citation Page Should Be Open
     Click Edit
-    Wait Until Element Is Visible    year
+    Wait Until Element Is Visible  year
     Sleep  0.25
     Input Text  year  2023
     Sleep  0.25
@@ -22,6 +22,20 @@ After editing a citation, changes are visible
     Go To Home Page
     Page Should Contain  2023
     
+After adding an optional field in edit, the field exists
+    Create Test Citation With an Optional Field
+    Page Should Contain  volume
+    Page Should Contain  50
+
+After removing an optional field, the field no longer exists
+    Create Test Citation With an Optional Field
+    Click Edit
+    Click Element  //input[@value='remove']
+    Sleep  0.25
+    Click Update
+    Page Should Not Contain  volume
+    Page Should Not Contain  50
+
 
 *** Keywords ***
 Click Create
@@ -49,3 +63,17 @@ Click Update
 Page Should Contain Visible Text
     [Arguments]  ${text}
     Element Should Be Visible  xpath=//*[contains(text(), '${text}')]
+
+Create Test Citation With an Optional Field
+    Create Test Citation  TestAuthor  Title  2020  Journal
+    Go To Home Page
+    Click Citation Row  1
+    Citation Page Should Be Open
+    Click Edit
+    Wait Until Element Is Visible  add-field-edit
+    Input Text  add-field-edit  volume
+    Click Element  add-field-edit-btn
+    Wait Until Element Is Visible  volume
+    Input Text  volume  50
+    Click Update
+    Sleep  0.25

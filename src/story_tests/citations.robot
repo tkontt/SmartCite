@@ -48,7 +48,6 @@ After adding an optional field to a citation, the field exists
     Go To Home Page
     Click Button  create_citation_button
     Wait Until Element Is Visible  year
-    Sleep  0.2
     Page Should Contain  article
     Input Text  author  TestAuthor1
     Input Text  title  Title
@@ -56,9 +55,8 @@ After adding an optional field to a citation, the field exists
     Input Text  year  2024
     Input Text  add-field-new  pages
     Click Element  add-field-new-btn
-    Sleep  0.25
+    Wait Until Element Is Visible  pages
     Input Text  pages  2-5
-    Sleep  0.25
     Click Create
     Double Click Element  //td[contains(text(), "1")]
     Citation Page Should Be Open

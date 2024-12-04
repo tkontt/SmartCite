@@ -220,6 +220,7 @@ if test_env:
                         "title": f"Title{i}",
                         "year": f"201{i}",
                         "journal": f"Journal{i}",
+                        "custom_field": f"CustomField{i}",
                     },
                 )
             )

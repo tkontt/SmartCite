@@ -60,9 +60,20 @@ def index():
         "unpublished",
     ]
 
+    all_fields = set(field for fields in TYPES.values() for field in fields)
+    default_headers = ["author", "title", "year", "type"]
+
     citations = get_citations()
     tags = get_tags()
-    return render_template("index.html", citations=citations, types=types, tags=tags)
+
+    return render_template(
+        "index.html",
+        citations=citations,
+        types=types,
+        tags=tags,
+        default_headers=default_headers,
+        all_fields=all_fields,
+    )
 
 
 @app.route("/create_citation", methods=["POST"])

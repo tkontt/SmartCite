@@ -165,3 +165,19 @@ def unique_key(key):
         if key == existing_key[0]:
             return False
     return True
+
+def get_unique_field_names() -> set:
+    """
+    Retrieves a set of all unique field names used across all citations.
+    """
+    sql = text(
+        """
+        SELECT DISTINCT field_name
+        FROM citation_fields
+        WHERE field_name IS NOT NULL
+        ORDER BY field_name ASC
+        """
+    )
+    result = db.session.execute(sql)
+    rows = result.fetchall()
+    return {row[0] for row in rows}

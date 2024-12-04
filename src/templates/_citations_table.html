@@ -4,10 +4,12 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Type</th>
+            {% for field in default_headers %}
+                <th data-field="{{ field }}">{{ field.capitalize() }}</th>
+            {% endfor %}
+            {% for field in all_fields if field not in default_headers %}
+                <th data-field="{{ field }}" style="display: none;">{{ field.capitalize() }}</th>
+            {% endfor %}
             <th class="text-end" id="actions">Actions</th>
         </tr>
     </thead>
@@ -15,10 +17,17 @@
         {% for citation in citations %}
         <tr class="citation-row" data-id="{{ citation.id }}">
             <td>{{ loop.index }}</td>
-            <td>{{ citation.fields.get('author', 'N/A') }}</td>
-            <td>{{ citation.fields.get('title', 'N/A') }}</td>
-            <td>{{ citation.fields.get('year', 'N/A') }}</td>
-            <td>{{ citation.citation_type }}</td>
+            {% for field in default_headers %}
+                {% if field == "type" %}
+                    <td>{{ citation.citation_type }}</td>
+                {% else %}
+                    <td>{{ citation.fields.get(field, 'N/A') }}</td>
+                {% endif %}
+            {% endfor %}
+            
+            {% for field in all_fields if field not in default_headers %}
+                <td style="display: none;">{{ citation.fields.get(field, 'N/A') }}</td>
+            {% endfor %}
             <td class="text-end">
                 <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
                 <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>

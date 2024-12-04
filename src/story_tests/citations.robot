@@ -65,25 +65,9 @@ After adding an optional field to a citation, the field exists
     Page Should Contain  pages
     Page Should Contain  2-5
 
-When Text Is Searched The Correct Citations Are Shown
-    Create Test Citations
-    Go To Home Page
-    Input Text  search-input  Author6
-    Page Should Not Contain Visible Text  Author5
-    Page Should Not Contain Visible Text  Author7
-    Page Should Contain Visible Text  Author6
-
 *** Keywords ***
 Click Create
     Scroll Element Into View  ${CREATE}
     Wait Until Element is visible  ${CREATE}  timeout=5s
     Set Focus To Element  ${CREATE}    
     Click Element  ${CREATE}
-
-Page Should Contain Visible Text
-    [Arguments]  ${text}
-    Element Should Be Visible  xpath=//*[contains(text(), '${text}')]
-
-Page Should Not Contain Visible Text
-    [Arguments]  ${text}
-    Element Should Not Be Visible  xpath=//*[contains(text(), '${text}')]

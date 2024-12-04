@@ -9,6 +9,7 @@ from repositories.citation_repository import remove_citation_field_from_db
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
+    get_unique_field_names,
 )
 from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
@@ -60,9 +61,20 @@ def index():
         "unpublished",
     ]
 
+    all_fields = get_unique_field_names()
+    default_headers = ["author", "title", "year", "type"]
+
     citations = get_citations()
     tags = get_tags()
-    return render_template("index.html", citations=citations, types=types, tags=tags)
+
+    return render_template(
+        "index.html",
+        citations=citations,
+        types=types,
+        tags=tags,
+        default_headers=default_headers,
+        all_fields=all_fields,
+    )
 
 
 @app.route("/create_citation", methods=["POST"])
@@ -208,6 +220,7 @@ if test_env:
                         "title": f"Title{i}",
                         "year": f"201{i}",
                         "journal": f"Journal{i}",
+                        "custom_field": f"CustomField{i}",
                     },
                 )
             )

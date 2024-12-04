@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  resource.robot
-Resource    delete_citation.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
 Test Setup       Reset Application

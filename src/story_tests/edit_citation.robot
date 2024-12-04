@@ -30,6 +30,8 @@ After adding an optional field in edit, the field exists
 After removing an optional field, the field no longer exists
     Create Test Citation With an Optional Field
     Click Edit
+    Scroll Element Into View  //input[@value='remove']
+    Wait Until Element is visible  //input[@value='remove']  timeout=5s
     Click Element  //input[@value='remove']
     Sleep  0.25
     Click Update

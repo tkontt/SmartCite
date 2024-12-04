@@ -9,6 +9,7 @@ from repositories.citation_repository import remove_citation_field_from_db
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
+    get_unique_field_names,
 )
 from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
@@ -60,7 +61,7 @@ def index():
         "unpublished",
     ]
 
-    all_fields = set(field for fields in TYPES.values() for field in fields)
+    all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
 
     citations = get_citations()

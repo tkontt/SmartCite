@@ -25,7 +25,13 @@ function filterTable() {
         const cells = rows[i].getElementsByTagName("td");
         let rowText = "";
         for (let j = 0; j < cells.length; j++) {
-            rowText += cells[j].textContent.toLowerCase();
+            title = cells[j].getAttribute("title");
+            if (title) {
+                rowText += cells[j].getAttribute("title").toLowerCase();
+            }
+            else {
+                rowText += cells[j].textContent.toLowerCase();
+            }
         }
         rows[i].style.display = rowText.includes(filter) ? "" : "none";
     }

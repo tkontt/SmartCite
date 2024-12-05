@@ -21,7 +21,6 @@ from util import (
     generate_bibtex,
     import_bibtex_citations,
     validate_bibtex,
-    valid_inputs,
 )
 
 TYPES = {
@@ -185,11 +184,10 @@ def import_from_bibtex():
 
     for c in citations:
         add_citation(c)
-    try:
-        valid_inputs(bibtex, citations)
-        flash(f"{len(citations)} citation/s added successfully!")
-    except Exception as error:
-        flash(str(error))
+    if len(citations) == 1:
+        flash(f"{len(citations)} citation added successfully!")
+    else:
+        flash(f"{len(citations)} citations added successfully!")
     return redirect("/")
 
 

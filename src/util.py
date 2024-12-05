@@ -73,13 +73,3 @@ def validate_bibtex(bibtex):
         raise UserInputError("Invalid input: empty")
     if bibtex[0] != "@":
         raise UserInputError("Invalid input: input should start with @")
-
-
-def valid_inputs(bibtex, list_of_valid):
-    amount_of_inputted_citations = bibtex.count("@")
-    if amount_of_inputted_citations != len(list_of_valid):
-        difference = amount_of_inputted_citations - len(list_of_valid)
-        raise UserInputError(
-            f"""{difference} of the citation/s were not in valid form.
-            {len(list_of_valid)} was/were added"""
-        )

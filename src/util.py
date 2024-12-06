@@ -40,7 +40,8 @@ def generate_bibtex(citations: list[Citation]):
         bibtex += f"@{citation.citation_type}{{{citation.citation_key},\n"
         for field_name, field_value in citation.fields.items():
             bibtex += f"\t{field_name} = {{{field_value}}},\n"
-        bibtex += "}\n\n"
+        bibtex = bibtex[:-2]
+        bibtex += "\n}\n\n"
 
     return bibtex
 

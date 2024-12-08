@@ -27,7 +27,7 @@ After adding an optional field in edit, the field exists
     Page Should Contain  volume
     Page Should Contain  50
 
-After removing an optional field, the field no longer exists
+After removing an optional field and pressing update, the field no longer exists
     Create Test Citation With an Optional Field
     Click Edit
     Wait Until Element is visible  //input[@value='remove']  timeout=0.25s
@@ -36,6 +36,18 @@ After removing an optional field, the field no longer exists
     Click Update
     Page Should Not Contain  volume
     Page Should Not Contain  50
+
+After removing an optional field and closing the edit without updating, the field still exists
+    Create Test Citation With an Optional Field
+    Click Edit
+    Wait Until Element is visible  //input[@value='remove']  timeout=0.25s
+    Click Element  //input[@value='remove']
+    Sleep  0.25
+    Wait Until Element is visible  //input[@name='exit-edit']  timeout=0.25s
+    Click Element  //input[@name='exit-edit']
+    Reload Page
+    Page Should Contain  volume
+    Page Should Contain  50
 
 
 *** Keywords ***

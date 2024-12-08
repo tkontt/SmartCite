@@ -5,7 +5,6 @@ from repositories.citation_repository import (
     add_citation,
     get_citation_by_id,
 )
-from repositories.citation_repository import remove_citation_field_from_db
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
@@ -239,9 +238,3 @@ if test_env:
 
         return jsonify({"message": "created test citation"})
 
-
-@app.route("/remove_citation_field/<citation_id>/<field_name>", methods=["POST"])
-def remove_citation_field(citation_id, field_name):
-    remove_citation_field_from_db(citation_id, field_name)
-
-    return {"result": "success"}

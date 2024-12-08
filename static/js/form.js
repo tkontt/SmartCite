@@ -39,7 +39,7 @@ function formFieldData(fields, citationType, citationId) {
         const mandatory = MANDATORY[citationType].includes(fieldName);
         let placement = mandatory ? mandatoryFields : optionalFields;
         
-        createField(fieldName, fieldData[fieldName], placement, placement == optionalFields, true, citationId);
+        createField(fieldName, fieldData[fieldName], placement, placement == optionalFields);
     }
 }
 
@@ -71,7 +71,7 @@ function updateFormAfterTypeChange(element) {
 
     if (citationType === "url") {
         // URL-specific handling
-        createField("url", "", mandatoryFields, false, false, "");
+        createField("url", "", mandatoryFields, false);
         
         // Add a button to fetch metadata
         const fetchButton = document.createElement("button");
@@ -83,7 +83,7 @@ function updateFormAfterTypeChange(element) {
     } else {
         // Normal handling for other citation types
         for (const fieldName of MANDATORY[citationType]) {
-            createField(fieldName, "", mandatoryFields, false, false, "");
+            createField(fieldName, "", mandatoryFields, false);
         }
     }
 }
@@ -112,9 +112,9 @@ function fetchUrlMetadata() {
         }
 
         // Dynamically populate fields with fetched metadata
-        if (data.title) createField("title", data.title, optionalFields, true, false, "");
-        if (data.author) createField("author", data.author, optionalFields, true, false, "");
-        if (data.description) createField("description", data.description, optionalFields, true, false, "");
+        if (data.title) createField("title", data.title, optionalFields, true);
+        if (data.author) createField("author", data.author, optionalFields, true);
+        if (data.description) createField("description", data.description, optionalFields, true);
     })
     .catch(error => {
         console.error("Error fetching metadata:", error);
@@ -138,7 +138,7 @@ function createRemoveButton(fieldName) {
     return removeButton;
 }
 
-function createField(fieldName, fieldValue, placement, removable, inDB, citationId) {
+function createField(fieldName, fieldValue, placement, removable) {
     let container = document.createElement("div");
     container.setAttribute("class", "mb-3");
 
@@ -159,14 +159,6 @@ function createField(fieldName, fieldValue, placement, removable, inDB, citation
 
     if (removable) {
         const removeButton = createRemoveButton(fieldName);
-        if (inDB) {
-            removeButton.addEventListener("click", function () {
-                fetch(`/remove_citation_field/${citationId}/${fieldName}`, { method: "POST" })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error(error));
-            });
-        }
         container.appendChild(removeButton);
     }
     placement.appendChild(container);
@@ -181,6 +173,6 @@ function addNewField() {
 
     CURRENTFIELDS.push(nameOfNewField);
     updateAllFieldsElementValue();
-    createField(nameOfNewField, "", placement, true, false, "");
+    createField(nameOfNewField, "", placement, true);
     addField.value = "";
 }

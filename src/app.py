@@ -1,9 +1,8 @@
-from flask import redirect, render_template, request, jsonify, flash, abort
+from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import (
     get_citations,
     add_citation,
-    get_citation_by_id,
 )
 from repositories.citation_repository import (
     delete_citation_from_db,
@@ -41,10 +40,8 @@ TYPES = {
 @app.route("/")
 def index():
     types = TYPES.keys()
-
     all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
-
     citations = get_citations()
 
     return render_template(
@@ -80,15 +77,6 @@ def citation_creation():
         return redirect("/")
 
 
-# Avaa Citation page
-@app.route("/citation/<int:citation_id>")
-def citation_details(citation_id):
-    citation = get_citation_by_id(citation_id)
-    if not citation:
-        abort(404)  # Return a 404 page if the citation is not found
-    return render_template("citation.html", citation=citation, citation_id=citation_id)
-
-
 # Poista Citation
 @app.route("/delete_citation/<int:citation_id>", methods=["POST"])
 def delete_citation_route(citation_id):
@@ -119,7 +107,6 @@ def edit_citation_form_route():
         validate_fields(fields, TYPES[request.form.get("citation_type")])
         update_citation_in_db(citation_id, fields)
         return redirect(f"/citation/{citation_id}")
-
     except Exception as e:
         flash(f"An error occurred while editing: {e}", "danger")
         return redirect(f"/citation/{citation_id}")
@@ -151,7 +138,7 @@ def import_from_bibtex():
     return redirect("/")
 
 
-# testausta varten oleva reitti
+# testausta varten olevat reitit
 if test_env:
     @app.route("/reset_db")
     def reset_database():

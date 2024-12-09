@@ -5,7 +5,6 @@ from repositories.citation_repository import (
     add_citation,
     get_citation_by_id,
 )
-from repositories.citation_repository import remove_citation_field_from_db
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
@@ -80,7 +79,7 @@ def index():
 def citation_creation():
     citation_type = request.form.get("citation-type")
     fields = {}
-    all_fields = request.form.get("all-fields-new").split(",")
+    all_fields = request.form.get("get-fields-new").split(",")
 
     if all_fields == [""]:
         flash("Citation must at least have one field.")
@@ -124,7 +123,7 @@ def delete_citation_route(citation_id):
 @app.route("/update_citation", methods=["POST"])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    all_fields = request.form.get("all-fields-edit").split(",")
+    all_fields = request.form.get("get-fields-edit").split(",")
     fields = {}
 
     if all_fields == [""]:
@@ -240,9 +239,3 @@ if test_env:
 
         return jsonify({"message": "created test citation"})
 
-
-@app.route("/remove_citation_field/<citation_id>/<field_name>", methods=["POST"])
-def remove_citation_field(citation_id, field_name):
-    remove_citation_field_from_db(citation_id, field_name)
-
-    return {"result": "success"}

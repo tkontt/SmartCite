@@ -20,37 +20,37 @@ const MANDATORY = {
 let CURRENTFIELDS = [];
 let mandatoryFields;
 let optionalFields;
-let allFields;
+let getFields;
 let addField;
 
-function formFieldData(fields, citationType, citationId) {
+function formFieldData(fields, citationType, citationId, citationKey) {
     const fieldData = JSON.parse(fields);
     CURRENTFIELDS = Object.keys(fieldData);
-    console.log(CURRENTFIELDS, "Current fields");
-
 
     mandatoryFields = document.getElementById("mandatory-fields-edit");
     optionalFields = document.getElementById("optional-fields-edit");
-    allFields = document.getElementById("all-fields-edit");
+    getFields = document.getElementById("get-fields-edit");
     addField = document.getElementById("add-field-edit");
-    console.log(mandatoryFields, "mandatory fields");
 
+    document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType} ${citationId}`;
+    document.getElementById("citation_id-edit").value = citationId;
+    document.getElementById("citation_type-edit").value = citationType;
 
-    updateAllFieldsElementValue();
+    updateGetFields();
     clearAllFields();
     
     for (const fieldName in fieldData) {
         const isMandatory = MANDATORY[citationType]?.includes(fieldName);
         let placement = isMandatory ? mandatoryFields : optionalFields;
         
-        createField(fieldName, fieldData[fieldName], placement, !isMandatory, true, citationId);
+        createField(fieldName, fieldData[fieldName], placement, !isMandatory);
     }
 }
 
 function formForNewCitation(element) {
     mandatoryFields = document.getElementById("mandatory-fields-new");
     optionalFields = document.getElementById("optional-fields-new");
-    allFields = document.getElementById("all-fields-new");
+    getFields = document.getElementById("get-fields-new");
     addField = document.getElementById("add-field-new");
 
     updateFormAfterTypeChange(element);
@@ -62,8 +62,8 @@ function clearAllFields() {
     while (last = optionalFields.lastChild) optionalFields.removeChild(last);
 }
 
-function updateAllFieldsElementValue() {
-    allFields.value = `${CURRENTFIELDS}`;
+function updateGetFields() {
+    getFields.value = `${CURRENTFIELDS}`;
 }
 
 function updateFormAfterTypeChange(element) {
@@ -71,11 +71,11 @@ function updateFormAfterTypeChange(element) {
 
     const citationType = element.value;
     CURRENTFIELDS = MANDATORY[citationType].slice();
-    updateAllFieldsElementValue();
+    updateGetFields();
 
     if (citationType === "url") {
         // URL-specific handling
-        createField("url", "", mandatoryFields, false, false, "");
+        createField("url", "", mandatoryFields, false);
         
         // Add a button to fetch metadata
         const fetchButton = document.createElement("button");
@@ -87,7 +87,7 @@ function updateFormAfterTypeChange(element) {
     } else {
         // Normal handling for other citation types
         for (const fieldName of MANDATORY[citationType]) {
-            createField(fieldName, "", mandatoryFields, false, false, "");
+            createField(fieldName, "", mandatoryFields, false);
         }
     }
 }
@@ -116,9 +116,9 @@ function fetchUrlMetadata() {
         }
 
         // Dynamically populate fields with fetched metadata
-        if (data.title) createField("title", data.title, optionalFields, true, false, "");
-        if (data.author) createField("author", data.author, optionalFields, true, false, "");
-        if (data.description) createField("description", data.description, optionalFields, true, false, "");
+        if (data.title) createField("title", data.title, optionalFields, true);
+        if (data.author) createField("author", data.author, optionalFields, true);
+        if (data.description) createField("description", data.description, optionalFields, true);
     })
     .catch(error => {
         console.error("Error fetching metadata:", error);
@@ -136,37 +136,26 @@ function createRemoveButton(fieldName) {
         removeButton.parentNode.remove();
 
         CURRENTFIELDS = CURRENTFIELDS.filter(value => value !== fieldName);
-        updateAllFieldsElementValue();
+        updateGetFields();
     });
 
     return removeButton;
 }
 
 
-function createField(fieldName, fieldValue, placement, removable, inDB, citationId) {
-    if (!fieldName) {
-        console.error("Field name is missing or invalid.");
-        return;
-    }
-    console.log(fieldName, "Field name");
-    console.log(fieldValue, "Field Value");
-
-
+function createField(fieldName, fieldValue, placement, removable) {
     let container = document.createElement("div");
     container.setAttribute("class", "mb-3");
 
-    let uniqueId = fieldName;
-
     let lbl = document.createElement("label");
-    lbl.setAttribute("for", uniqueId);
+    lbl.setAttribute("for", fieldName);
     lbl.setAttribute("class", "form-label");
     lbl.innerText = `${fieldName}:`;
 
     let txt = document.createElement("input");
     txt.setAttribute("type", "text");
     txt.setAttribute("class", "form-control");
-    txt.setAttribute("name", uniqueId);
-    txt.setAttribute("id", uniqueId);
+    txt.setAttribute("name", fieldName);
     txt.setAttribute("value", fieldValue || "");
     txt.required = true;
 
@@ -175,21 +164,13 @@ function createField(fieldName, fieldValue, placement, removable, inDB, citation
 
     if (removable) {
         const removeButton = createRemoveButton(fieldName);
-        if (inDB) {
-            removeButton.addEventListener("click", function () {
-                fetch(`/remove_citation_field/${citationId}/${fieldName}`, { method: "POST" })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error(error));
-            });
-        }
         container.appendChild(removeButton);
     }
 
     placement.appendChild(container);
 }
 
-function addNewField(loopIndex) {
+function addNewField() {
     let placement = optionalFields;
     let nameOfNewField = addField.value.trim().toLowerCase();
 
@@ -197,7 +178,7 @@ function addNewField(loopIndex) {
     if (CURRENTFIELDS.includes(nameOfNewField)) return;
 
     CURRENTFIELDS.push(nameOfNewField);
-    updateAllFieldsElementValue();
-    createField(nameOfNewField, "", placement, true, false, "");
+    updateGetFields();
+    createField(nameOfNewField, "", placement, true);
     addField.value = "";
 }

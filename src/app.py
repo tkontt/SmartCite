@@ -79,7 +79,7 @@ def index():
 def citation_creation():
     citation_type = request.form.get("citation-type")
     fields = {}
-    all_fields = request.form.get("all-fields-new").split(",")
+    all_fields = request.form.get("get-fields-new").split(",")
 
     if all_fields == [""]:
         flash("Citation must at least have one field.")
@@ -123,7 +123,7 @@ def delete_citation_route(citation_id):
 @app.route("/update_citation", methods=["POST"])
 def edit_citation_form_route():
     citation_id = request.form.get("citation_id")
-    all_fields = request.form.get("all-fields-edit").split(",")
+    all_fields = request.form.get("get-fields-edit").split(",")
     fields = {}
 
     if all_fields == [""]:
@@ -136,15 +136,16 @@ def edit_citation_form_route():
 
     if "" in fields.values():
         flash("Missing required fields")
-        return redirect(f"/citation/{citation_id}")
+        return redirect("/")
 
-    try:
-        update_citation_in_db(citation_id, fields)
-        return redirect(f"/citation/{citation_id}")
+    # try:
+    update_citation_in_db(citation_id, fields)
+    print(citation_id, "ID uusiks")
+    return redirect("/")
 
-    except Exception as e:
-        flash(f"An error occurred while editing: {e}", "danger")
-        return redirect(f"/citation/{citation_id}")
+    # except Exception as e:
+    #   flash(f"An error occurred while editing: {e}", "danger")
+    #  return redirect("/")
 
 
 @app.route("/create_tag", methods=["POST"])

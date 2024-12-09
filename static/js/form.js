@@ -20,24 +20,28 @@ const MANDATORY = {
 let CURRENTFIELDS = [];
 let mandatoryFields;
 let optionalFields;
-let allFields;
+let getFields;
 let addField;
 
-function formFieldData(fields, citationType, citationId) {
+function formFieldData(fields, citationType, citationId, citationKey) {
     const fieldData = JSON.parse(fields);
     CURRENTFIELDS = Object.keys(fieldData);
 
     mandatoryFields = document.getElementById("mandatory-fields-edit");
     optionalFields = document.getElementById("optional-fields-edit");
-    allFields = document.getElementById("all-fields-edit");
+    getFields = document.getElementById("get-fields-edit");
     addField = document.getElementById("add-field-edit");
 
-    updateAllFieldsElementValue();
+    document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType} ${citationId}`;
+    document.getElementById("citation_id-edit").value = citationId;
+    document.getElementById("citation_type-edit").value = citationType;
+
+    updateGetFields();
     clearAllFields();
     
     for (const fieldName in fieldData) {
-        const mandatory = MANDATORY[citationType].includes(fieldName);
-        let placement = mandatory ? mandatoryFields : optionalFields;
+        const isMandatory = MANDATORY[citationType]?.includes(fieldName);
+        let placement = isMandatory ? mandatoryFields : optionalFields;
         
         createField(fieldName, fieldData[fieldName], placement, placement == optionalFields);
     }
@@ -46,7 +50,7 @@ function formFieldData(fields, citationType, citationId) {
 function formForNewCitation(element) {
     mandatoryFields = document.getElementById("mandatory-fields-new");
     optionalFields = document.getElementById("optional-fields-new");
-    allFields = document.getElementById("all-fields-new");
+    getFields = document.getElementById("get-fields-new");
     addField = document.getElementById("add-field-new");
 
     updateFormAfterTypeChange(element);
@@ -58,8 +62,8 @@ function clearAllFields() {
     while (last = optionalFields.lastChild) optionalFields.removeChild(last);
 }
 
-function updateAllFieldsElementValue() {
-    allFields.value = `${CURRENTFIELDS}`;
+function updateGetFields() {
+    getFields.value = `${CURRENTFIELDS}`;
 }
 
 function updateFormAfterTypeChange(element) {
@@ -67,7 +71,7 @@ function updateFormAfterTypeChange(element) {
 
     const citationType = element.value;
     CURRENTFIELDS = MANDATORY[citationType].slice();
-    updateAllFieldsElementValue();
+    updateGetFields();
 
     if (citationType === "url") {
         // URL-specific handling
@@ -132,7 +136,7 @@ function createRemoveButton(fieldName) {
         removeButton.parentNode.remove();
 
         CURRENTFIELDS = CURRENTFIELDS.filter(value => value !== fieldName);
-        updateAllFieldsElementValue();
+        updateGetFields();
     });
 
     return removeButton;
@@ -151,7 +155,7 @@ function createField(fieldName, fieldValue, placement, removable) {
     txt.setAttribute("type", "text");
     txt.setAttribute("class", "form-control");
     txt.setAttribute("name", fieldName);
-    txt.setAttribute("value", fieldValue);
+    txt.setAttribute("value", fieldValue || "");
     txt.required = true;
 
     container.appendChild(lbl);
@@ -161,6 +165,7 @@ function createField(fieldName, fieldValue, placement, removable) {
         const removeButton = createRemoveButton(fieldName);
         container.appendChild(removeButton);
     }
+
     placement.appendChild(container);
 }
 
@@ -172,7 +177,7 @@ function addNewField() {
     if (CURRENTFIELDS.includes(nameOfNewField)) return;
 
     CURRENTFIELDS.push(nameOfNewField);
-    updateAllFieldsElementValue();
+    updateGetFields();
     createField(nameOfNewField, "", placement, true);
     addField.value = "";
 }

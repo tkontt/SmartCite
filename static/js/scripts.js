@@ -5,11 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     rows.forEach(function(row) {
         row.addEventListener("dblclick", function() {
-            // Hae citation ID rivin data-id attribuutilta
-            const citationId = row.getAttribute("data-id");
+            const viewDetailsButton = row.querySelector('button[name="show_citation_button"]');
             
-            // ohjaa edit sivulle
-            window.location.href = `/citation/${citationId}`;
+            viewDetailsButton.click();
         });
     });
 });

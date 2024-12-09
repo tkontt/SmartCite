@@ -59,7 +59,6 @@ After adding an optional field to a citation, the field exists
     Input Text  pages  2-5
     Click Create
     Double Click Element  //td[contains(text(), "1")]
-    Citation Page Should Be Open
     Page Should Contain  pages
     Page Should Contain  2-5
 

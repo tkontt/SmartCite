@@ -20,16 +20,25 @@ def table_exists(name):
     result = db.session.execute(sql_table_existence)
     return result.fetchall()[0][0]
 
+
+
+
 def reset_db():
     clear_table(CITATIONS_TABLE)
     clear_table(CITATION_FIELDS_TABLE)
     clear_table(TAGS_TABLE)
+
+
+
 
 def clear_table(table_name: str):
     print(f"Clearing contents from table {table_name}")
     sql = text(f"DELETE FROM {table_name}")
     db.session.execute(sql)
     db.session.commit()
+
+
+
 
 def setup_db():
     drop_table_if_exists(CITATIONS_TABLE)
@@ -68,12 +77,18 @@ def setup_db():
     db.session.execute(sql)
     db.session.commit()
 
+
+
+
 def drop_table_if_exists(table_name: str):
     if table_exists(table_name):
         print(f"Table {table_name} exists, dropping")
         sql = text(f"DROP TABLE {table_name} CASCADE")
         db.session.execute(sql)
         db.session.commit()
+
+
+
 
 if __name__ == "__main__":
     with app.app_context():

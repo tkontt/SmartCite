@@ -57,7 +57,7 @@ def index():
 def citation_creation():
     citation_type = request.form.get("citation-type")
     fields = {}
-    all_fields = request.form.get("all-fields-new").split(",")
+    all_fields = request.form.get("get-fields-new").split(",")
 
     if all_fields == [""]:
         flash("Citation must at least have one field.")

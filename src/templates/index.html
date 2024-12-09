@@ -22,12 +22,13 @@ Citation App
 <!-- Table -->
 {% if citations|length > 0 %}
 {% include "_citations_table.html" %}
+{% include "edit_citation.html" %}
 
 {% else %}
     <p class="alert alert-warning">No citations found. Use the "Create New Citation" button to add your first citation.</p>
 {% endif %}
 
-<input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citation_modal" id="create_citation_button" 
+<input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_citation_modal" id="create_citation_button" 
        onclick='formForNewCitation(document.getElementById("citation-type"))' value="Create new citation">
 
 {% include "new_citation.html" %}

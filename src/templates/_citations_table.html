@@ -30,10 +30,20 @@
                 <td style="display: none;">{{ citation.fields.get(field, 'N/A') }}</td>
             {% endfor %}
             <td class="text-end">
-                <div class="text-end d-flex d-flex justify-content-end gap-1">
-                    <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
-                    <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
-                </div>
+                {% with citation=citation, loop_index=loop.index0 %}
+                    {% include "citation_modal.html" %}
+                    <div class="text-end d-flex d-flex justify-content-end gap-1">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#citation_modal{{ loop_index }}" id="show_citation_button_{{ loop_index }}" name="show_citation_button">View Details</button>
+                        <input type="button" 
+                        class="btn btn-primary btn-sm" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#edit_citation_modal" 
+                        name="edit" 
+                        onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
+                        value="Edit">
+                        <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
+                    </div>
+                {% endwith %}
             </td>
         </tr>
         {% endfor %}

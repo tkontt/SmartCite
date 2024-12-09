@@ -9,7 +9,7 @@ After editing a citation, changes are visible
     Create Test Citations
     Go To Home Page
     Click Citation Row  1
-    Citation Page Should Be Open
+    Sleep  0.25
     Click Edit
     Wait Until Element Is Visible  year
     Sleep  0.25
@@ -17,7 +17,6 @@ After editing a citation, changes are visible
     Sleep  0.25
     Click Update
     Sleep  0.25
-    Citation Page Should Be Open
     Page Should Contain  2023
     Go To Home Page
     Page Should Contain  2023
@@ -25,30 +24,37 @@ After editing a citation, changes are visible
 After adding an optional field in edit, the field exists
     Create Test Citation With an Optional Field
     Page Should Contain  volume
-    Page Should Contain  50
+    Page Should Contain  5050
 
 After removing an optional field and pressing update, the field no longer exists
     Create Test Citation With an Optional Field
+    Click Citation Row  1
+    Sleep  0.25
     Click Edit
-    Wait Until Element is visible  //input[@value='remove']  timeout=0.25s
+    Wait Until Element is visible  //input[@value='remove']  timeout=0.5s
     Click Element  //input[@value='remove']
     Sleep  0.25
     Click Update
+    Click Citation Row  1
+    Sleep  0.25
     Page Should Not Contain  volume
-    Page Should Not Contain  50
+    Page Should Not Contain  5050
 
 After removing an optional field and closing the edit without updating, the field still exists
     Create Test Citation With an Optional Field
+    Click Citation Row  1
+    Sleep  0.25
     Click Edit
-    Wait Until Element is visible  //input[@value='remove']  timeout=0.25s
+    Wait Until Element is visible  //input[@value='remove']  timeout=0.5s
     Click Element  //input[@value='remove']
     Sleep  0.25
     Wait Until Element is visible  //input[@name='exit-edit']  timeout=0.25s
     Click Element  //input[@name='exit-edit']
     Reload Page
+    Click Citation Row  1
+    Sleep  0.25
     Page Should Contain  volume
-    Page Should Contain  50
-
+    Page Should Contain  5050
 
 *** Keywords ***
 Click Create
@@ -81,12 +87,12 @@ Create Test Citation With an Optional Field
     Create Test Citation  TestAuthor  Title  2020  Journal
     Go To Home Page
     Click Citation Row  1
-    Citation Page Should Be Open
+    Sleep  0.25
     Click Edit
     Wait Until Element Is Visible  add-field-edit
     Input Text  add-field-edit  volume
     Click Element  add-field-edit-btn
     Wait Until Element Is Visible  volume
-    Input Text  volume  50
+    Input Text  volume  5050
     Click Update
     Sleep  0.25

@@ -56,6 +56,18 @@ After removing an optional field and closing the edit without updating, the fiel
     Page Should Contain  volume
     Page Should Contain  5050
 
+After removing an optional field and closing the edit without updating, the field still exists
+    Create Test Citation With an Optional Field
+    Click Edit
+    Wait Until Element is visible  //input[@value='remove']  timeout=0.25s
+    Click Element  //input[@value='remove']
+    Sleep  0.25
+    Wait Until Element is visible  //input[@name='exit-edit']  timeout=0.25s
+    Click Element  //input[@name='exit-edit']
+    Reload Page
+    Page Should Contain  volume
+    Page Should Contain  50
+
 
 *** Keywords ***
 Click Create

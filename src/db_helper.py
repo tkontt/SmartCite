@@ -39,12 +39,7 @@ def setup_db():
         "    id SERIAL PRIMARY KEY, "
         "    citation_type TEXT NOT NULL,"
         "    citation_key TEXT NOT NULL UNIQUE"
-        ")"
-    )
-    db.session.execute(sql)
-
-    print(f"Creating table {CITATION_FIELDS_TABLE}")
-    sql = text(
+        ");"
         f"CREATE TABLE {CITATION_FIELDS_TABLE} ("
         "    id SERIAL PRIMARY KEY, "
         f"   citation_id INT REFERENCES {CITATIONS_TABLE} (id) ON DELETE CASCADE,"
@@ -54,6 +49,7 @@ def setup_db():
         ")"
     )
     db.session.execute(sql)
+    db.session.commit()
 
 def drop_table_if_exists(table_name: str):
     if table_exists(table_name):

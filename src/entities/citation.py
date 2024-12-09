@@ -9,14 +9,7 @@ class Citation:
         self.fields = fields
 
     def __str__(self):
-        data = {
-            "id": self.id,
-            "citation_type" : self.citation_type,
-            "citation_key" : self.citation_key,
-            "fields" : self.fields 
-            }
-
-        return json.dumps(data)
+        return json.dumps(self.to_dict())
 
     def to_dict(self):
         """

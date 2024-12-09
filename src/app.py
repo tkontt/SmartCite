@@ -153,7 +153,6 @@ def import_from_bibtex():
 
 # testausta varten oleva reitti
 if test_env:
-
     @app.route("/reset_db")
     def reset_database():
         reset_db()

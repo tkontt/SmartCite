@@ -33,7 +33,7 @@
                 {% with citation=citation, loop_index=loop.index0 %}
                     {% include "citation_modal.html" %}
                     <div class="text-end d-flex d-flex justify-content-end gap-1">
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#citation_modal{{ loop_index }}" id="test_button" name="test_button">View Details</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#citation_modal{{ loop_index }}" id="show_citation_button_{{ loop_index }}" name="show_citation_button">View Details</button>
                         <input type="button" 
                         class="btn btn-primary btn-sm" 
                         data-bs-toggle="modal" 

@@ -10,9 +10,7 @@ from repositories.citation_repository import (
     update_citation_in_db,
     get_unique_field_names,
 )
-from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
-from entities.tag import Tag
 from config import app, test_env
 from util import (
     generate_cite_key,
@@ -63,13 +61,11 @@ def index():
     default_headers = ["author", "title", "year", "type"]
 
     citations = get_citations()
-    tags = get_tags()
 
     return render_template(
         "index.html",
         citations=citations,
         types=types,
-        tags=tags,
         default_headers=default_headers,
         all_fields=all_fields,
     )
@@ -145,23 +141,6 @@ def edit_citation_form_route():
     except Exception as e:
         flash(f"An error occurred while editing: {e}", "danger")
         return redirect(f"/citation/{citation_id}")
-
-
-@app.route("/create_tag", methods=["POST"])
-def tag_creation():
-    tag = request.form.get("tag").lower()
-    if check_if_valid_tag(tag):
-        try:
-            tag_create = Tag(tag)
-            create_tag(tag_create)
-            return redirect("/")
-        except Exception as error:
-            flash(str(error))
-            return redirect("/")
-    else:
-        error = Exception("Tag needs to between 1 and 7 characters long.")
-        flash(str(error))
-        return redirect("/")
 
 
 @app.route("/create_bibtex", methods=["GET"])

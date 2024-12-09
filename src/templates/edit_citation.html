@@ -1,16 +1,16 @@
-<div class="modal fade" id="edit_citation_modal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+<div class="modal fade" id="edit_citation_modal_{{ loop_index }}" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content text-start">
       <div class="modal-body">
         <h2 class="mb-4">Edit Citation Details</h2>
 
         <div class="card-header">
-          <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
+          <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }}) {{ citation.id }}</h5>
         </div>
         
         <div class="card-body">
           <form action="/update_citation" method="post">
-            <input type="hidden" name="citation_id" value="{{ citation_id }}">
+            <input type="hidden" name="citation_id" id="citation_modal" value="{{ citation.id }}">
             <input type="hidden" 
                     name="citation_type" 
                     value="{{ citation.citation_type }}" 
@@ -28,11 +28,10 @@
               Add a field <br>
               <label for="add-field-edit">The name of the field:</label>
               <input type="text" name="add-field-edit" id="add-field-edit">
-              <input type="button" value="Add" name="add-field-edit-btn" onclick="addNewField()">
+              <input type="button" value="Add" name="add-field-edit-btn" onclick="addNewField(`{{ loop_index }}`)">
             </div>
           
             <input type="hidden" id="all-fields-edit" name="all-fields-edit" value="">
-        
             <button type="submit" class="btn btn-primary" name="update">Update</button>
           </form>
         </div>

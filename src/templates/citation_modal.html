@@ -1,0 +1,55 @@
+<div class="modal fade" id="test_citation_modal{{ loop_index }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2 class="mb-4 row align-items-start">Citation Details</h2>
+            <div class="card">
+                <div class="card-header text-start">
+                    <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }}) {{ citation.id }}</h5>
+                    <h5>DEBUG: Citation ID = {{ citation.id }}, Loop Index = {{ loop_index }}</h5>
+
+                </div>
+                <div class="card-body text-start">
+                    <dl class="row align-items-start">
+                        <input type="hidden" 
+                        name="citation_type" 
+                        value="{{ citation.citation_type }}" 
+                        id="citation_type"
+                        {% for field, value in citation.fields.items() %}
+                        data-{{ field }}="{{ value }}"
+                        {% endfor %}>
+            
+                        {% for field, value in citation.fields.items() %}
+                            <dt class="col-sm-3">{{ field }}</dt>
+                            <dd class="col-sm-9">{{ value }}</dd>
+                        {% endfor %}
+            
+                    </dl>
+                </div>
+                <div class="card-footer text-end">
+                    <a href="/" class="btn btn-secondary">Back</a>
+                    <input type="button" 
+       class="btn btn-primary" 
+       data-bs-toggle="modal" 
+       data-bs-target="#edit_citation_modal_{{ loop_index }}" 
+       name="edit" 
+       onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`)' 
+       value="Edit">
+
+                    <form action="/delete_citation/{{ citation.id }}" method="POST" style="display:inline-block;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this citation?');">Delete</button>
+                    </form>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% for citation in citations %}
+  {% with citation=citation, loop_index=loop.index0 %}
+      {% include "edit_citation.html" %}
+  {% endwith %}
+{% endfor %}

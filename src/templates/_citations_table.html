@@ -29,9 +29,15 @@
                 <td style="display: none;">{{ citation.fields.get(field, 'N/A') }}</td>
             {% endfor %}
             <td class="text-end">
-                <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
-                <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
-            </td>
+                {% with citation=citation, loop_index=loop.index0 %}
+
+                    {% include "citation_modal.html" %}
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#test_citation_modal{{ loop_index }}" id="test_button" name="test_button">View Details</button>
+                    <a href="/citation/{{ citation.id }}" class="btn btn-primary btn-sm">Edit</a>
+                    <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
+                {% endwith %}
+                </td>
+
         </tr>
         {% endfor %}
     </tbody>

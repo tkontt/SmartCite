@@ -26,20 +26,24 @@ let addField;
 function formFieldData(fields, citationType, citationId) {
     const fieldData = JSON.parse(fields);
     CURRENTFIELDS = Object.keys(fieldData);
+    console.log(CURRENTFIELDS, "Current fields");
+
 
     mandatoryFields = document.getElementById("mandatory-fields-edit");
     optionalFields = document.getElementById("optional-fields-edit");
     allFields = document.getElementById("all-fields-edit");
     addField = document.getElementById("add-field-edit");
+    console.log(mandatoryFields, "mandatory fields");
+
 
     updateAllFieldsElementValue();
     clearAllFields();
     
     for (const fieldName in fieldData) {
-        const mandatory = MANDATORY[citationType].includes(fieldName);
-        let placement = mandatory ? mandatoryFields : optionalFields;
+        const isMandatory = MANDATORY[citationType]?.includes(fieldName);
+        let placement = isMandatory ? mandatoryFields : optionalFields;
         
-        createField(fieldName, fieldData[fieldName], placement, placement == optionalFields, true, citationId);
+        createField(fieldName, fieldData[fieldName], placement, !isMandatory, true, citationId);
     }
 }
 
@@ -138,20 +142,32 @@ function createRemoveButton(fieldName) {
     return removeButton;
 }
 
+
 function createField(fieldName, fieldValue, placement, removable, inDB, citationId) {
+    if (!fieldName) {
+        console.error("Field name is missing or invalid.");
+        return;
+    }
+    console.log(fieldName, "Field name");
+    console.log(fieldValue, "Field Value");
+
+
     let container = document.createElement("div");
     container.setAttribute("class", "mb-3");
 
+    let uniqueId = fieldName;
+
     let lbl = document.createElement("label");
-    lbl.setAttribute("for", fieldName);
+    lbl.setAttribute("for", uniqueId);
     lbl.setAttribute("class", "form-label");
     lbl.innerText = `${fieldName}:`;
 
     let txt = document.createElement("input");
     txt.setAttribute("type", "text");
     txt.setAttribute("class", "form-control");
-    txt.setAttribute("name", fieldName);
-    txt.setAttribute("value", fieldValue);
+    txt.setAttribute("name", uniqueId);
+    txt.setAttribute("id", uniqueId);
+    txt.setAttribute("value", fieldValue || "");
     txt.required = true;
 
     container.appendChild(lbl);
@@ -169,10 +185,11 @@ function createField(fieldName, fieldValue, placement, removable, inDB, citation
         }
         container.appendChild(removeButton);
     }
+
     placement.appendChild(container);
 }
 
-function addNewField() {
+function addNewField(loopIndex) {
     let placement = optionalFields;
     let nameOfNewField = addField.value.trim().toLowerCase();
 

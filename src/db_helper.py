@@ -3,7 +3,6 @@ from config import db, app
 
 CITATIONS_TABLE = "citations"
 CITATION_FIELDS_TABLE = "citation_fields"
-TAGS_TABLE = "tags"
 
 def table_exists(name):
     sql_table_existence = text(
@@ -23,7 +22,6 @@ def table_exists(name):
 def reset_db():
     clear_table(CITATIONS_TABLE)
     clear_table(CITATION_FIELDS_TABLE)
-    clear_table(TAGS_TABLE)
 
 def clear_table(table_name: str):
     print(f"Clearing contents from table {table_name}")
@@ -34,35 +32,19 @@ def clear_table(table_name: str):
 def setup_db():
     drop_table_if_exists(CITATIONS_TABLE)
     drop_table_if_exists(CITATION_FIELDS_TABLE)
-    drop_table_if_exists(TAGS_TABLE)
 
-    print(f"Creating table {CITATIONS_TABLE}")
     sql = text(
         f"CREATE TABLE {CITATIONS_TABLE} ("
         "    id SERIAL PRIMARY KEY, "
         "    citation_type TEXT NOT NULL,"
         "    citation_key TEXT NOT NULL UNIQUE"
-        ")"
-    )
-    db.session.execute(sql)
-
-    print(f"Creating table {CITATION_FIELDS_TABLE}")
-    sql = text(
+        ");"
         f"CREATE TABLE {CITATION_FIELDS_TABLE} ("
         "    id SERIAL PRIMARY KEY, "
         f"   citation_id INT REFERENCES {CITATIONS_TABLE} (id) ON DELETE CASCADE,"
         "    field_name TEXT NOT NULL,"
         "    field_value TEXT NOT NULL,"
         "    UNIQUE (citation_id, field_name)"
-        ")"
-    )
-    db.session.execute(sql)
-
-    print(f"Creating table {TAGS_TABLE}")
-    sql = text(
-        f"CREATE TABLE {TAGS_TABLE} ("
-        "   id SERIAL PRIMARY KEY, "
-        "   tag TEXT NOT NULL"
         ")"
     )
     db.session.execute(sql)

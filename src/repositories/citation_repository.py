@@ -168,10 +168,8 @@ def unique_key(key):
     sql = text("SELECT c.citation_key FROM citations c")
     result = db.session.execute(sql)
     rows = result.fetchall()
-    for existing_key in rows:
-        if key == existing_key[0]:
-            return False
-    return True
+    existing_keys = {row[0] for row in rows}
+    return key not in existing_keys
 
 
 def get_unique_field_names() -> set:

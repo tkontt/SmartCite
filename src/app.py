@@ -1,18 +1,15 @@
-from flask import redirect, render_template, request, jsonify, flash, abort
+from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import (
     get_citations,
     add_citation,
-    get_citation_by_id,
 )
 from repositories.citation_repository import (
     delete_citation_from_db,
     update_citation_in_db,
     get_unique_field_names,
 )
-from repositories.tag_repository import get_tags, create_tag, check_if_valid_tag
 from entities.citation import Citation
-from entities.tag import Tag
 from config import app, test_env
 from util import (
     generate_cite_key,
@@ -42,34 +39,15 @@ TYPES = {
 
 @app.route("/")
 def index():
-    # Article on defaulttina
-    types = [
-        "book",
-        "inproceedings",
-        "booklet",
-        "conference",
-        "inbook",
-        "incollection",
-        "manual",
-        "masterthesis",
-        "misc",
-        "phdthesis",
-        "proceedings",
-        "techreport",
-        "unpublished",
-    ]
-
+    types = TYPES.keys()
     all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
-
     citations = get_citations()
-    tags = get_tags()
 
     return render_template(
         "index.html",
         citations=citations,
         types=types,
-        tags=tags,
         default_headers=default_headers,
         all_fields=all_fields,
     )
@@ -97,15 +75,6 @@ def citation_creation():
     except Exception as error:
         flash(str(error))
         return redirect("/")
-
-
-# Avaa Citation page
-@app.route("/citation/<int:citation_id>")
-def citation_details(citation_id):
-    citation = get_citation_by_id(citation_id)
-    if not citation:
-        abort(404)  # Return a 404 page if the citation is not found
-    return render_template("citation.html", citation=citation, citation_id=citation_id)
 
 
 # Poista Citation
@@ -138,31 +107,9 @@ def edit_citation_form_route():
         flash("Missing required fields")
         return redirect("/")
 
-    # try:
     update_citation_in_db(citation_id, fields)
     print(citation_id, "ID uusiks")
     return redirect("/")
-
-    # except Exception as e:
-    #   flash(f"An error occurred while editing: {e}", "danger")
-    #  return redirect("/")
-
-
-@app.route("/create_tag", methods=["POST"])
-def tag_creation():
-    tag = request.form.get("tag").lower()
-    if check_if_valid_tag(tag):
-        try:
-            tag_create = Tag(tag)
-            create_tag(tag_create)
-            return redirect("/")
-        except Exception as error:
-            flash(str(error))
-            return redirect("/")
-    else:
-        error = Exception("Tag needs to between 1 and 7 characters long.")
-        flash(str(error))
-        return redirect("/")
 
 
 @app.route("/create_bibtex", methods=["GET"])
@@ -191,9 +138,8 @@ def import_from_bibtex():
     return redirect("/")
 
 
-# testausta varten oleva reitti
+# testausta varten olevat reitit
 if test_env:
-
     @app.route("/reset_db")
     def reset_database():
         reset_db()

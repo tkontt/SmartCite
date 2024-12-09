@@ -29,9 +29,9 @@
                     <input type="button" 
                     class="btn btn-primary" 
                     data-bs-toggle="modal" 
-                    data-bs-target="#edit_citation_modal_{{ loop_index }}" 
+                    data-bs-target="#edit_citation_modal" 
                     name="edit" 
-                    onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`)' 
+                    onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
                     value="Edit">
 
                     <form action="/delete_citation/{{ citation.id }}" method="POST" style="display:inline-block;">

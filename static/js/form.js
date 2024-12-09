@@ -36,10 +36,6 @@ function formFieldData(fields, citationType, citationId, citationKey) {
     document.getElementById("citation_id-edit").value = citationId;
     document.getElementById("citation_type-edit").value = citationType;
 
-    document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType} ${citationId}`;
-    document.getElementById("citation_id-edit").value = citationId;
-    document.getElementById("citation_type-edit").value = citationType;
-
     updateGetFields();
     clearAllFields();
     

@@ -47,9 +47,3 @@
       </div>
     </div>
   </div>
-
-{% for citation in citations %}
-  {% with citation=citation, loop_index=loop.index0 %}
-      {% include "edit_citation.html" %}
-  {% endwith %}
-{% endfor %}

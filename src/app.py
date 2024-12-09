@@ -40,22 +40,7 @@ TYPES = {
 
 @app.route("/")
 def index():
-    # Article on defaulttina
-    types = [
-        "book",
-        "inproceedings",
-        "booklet",
-        "conference",
-        "inbook",
-        "incollection",
-        "manual",
-        "masterthesis",
-        "misc",
-        "phdthesis",
-        "proceedings",
-        "techreport",
-        "unpublished",
-    ]
+    types = TYPES.keys()
 
     all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
@@ -85,7 +70,7 @@ def citation_creation():
         fields[field] = request.form.get(field).strip()
 
     try:
-        validate_fields(fields)
+        validate_fields(fields, TYPES[citation_type])
         key = generate_cite_key(fields)
         add_citation(Citation(citation_type, key, fields))
         flash("Citation added successfully!")
@@ -130,11 +115,8 @@ def edit_citation_form_route():
     for field in all_fields:
         fields[field] = request.form.get(field).strip()
 
-    if "" in fields.values():
-        flash("Missing required fields")
-        return redirect(f"/citation/{citation_id}")
-
     try:
+        validate_fields(fields, TYPES[request.form.get("citation_type")])
         update_citation_in_db(citation_id, fields)
         return redirect(f"/citation/{citation_id}")
 

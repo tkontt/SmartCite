@@ -29,9 +29,10 @@ def generate_cite_key(fields: dict):
     return cite_key
 
 
-def validate_fields(fields):
-    if "" in fields.values():
-        raise UserInputError("Missing required fields")
+def validate_fields(fields, required_fields):
+    for field in required_fields:
+        if field not in fields or fields[field] == "":
+            raise UserInputError(f"Missing required field: {field}")
 
 
 def generate_bibtex(citations: list[Citation]):

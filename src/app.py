@@ -119,8 +119,11 @@ def create_bibtex():
 
 
 @app.route("/import_citations_bibtex", methods=["POST"])
-def import_from_bibtex():
-    bibtex = request.form.get("input_bibtex")
+def import_from_bibtex(bibtex_input=None):
+    if bibtex_input is None:
+        bibtex = request.form.get("input_bibtex")
+    else:
+        bibtex = bibtex_input
     try:
         validate_bibtex(bibtex)
     except Exception as error:
@@ -138,7 +141,26 @@ def import_from_bibtex():
     return redirect("/")
 
 
-# testausta varten olevat reitit
+
+@app.route('/upload', methods=['POST'])
+def upload_bibtex_file():
+    if 'file' not in request.files:
+        flash("No file given")
+
+    file = request.files['file']
+    if file.filename == '':
+        flash("No selected file")
+    elif file:
+        content = file.read()
+        content = content.decode('utf-8')
+        import_from_bibtex(content)
+    return redirect("/")
+
+
+
+
+# testausta varten oleva reitti
+
 if test_env:
     @app.route("/reset_db")
     def reset_database():

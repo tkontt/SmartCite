@@ -119,12 +119,11 @@ def create_bibtex():
 
 
 @app.route("/import_citations_bibtex", methods=["POST"])
-def import_from_bibtex(input=None):
-    if input is None:
+def import_from_bibtex(bibtex_input=None):
+    if bibtex_input is None:
         bibtex = request.form.get("input_bibtex")
     else:
-        bibtex = input
-        
+        bibtex = bibtex_input
     try:
         validate_bibtex(bibtex)
     except Exception as error:
@@ -146,15 +145,16 @@ def import_from_bibtex(input=None):
 @app.route('/upload', methods=['POST'])
 def upload_bibtex_file():
     if 'file' not in request.files:
-        return 'No file part'
+        flash("No file given")
+
     file = request.files['file']
     if file.filename == '':
-        return 'No selected file'
-    if file:
+        flash("No selected file")
+    elif file:
         content = file.read()
         content = content.decode('utf-8')
         import_from_bibtex(content)
-        return redirect("/")
+    return redirect("/")
 
 
 

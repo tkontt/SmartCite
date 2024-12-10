@@ -43,7 +43,7 @@ function formFieldData(fields, citationType, citationId, citationKey) {
         const isMandatory = MANDATORY[citationType]?.includes(fieldName);
         let placement = isMandatory ? mandatoryFields : optionalFields;
         
-        createField(fieldName, fieldData[fieldName], placement, !isMandatory);
+        createField(fieldName, fieldData[fieldName], placement, placement == optionalFields);
     }
 }
 
@@ -141,7 +141,6 @@ function createRemoveButton(fieldName) {
 
     return removeButton;
 }
-
 
 function createField(fieldName, fieldValue, placement, removable) {
     let container = document.createElement("div");

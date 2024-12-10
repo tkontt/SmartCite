@@ -10,9 +10,8 @@
 
 /* Global styles */
 .container {
-    max-width: 60%;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 70%;
+    padding: 0.5rem;
 }
 body {
     font-family: Arial, sans-serif;

@@ -19,3 +19,24 @@
 
 ## Stop
 - Ei mitään!
+
+
+# Retrospektiivi sprintin 3 jälkeen
+
+## More of
+- Hyvä tiimihenki on jatkunut
+
+## Less of
+- Yksipuoliset testit
+- Backlogin hoitaminen välttävästi ...
+
+## Continue
+- Tiimityöskentely on jatkunut hyvänä
+- Sovellus on edelleen hyvällä mallilla
+
+## Start
+- Ole huolellinen main branchin kanssa, ei saa olla punasella
+- Ole kriittisempi user storyjen määrän kanssa, ei luvata liikaa!
+
+## Stop
+- Ei mitään!

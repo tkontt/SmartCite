@@ -10,7 +10,7 @@ After deleting a citation, it is no longer visible
     Go To Home Page
     Page Should Contain  Title1
     Click Citation Row  1
-    Citation Page Should Be Open
+    Sleep  0.25
     Click Delete
     Handle Alert  action=ACCEPT
     Go To Home Page

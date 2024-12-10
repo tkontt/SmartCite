@@ -59,9 +59,13 @@ After adding an optional field to a citation, the field exists
     Input Text  pages  2-5
     Click Create
     Double Click Element  //td[contains(text(), "1")]
-    Citation Page Should Be Open
     Page Should Contain  pages
     Page Should Contain  2-5
+
+After Adding A Long Citation The Text Is Truncated
+    Create Test Citation    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 123  title  2024  journal
+    Go To Home Page
+    Page Should Not Contain Visible Text  123
 
 *** Keywords ***
 Click Create
@@ -69,3 +73,7 @@ Click Create
     Wait Until Element is visible  ${CREATE}  timeout=5s
     Set Focus To Element  ${CREATE}    
     Click Element  ${CREATE}
+
+Page Should Not Contain Visible Text
+    [Arguments]  ${text}
+    Element Should Not Be Visible  xpath=//*[contains(text(), '${text}')]

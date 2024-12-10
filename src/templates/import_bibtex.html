@@ -1,15 +1,79 @@
 <div class="modal fade" id="bibtex_importing_modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Import from BibTeX</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div id="import-bibtex-list" class="border rounded p-3">
-            <form action="/import_citations_bibtex" method="post">
-                <textarea rows="15" class="form-control" id="input_bibtex" name="input_bibtex" 
-                placeholder="@inproceedings{Example1,
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import from BibTeX</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="file-drop-area border p-3">
+                        <form action="/upload" method="post" enctype="multipart/form-data">
+                            <input class="file-input" type="file" accept=".bib" name="file" style="display:none;">
+                            <button type="button" class="btn btn-primary fake-btn">Choose files</button>
+                            <span class="file-msg">or drag and drop files here</span>
+                            <br>
+                            <input type="submit" value="Upload" class="btn btn-success mt-2">
+                        </form>
+                    </div>
+                </div>
+
+                <!-- jQuery -->
+                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <script>
+                $(document).ready(function() {
+                    var $fileInput = $('.file-input');
+                    var $dropArea = $('.file-drop-area');
+                    var $fileMsg = $('.file-msg');
+
+                    $('.fake-btn').click(function() {
+                        $fileInput.click();
+                    });
+
+                    $fileInput.on('change', function() {
+                        var file = this.files[0];
+                        var fileName = file.name;
+                        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                        if (fileExtension !== "bib") {
+                            alert("Only .bib files are allowed!");
+                            this.value = ''; // Clear the input
+                        } else {
+                            $fileMsg.text(fileName);
+                        }
+                    });
+
+                    // Drag and Drop functionality with validation
+                    $dropArea.on('dragover', function(e) {
+                        e.preventDefault();
+                        $(this).addClass('active');
+                    });
+
+                    $dropArea.on('dragleave', function(e) {
+                        e.preventDefault();
+                        $(this).removeClass('active');
+                    });
+
+                    $dropArea.on('drop', function(e) {
+                        e.preventDefault();
+                        $(this).removeClass('active');
+                        var files = e.originalEvent.dataTransfer.files;
+                        var file = files[0];
+                        var fileName = file.name;
+                        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                        if (fileExtension !== "bib") {
+                            alert("Only .bib files are allowed!");
+                        } else {
+                            $fileInput.prop('files', files);
+                            $fileMsg.text(fileName);
+                        }
+                    });
+                });
+                </script>
+                <div id="import-bibtex-list" class="border rounded p-3">
+                    <form action="/import_citations_bibtex" method="post">
+                        <textarea rows="15" class="form-control" id="input_bibtex" name="input_bibtex" placeholder="@inproceedings{Example1,
     author = {Author1, Author2},
     title = {Title1},
     year = {Year1},
@@ -24,15 +88,16 @@
     volume = {1},
     pages = {11--22}
 }"></textarea>
-                <div id="input_bibtex" class="form-text">
-                    Input citations in BibTeX form as shown in example. Input should start with "@" and end with "}"
+                        <div id="input_bibtex" class="form-text">
+                            Input citations in BibTeX form as shown in example. Input should start with "@" and end with "}"
+                        </div>
                 </div>
-          </div>
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" name="import">Import</button>
-            </form>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary" name="import">Import</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
     </div>
 </div>
+

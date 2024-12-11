@@ -1,6 +1,6 @@
 <!-- Table -->
 {% if citations|length > 0 %}
-<table id="citations-table" class="table table-striped table-hover">
+<table id="citations-table" class="table table-hover">
     <thead>
         <tr>
             <th>#</th>
@@ -39,7 +39,8 @@
                         data-bs-toggle="modal" 
                         data-bs-target="#edit_citation_modal" 
                         name="edit" 
-                        onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
+                        data-citation='{{ citation.fields | tojson | safe }}'
+                        onclick='formFieldData(this.dataset.citation, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
                         value="Edit">
                         <button class="btn btn-dark btn-sm" title="Copy citation to clipboard" onclick="copyToClipboard('\\cite&#123;{{ citation.citation_key }}&#125;')">LaTeX</button>
                     </div>
@@ -49,16 +50,4 @@
         {% endfor %}
     </tbody>
 </table>
-<div class="row align-items-center mt-3">
-    <div class="col-md-6 col-12">
-        <!-- Pagination options -->
-        <label for="results-per-page" class="form-label me-2">Show:</label>
-        <select id="results-per-page" class="form-select d-inline-block w-auto" onchange="updateResultsPerPage()">
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="all">All</option>
-        </select>
-    </div>
-</div>
 {% endif %}

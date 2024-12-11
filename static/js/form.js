@@ -24,6 +24,7 @@ let getFields;
 let addField;
 
 function formFieldData(fields, citationType, citationId, citationKey) {
+    console.log(fields);
     const fieldData = JSON.parse(fields);
     CURRENTFIELDS = Object.keys(fieldData);
 
@@ -128,9 +129,11 @@ function fetchUrlMetadata() {
 
 
 function createRemoveButton(fieldName) {
-    let removeButton = document.createElement("input");
+    let removeButton = document.createElement("button");
     removeButton.setAttribute("type", "button");
+    removeButton.setAttribute("class", "btn btn-danger btn-sm ms-2");
     removeButton.setAttribute("value", "remove");
+    removeButton.innerText = "Remove";
 
     removeButton.addEventListener("click", function () {
         removeButton.parentNode.remove();

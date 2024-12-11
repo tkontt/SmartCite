@@ -31,8 +31,8 @@ After removing an optional field and pressing update, the field no longer exists
     Click Citation Row  1
     Sleep  0.25
     Click Edit
-    Wait Until Element is visible  //input[@value='remove']  timeout=0.5s
-    Click Element  //input[@value='remove']
+    Wait Until Element is visible  //button[@value='remove']  timeout=0.5s
+    Click Element  //button[@value='remove']
     Sleep  0.25
     Click Update
     Click Citation Row  1
@@ -45,11 +45,11 @@ After removing an optional field and closing the edit without updating, the fiel
     Click Citation Row  1
     Sleep  0.25
     Click Edit
-    Wait Until Element is visible  //input[@value='remove']  timeout=0.5s
-    Click Element  //input[@value='remove']
+    Wait Until Element is visible  //button[@value='remove']  timeout=0.5s
+    Click Element  //button[@value='remove']
     Sleep  0.25
-    Wait Until Element is visible  //input[@name='exit-edit']  timeout=0.25s
-    Click Element  //input[@name='exit-edit']
+    Wait Until Element is visible  //button[@name='exit-edit']  timeout=0.25s
+    Click Element  //button[@name='exit-edit']
     Reload Page
     Click Citation Row  1
     Sleep  0.25

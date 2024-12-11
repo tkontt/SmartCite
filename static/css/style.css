@@ -1,4 +1,4 @@
- /* Container for the logo */
+/* Container for the logo */
  .logo {
     background-image: url("{{ url_for('static', filename='logo.svg') }}");
     background-size: contain;
@@ -8,11 +8,6 @@
     margin: 20px auto; /* Center the logo */
 }
 
-/* Global styles */
-.container {
-    max-width: 70%;
-    padding: 0.5rem;
-}
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
@@ -61,4 +56,10 @@ th {
     max-height: 50vh;
     overflow-y: scroll;
     white-space: pre-wrap;
+}
+
+.sticky-top {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
 }

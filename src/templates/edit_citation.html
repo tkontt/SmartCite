@@ -16,16 +16,17 @@
               <div id="optional-fields-edit"></div>
             </div>
           
-            <div>
-              Add a field <br>
-              <label for="add-field-edit">The name of the field:</label>
-              <input type="text" name="add-field-edit" id="add-field-edit">
-              <input type="button" value="Add" name="add-field-edit-btn" onclick="addNewField()">
+            <div class="mt-3">
+              <label for="add-field-edit">Add a field:</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="add-field-edit" id="add-field-edit" placeholder="Field name">
+                <button type="button" class="btn btn-secondary" name="add-field-edit-btn"  onclick="addNewField()">Add</button>
+              </div>
             </div>
           
             <input type="hidden" id="get-fields-edit" name="get-fields-edit" value="">
-            <button type="submit" class="btn btn-primary" name="update">Update</button>
-            <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="exit-edit">
+            <button type="submit" class="btn btn-primary mt-3" name="update">Update</button>
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal" aria-label="Close" name="exit-edit">Close</button>
           </form>
         </div>
       </div>

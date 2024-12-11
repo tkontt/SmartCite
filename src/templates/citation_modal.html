@@ -5,7 +5,7 @@
           <h2 class="mb-4 row align-items-start">Citation Details</h2>
             <div class="card">
                 <div class="card-header text-start">
-                    <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }}) {{ citation.id }}</h5>
+                    <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
                 </div>
                 <div class="card-body text-start">
                     <dl class="row align-items-start">
@@ -31,7 +31,8 @@
                     data-bs-toggle="modal" 
                     data-bs-target="#edit_citation_modal" 
                     name="edit" 
-                    onclick='formFieldData(`{{ citation.fields | tojson }}`, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
+                    data-citation='{{ citation.fields | tojson | safe }}'
+                    onclick='formFieldData(this.dataset.citation, `{{ citation.citation_type }}`, `{{ citation.id }}`, `{{ citation.citation_key }}`)' 
                     value="Edit">
 
                     <form action="/delete_citation/{{ citation.id }}" method="POST" style="display:inline-block;">

@@ -10,12 +10,12 @@
                 <!-- "Select All" Checkbox -->
                 <li><label class="dropdown-item"><input type="checkbox" id="select-all" checked> All</label></li>
                 <!-- Single Checkboxes -->
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="0" checked> #</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="1" checked> Author</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="2" checked> Title</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="3" checked> Year</label></li>
-                <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="4" checked> Type</label></li>
-                <!--<li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="5" checked> Actions</label></li>-->
+                {% for field in default_headers %}
+                    <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="{{ loop.index0 + 1 }}" checked> {{ field.capitalize() }}</label></li>
+                {% endfor %}
+                {% for field in all_fields if field not in default_headers %}
+                    <li><label class="dropdown-item"><input type="checkbox" class="header-checkbox" data-column="{{ loop.index0 + 1 + default_headers|length }}"> {{ field.capitalize() }}</label></li>
+                {% endfor %}
             </ul>
         </div>
     </div>

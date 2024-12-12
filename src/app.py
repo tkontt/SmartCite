@@ -39,7 +39,7 @@ TYPES = {
 
 @app.route("/")
 def index():
-    types = TYPES.keys()
+    types = list(filter(lambda x: x != "article", TYPES.keys()))
     all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
     citations = get_citations()

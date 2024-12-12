@@ -33,7 +33,7 @@ function formFieldData(fields, citationType, citationId, citationKey) {
     getFields = document.getElementById("get-fields-edit");
     addField = document.getElementById("add-field-edit");
 
-    document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType} ${citationId}`;
+    document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType}`;
     document.getElementById("citation_id-edit").value = citationId;
     document.getElementById("citation_type-edit").value = citationType;
 

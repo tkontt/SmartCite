@@ -1,9 +1,11 @@
 <div class="modal fade" id="citation_modal{{ loop_index }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Citation Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
-          <h2 class="mb-4 row align-items-start">Citation Details</h2>
-            <div class="card">
                 <div class="card-header text-start">
                     <h5><strong>{{ citation.citation_key }}</strong> ({{ citation.citation_type }})</h5>
                 </div>
@@ -40,8 +42,6 @@
                     </form>
                 </div>
             </div>
-            
-          </div>
         </div>
       </div>
     </div>

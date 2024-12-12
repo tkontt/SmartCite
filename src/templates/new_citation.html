@@ -1,9 +1,11 @@
 <div class="modal fade" id="new_citation_modal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create new citation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
       <div class="modal-body">
-        <h2>Create a new citation</h2>
-
         <form action="/create_citation" method="post">
           <select class="form-select" aria-label="Select citation type" name="citation-type" id="citation-type" onchange="updateFormAfterTypeChange(this)">
             <option value="article" name="article" selected>article</option>

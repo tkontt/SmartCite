@@ -22,7 +22,8 @@
           <div class="mt-3">
             <label for="add-field-new">Add a field:</label>
             <div class="input-group">
-              <input type="text" class="form-control" name="add-field-new" id="add-field-new" placeholder="Field name">
+              <input type="text" class="form-control" name="add-field-new" id="add-field-new" placeholder="Field name" list="add-field-dl-new">
+              <datalist id="add-field-dl-new"></datalist>
               <button type="button" class="btn btn-secondary" name="add-field-new-btn" onclick="addNewField()">Add</button>
             </div>
             <div id="add-field-error-new"></div>

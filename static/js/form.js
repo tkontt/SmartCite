@@ -16,6 +16,27 @@ const MANDATORY = {
     url: ["url"] // URL citation type only requires the URL field initially
 };
 
+const OPTIONAL = {
+    article: ["volume", "number", "pages", "month", "note"],
+    book: ["volume", "number", "pages", "month", "note"],
+    inproceedings: ["booktitle ", "year", "editor", "volume", "number", "series", "pages", "month",
+                    "address", "organization", "publisher", "note", "annote"],
+    booklet: ["author", "howpublished", "address", "month", "year", "note", "annote"],
+    conference: ["booktitle ", "year", "editor", "volume", "number", "series", "pages", "month", "address",
+                 "organization", "publisher", "note", "annote"],
+    inbook: ["volume", "number", "series", "type", "address", "edition", "pages", "month", "note", "annote"],
+    incollection: ["publisher", "year", "editor", "volume", "number", "series", "type", "chapter", "address",
+                   "edition", "pages", "month", "note", "annote"],
+    manual: ["author", "organization", "address", "edition", "month", "year", "note", "annote"],
+    masterthesis: ["type", "address", "month", "note", "annote"],
+    misc: [],
+    phdthesis: ["type", "address", "month", "note", "annote"],
+    proceedings: ["booktitle ", "editor", "volume", "number", "series", "month", "address", "organization", 
+                  "publisher", "note", "annote"],
+    techreport: ["type", "number", "address", "month", "note", "annote"],
+    unpublished: ["month", "year", "note", "annote"],
+};
+
 // Ylläpitää listaa kentistä
 let CURRENTFIELDS = [];
 let MODAL;
@@ -46,6 +67,8 @@ function formFieldData(fields, citationType, citationId, citationKey) {
         
         createField(fieldName, fieldData[fieldName], placement, placement == optionalFields);
     }
+    populateDatalist(citationType);
+    addField.value = "";
 }
 
 function formForNewCitation(element) {
@@ -96,6 +119,8 @@ function updateFormAfterTypeChange(element) {
         for (const fieldName of MANDATORY[citationType]) {
             createField(fieldName, "", mandatoryFields, false);
         }
+        populateDatalist(citationType);
+        addField.value = "";
     }
 }
 
@@ -194,4 +219,17 @@ function addNewField() {
     updateGetFields();
     createField(nameOfNewField, "", placement, true);
     addField.value = "";
+}
+
+function populateDatalist(citationType) {
+    const datalist = document.getElementById(`add-field-dl-${MODAL}`);
+
+    var last;
+    while (last = datalist.lastChild) datalist.removeChild(last);
+
+    for (const fieldName of OPTIONAL[citationType]) {
+        const option = document.createElement("option");
+        option.innerText = fieldName;
+        datalist.appendChild(option);
+    }
 }

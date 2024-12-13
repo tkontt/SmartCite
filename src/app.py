@@ -192,3 +192,19 @@ if test_env:
         )
 
         return jsonify({"message": "created test citation"})
+
+    @app.route("/create_test_citation_with_optional_field")
+    def create_test_citation_with_optional_field():
+        citation_data = {"author": "Author", "title": "Title", "year": "2000", "journal": "Journal",
+                         "volume": "5050"}
+        add_citation(
+            Citation(
+                "article",
+                generate_cite_key(
+                    citation_data
+                ),
+                citation_data
+            )
+        )
+
+        return jsonify({"message": "created test citation"})

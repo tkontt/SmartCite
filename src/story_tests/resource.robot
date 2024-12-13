@@ -8,6 +8,7 @@ ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
 ${CREATE_TEST_CITATIONS_URL}  http://${SERVER}/create_test_citations
 ${CREATE_TEST_CITATION_URL}  http://${SERVER}/create_test_citation
+${CREATE_TEST_CITATION_WITH_OPTIONAL_FIELD_URL}  http://${SERVER}/create_test_citation_with_optional_field
 ${NEW_CITATION_URL}   http://${SERVER}
 ${BROWSER}    chrome
 ${HEADLESS}   false
@@ -17,6 +18,7 @@ ${IMPORT_BIBTEX}     //button[@name='import_bibtex']
 ${IMPORT}     //button[@name='import']
 ${EDIT}       //input[@name='edit']
 ${UPDATE}     //button[@name='update']
+${DETAILS_FIRST_CITATION}    //button[@id='show_citation_button_0']
 ${SELECT-CITATION-TYPE}  //select[@name='citation-type']
 
 *** Keywords ***
@@ -44,6 +46,9 @@ Create Test Citation
     [Arguments]  ${author}  ${title}  ${year}  ${journal}
     Go To  ${CREATE_TEST_CITATION_URL}/${author}/${title}/${year}/${journal}
 
+Create Test Citation With Optional Field
+    Go To  ${CREATE_TEST_CITATION_WITH_OPTIONAL_FIELD_URL}
+
 Home Page Should Be Open
     Title Should Be  Citation App
 
@@ -61,3 +66,9 @@ Select Citation Type
     Click Element  ${SELECT-CITATION-TYPE}
     Wait Until Element Is Visible  ${type}
     Click Element  ${type}
+
+View First Citation Details
+    Scroll Element Into View  ${DETAILS_FIRST_CITATION}
+    Wait Until Element is visible  ${DETAILS_FIRST_CITATION}  timeout=5s
+    Set Focus To Element  ${DETAILS_FIRST_CITATION}    
+    Click Element  ${DETAILS_FIRST_CITATION}

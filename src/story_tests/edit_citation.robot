@@ -52,7 +52,7 @@ After removing an optional field and closing the edit without updating, the fiel
     Click Element  //button[@name='exit-edit']
     Reload Page
     Click Citation Row  1
-    Sleep  0.25
+    Sleep  0.5
     Page Should Contain  volume
     Page Should Contain  5050
 

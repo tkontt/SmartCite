@@ -9,6 +9,7 @@ When Get BibTeX Is Clicked The Generated BibTeX Is Shown
     Create Test Citation  Author1  Title1  2024  Journal1
     Go To Home Page
     Click Get Bibtex
+    Sleep  0.25
     Wait Until Element Is Visible  copy_bibtex_button
     Page Should Contain  author = \{Author1\},\n\ttitle = \{Title1\},\n\tyear = \{2024\},\n\tjournal = \{Journal1\}
 

@@ -18,20 +18,20 @@ const MANDATORY = {
 
 // Ylläpitää listaa kentistä
 let CURRENTFIELDS = [];
+let MODAL;
+
 let mandatoryFields;
 let optionalFields;
-let getFields;
 let addField;
+let addFieldErrorCont;
+let getFields;
 
 function formFieldData(fields, citationType, citationId, citationKey) {
-    console.log(fields);
     const fieldData = JSON.parse(fields);
     CURRENTFIELDS = Object.keys(fieldData);
+    MODAL = "edit";
 
-    mandatoryFields = document.getElementById("mandatory-fields-edit");
-    optionalFields = document.getElementById("optional-fields-edit");
-    getFields = document.getElementById("get-fields-edit");
-    addField = document.getElementById("add-field-edit");
+    updateModal();
 
     document.getElementById("edit-citation-card-header").innerHTML = `${citationKey} ${citationType}`;
     document.getElementById("citation_id-edit").value = citationId;
@@ -49,18 +49,24 @@ function formFieldData(fields, citationType, citationId, citationKey) {
 }
 
 function formForNewCitation(element) {
-    mandatoryFields = document.getElementById("mandatory-fields-new");
-    optionalFields = document.getElementById("optional-fields-new");
-    getFields = document.getElementById("get-fields-new");
-    addField = document.getElementById("add-field-new");
-
+    MODAL = "new";
+    updateModal();
     updateFormAfterTypeChange(element);
+}
+
+function updateModal() {
+    mandatoryFields = document.getElementById(`mandatory-fields-${MODAL}`);
+    optionalFields = document.getElementById(`optional-fields-${MODAL}`);
+    getFields = document.getElementById(`get-fields-${MODAL}`);
+    addField = document.getElementById(`add-field-${MODAL}`);
+    addFieldErrorCont = document.getElementById(`add-field-error-${MODAL}`);
 }
 
 function clearAllFields() {
     var last;
     while (last = mandatoryFields.lastChild) mandatoryFields.removeChild(last);
     while (last = optionalFields.lastChild) optionalFields.removeChild(last);
+    while (last = addFieldErrorCont.lastChild) addFieldErrorCont.removeChild(last);
 }
 
 function updateGetFields() {
@@ -176,8 +182,13 @@ function addNewField() {
     let placement = optionalFields;
     let nameOfNewField = addField.value.trim().toLowerCase();
 
-    if (nameOfNewField === "") return;
-    if (CURRENTFIELDS.includes(nameOfNewField)) return;
+    let message = null;
+    if (nameOfNewField == "") message = "Pease name the field.";
+    if (CURRENTFIELDS.includes(nameOfNewField)) message = "A field with the given name already exists.";
+    if (message) {
+        showAlert(message, 2000, `add-field-error-${MODAL}`, 'alert-danger');
+        return;
+    }
 
     CURRENTFIELDS.push(nameOfNewField);
     updateGetFields();

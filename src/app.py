@@ -19,27 +19,13 @@ from util import (
     validate_bibtex,
 )
 
-TYPES = {
-    "article": ["author", "title", "journal", "year"],
-    "book": ["author", "editor", "title", "publisher", "year"],
-    "inproceedings": ["author", "title"],
-    "booklet": ["title"],
-    "conference": ["author", "title"],
-    "inbook": ["author", "title", "chapter", "publisher", "year"],
-    "incollection": ["author", "title", "booktitle"],
-    "manual": ["title"],
-    "masterthesis": ["author", "title", "school", "year"],
-    "misc": [],
-    "phdthesis": ["author", "title", "school", "year"],
-    "proceedings": ["title", "year"],
-    "techreport": ["author", "title", "institution", "year"],
-    "unpublished": ["author", "title"],
-}
+TYPES = ["article", "book", "inproceedings", "booklet", "conference", "inbook", "incollection",
+         "manual", "masterthesis", "misc", "phdthesis", "proceedings", "techreport", "unpublished"]
 
 
 @app.route("/")
 def index():
-    types = list(filter(lambda x: x != "article", TYPES.keys()))
+    types = list(filter(lambda x: x != "article", TYPES))
     all_fields = get_unique_field_names()
     default_headers = ["author", "title", "year", "type"]
     citations = get_citations()
@@ -104,11 +90,11 @@ def edit_citation_form_route():
         fields[field] = request.form.get(field).strip()
 
     if "" in fields.values():
-        flash("Missing required fields")
+        flash("Citation edit failed due to some empty fields.")
         return redirect("/")
 
-    update_citation_in_db(citation_id, fields)
-    print(citation_id, "ID uusiks")
+    citekey = update_citation_in_db(citation_id, fields)
+    flash(f'Citation {citekey} edited successfully.')
     return redirect("/")
 
 

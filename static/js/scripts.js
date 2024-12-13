@@ -41,11 +41,11 @@ function copyToClipboard(text, message) {
     });
 }
 
-function showAlert(message, duration = 2000) {
-    const alertContainer = document.getElementById('alert-container');
+function showAlert(message, duration = 2000, alertContId = 'alert-container', alertType = 'alert-success') {
+    const alertContainer = document.getElementById(alertContId);
     
     const alert = document.createElement('div');
-    alert.className = 'alert alert-success alert-dismissible fade show';
+    alert.className = `alert ${alertType} alert-dismissible fade show`;
     alert.role = 'alert';
     alert.innerHTML = `
         ${message}

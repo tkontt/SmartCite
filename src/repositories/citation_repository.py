@@ -163,6 +163,12 @@ def update_citation_in_db(citation_id: int, citation_fields: dict):
 
     db.session.commit()
 
+    sql = "SELECT citation_key FROM citations WHERE id = :citation_id"
+    result = db.session.execute(text(sql), {"citation_id": citation_id})
+    citekey = result.fetchone()
+
+    return citekey[0]
+
 
 def unique_key(key):
     sql = text("SELECT c.citation_key FROM citations c")

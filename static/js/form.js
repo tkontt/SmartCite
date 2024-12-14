@@ -208,7 +208,7 @@ function addNewField() {
     let nameOfNewField = addField.value.trim().toLowerCase();
 
     let message = null;
-    if (nameOfNewField == "") message = "Pease name the field.";
+    if (nameOfNewField == "") message = "Please name the field.";
     if (CURRENTFIELDS.includes(nameOfNewField)) message = "A field with the given name already exists.";
     if (message) {
         showAlert(message, 2000, `add-field-error-${MODAL}`, 'alert-danger');

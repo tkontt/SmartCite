@@ -68,7 +68,6 @@ Select Citation Type
     Click Element  ${type}
 
 View First Citation Details
-    Scroll Element Into View  ${DETAILS_FIRST_CITATION}
     Wait Until Element is visible  ${DETAILS_FIRST_CITATION}  timeout=5s
     Set Focus To Element  ${DETAILS_FIRST_CITATION}    
     Click Element  ${DETAILS_FIRST_CITATION}

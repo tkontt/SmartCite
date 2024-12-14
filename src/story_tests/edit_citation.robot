@@ -11,6 +11,7 @@ After editing a citation, changes are visible
     Click Citation Row  1
     Click Edit
     Wait Until Element Is Visible  year
+    Sleep  0.25
     Input Text  year  2023
     Input Text  journal  Journal
     Click Update
@@ -25,13 +26,16 @@ After adding an optional fields in edit, the fields exist
     Click Citation Row  1
     Click Edit
     Wait Until Element Is Visible  add-field-edit
+    Sleep  0.25
     Input Text  add-field-edit  volume
-    Click Element  add-field-edit-btn
+    Click Add Field
     Wait Until Element Is Visible  volume
+    Sleep  0.25
     Input Text  volume  5050
     Input Text  add-field-edit  month
-    Click Element  add-field-edit-btn
+    Click Add Field
     Wait Until Element Is Visible  month
+    Sleep  0.25
     Input Text  month  April
     Click Update
     Sleep  0.25
@@ -78,8 +82,9 @@ Error message is shown if user tries to add an existing field
     Click Citation Row  1
     Click Edit
     Wait Until Element Is Visible  add-field-edit
-    Input Text  add-field-edit  author
-    Click Element  add-field-edit-btn
+    Sleep  0.25
+    Input Text  add-field-edit  author    
+    Click Add Field
     Page Should Contain  A field with the given name already exists.
 
 Error message is shown if user tries to add a field with no name
@@ -88,8 +93,8 @@ Error message is shown if user tries to add a field with no name
     Click Citation Row  1
     Click Edit
     Wait Until Element Is Visible  add-field-edit
-    Click Element  add-field-edit-btn
-    Page Should Contain  Pease name the field.
+    Click Add Field
+    Page Should Contain  Please name the field.
 
 
 *** Keywords ***
@@ -104,10 +109,14 @@ Click Citation Row
     Double Click Element  //td[contains(text(), "${row}")]
 
 Click Edit
-    Scroll Element Into View  ${EDIT}
     Wait Until Element is visible  ${EDIT}  timeout=5s
     Set Focus To Element  ${EDIT}    
     Click Element  ${EDIT}
+
+Click Add Field
+    Wait Until Element is visible  //button[@name='add-field-edit-btn']  timeout=5s
+    Set Focus To Element  //button[@name='add-field-edit-btn']   
+    Click Element  //button[@name='add-field-edit-btn']
 
 Click Update
     Scroll Element Into View  ${UPDATE}

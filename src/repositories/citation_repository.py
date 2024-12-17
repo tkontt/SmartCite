@@ -157,7 +157,8 @@ def delete_citation_from_db(citation_id: int):
 
 
 def remove_citation_field_from_db(citation_id, field_name):
-    db.session.execute(REMOVE_CITATION_FIELD_SQL, {"citation_id": citation_id, "field_name": field_name})
+    db.session.execute(REMOVE_CITATION_FIELD_SQL,
+                       {"citation_id": citation_id, "field_name": field_name})
     db.session.commit()
 
 
@@ -173,13 +174,13 @@ def update_citation_in_db(citation_id: int, citation_fields: dict):
     for field_name, field_value in citation_fields.items():
         if field_name in existing_fields:
             db.session.execute(
-                UPDATE_FIELD_SQL, 
+                UPDATE_FIELD_SQL,
                 {"citation_id": citation_id, "field_name": field_name, "field_value": field_value}
             )
             existing_fields.remove(field_name)
         else:
             db.session.execute(
-                INSERT_FIELD_SQL, 
+                INSERT_FIELD_SQL,
                 {"citation_id": citation_id, "field_name": field_name, "field_value": field_value}
             )
 

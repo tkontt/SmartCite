@@ -8,7 +8,7 @@ Definition of Done:
 Backlog: 
 https://docs.google.com/spreadsheets/d/1wmKJn92xzplfzJKrfDkUWur9-Hx96e_3TWNF-Ajup8c/edit?usp=sharing
 
-Report
+Raportti:
 https://docs.google.com/document/d/1VrDSSgh54i9A0PbSWo_RU9nWHGxZ7yCTIuv7qEP4IGQ/edit?tab=t.0
 
 ## Käynnistysohjeet
